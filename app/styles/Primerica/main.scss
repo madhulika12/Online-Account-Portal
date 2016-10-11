@@ -1,0 +1,30 @@
+@import "../variables";
+
+@import "../../appFiles/header/styles/headerVariables";
+@import "../jumbotron/jumbotronVariables";
+@import "../../appFiles/login/styles/loginVariables";
+// @import "../../appFiles/forgotPasswordResponse/styles/forgotPasswordResponseVariables";
+@import "../submitButton/submitButtonVariables";
+@import "../../appFiles/footer/styles/footerVariables";
+
+@import "../../appFiles/footer/styles/Primerica/footer";
+@import "../../appFiles/header/styles/Primerica/header";
+@import "../../appFiles/login/styles/Primerica/login";
+@import "../submitButton/Primerica/submitButton";
+
+@font-face{
+  font-family:'InterStateLight';
+  src : url('../fonts/Primerica/interstate-light-webfont.woff') format('woff');
+}
+
+.wrapper {
+  background-color: #f3f3f3;
+  #{$headersAndLinks} {
+    color: $primBlue;
+  }
+}
+
+#{$allText}, .wrapper #{$allText} {
+  font-family: 'InterStateLight';
+  text-align: left;
+}

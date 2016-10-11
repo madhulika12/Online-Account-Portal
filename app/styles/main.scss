@@ -1,0 +1,291 @@
+@import "variables";
+
+@import "../appFiles/header/styles/headerVariables";
+@import "jumbotron/jumbotronVariables";
+@import "../appFiles/login/styles/loginVariables";
+// @import "../appFiles/forgotPasswordResponse/styles/forgotPasswordResponseVariables";
+@import "submitButton/submitButtonVariables";
+
+@import "submitButton/submitButton";
+@import "../appFiles/forgotPassword/styles/forgotPassword";
+
+
+@import "../appFiles/footer/styles/footerVariables";
+
+@import "../appFiles/header/styles/header";
+@import "jumbotron/jumbotron";
+@import "../appFiles/login/styles/login";
+@import "../appFiles/updateProfile/styles/updateAccount";
+@import "submitButton/submitButton";
+@import "../appFiles/footer/styles/footer";
+@import "../appFiles/updateEmail/styles/updateEmail";
+@import "../appFiles/signUp/signUp";
+@import "../appFiles/recoverAccount/styles/_recoverAccount.scss";
+@import "../appFiles/havingTrouble/styles/havingTrouble.scss";
+@import "../appFiles/termsAccept/styles/termsAccept.scss";
+@import "../appFiles/forgotUsername/forgotUsername.scss";
+
+//static pages
+@import "../appFiles/termsAndConditions/styles/termsAndConditions";
+@import "../appFiles/privacyPolicy/styles/privacyPolicy";
+@import "../appFiles/contactIDShield/styles/contactIDShield";
+@import "../appFiles/resetPassword/styles/_resetPassword.scss";
+@import "../appFiles/browser/styles/browserCompatibility.scss";
+
+//popup
+@import "../scripts/directives/responseModal/responseModal";
+
+.browsehappy {
+  margin: 0.2em 0;
+  background: #ccc;
+  color: #000;
+  padding: 0.2em 0;
+}
+
+html {
+  height: 100%;
+  min-height: 100%;
+}
+
+body {
+  -webkit-font-smoothing: antialiased;
+  padding: 0 0 150px;
+  min-height: 100%;
+  position: relative;
+  footer {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  body {
+    padding-bottom: 318px;
+  }
+}
+
+/* Everything but the jumbotron gets side spacing for mobile first views */
+.header,
+.marketing,
+.footer {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+/* Custom page header */
+.header {
+  border-bottom: 1px solid #e5e5e5;
+  margin-bottom: 10px;
+
+  /* Make the masthead heading the same height as the navigation */
+  h3 {
+    margin-top: 0;
+    margin-bottom: 0;
+    line-height: 40px;
+    padding-bottom: 19px;
+  }
+}
+
+/* Custom page footer */
+.footer {
+  padding-top: 19px;
+  color: #777;
+  border-top: 1px solid #e5e5e5;
+}
+
+.container-narrow > hr {
+  margin: 30px 0;
+}
+
+/* Main marketing message and sign up button */
+.wrapper {
+  //text-align: center;
+  border-bottom: 1px solid #e5e5e5;
+
+  .btn {
+    font-size: 21px;
+    padding: 14px 24px;
+  }
+}
+
+.container {
+  width: 100%;
+  max-width: 1325px;
+}
+
+/* Supporting marketing content */
+.marketing {
+  margin: 40px 0;
+
+  p + h4 {
+    margin-top: 28px;
+  }
+}
+
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+  /* Remove the padding we set earlier */
+  .header,
+  .marketing,
+  .footer {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  /* Space out the masthead */
+  .header {
+    margin-bottom: 30px;
+  }
+  /* Remove the bottom border on the jumbotron for visual effect */
+  .wrapper {
+    border-bottom: 0;
+  }
+}
+
+.k-button {
+    padding: $kendoButtonPadding;
+    border-radius: 0;
+}
+
+.k-datepicker {
+  width: 100%;
+}
+
+//OVERWRITING BOOTSTRAP
+
+.input {
+  border-radius: 1px;
+  // margin-bottom: 0;
+}
+
+.form-control:focus {
+  border-color: #939393;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #939393;
+}
+
+//KROLL STYLE-GUIDE
+
+html {
+  font-size: 100% !important;
+}
+
+.wrapper h1:first-child {
+  margin-top: 0;
+}
+
+.k-picker-wrap.k-state-default {
+  border: 1px solid lightgray;
+  box-sizing: border-box;
+  &, input {
+    background-color: white;
+  }
+}
+
+// .has-error .form-control {
+.ng-invalid.ng-touched {
+  border-color: $krollRed;
+  &:focus {
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px $krollRed;
+  }
+  // .k-picker-wrap.k-state-default {
+  //   border-color: $krollRed;
+  //   box-sizing: border-box;
+  // }
+}
+
+// .has-success .form-control {
+.ng-valid {
+  border-color: green;
+  &:focus {
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px green;
+  }
+  .k-picker-wrap.k-state-default {
+    border-color: green;
+  }
+}
+
+#main-container main {
+  margin: 45px 0;
+}
+
+/*******************************
+
+UTILITY CLASSES
+
+**********************************/
+
+.bold {
+  font-weight: bold;
+}
+
+.underline {
+  text-decoration: underline;
+}
+
+.centered {
+  text-align: center;
+}
+
+span.required {
+  color: darken(red, 10%);
+  font-weight: bold;
+  padding-left: 4px;
+}
+
+.global-form {
+  padding: 10px 2%;
+  margin-bottom: 15px;
+}
+
+.global-form-instructions {
+  padding: 0 25px;
+}
+
+.global-form-button-holder {
+  text-align: right;
+  padding: 10px 2% 0px;
+  a {
+    float: left;
+  }
+}
+
+.centered-response-box {
+  max-width: 500px;
+  margin: auto;
+  p {
+    font-size: 105%;
+    margin-bottom: 50px;
+  }
+  .global-form {
+    padding: 10px 3%;
+  }
+}
+
+.form-section-headings {
+  margin: -5px -1% 40px;
+}
+
+div.error-message {
+  clear: both;
+  span {
+
+    display: block;
+    float: left;
+
+    width: 100%;
+
+    background-color: $krollRed;
+
+    padding-left: 2%;
+    padding-right: 2%;
+    font-size: 14px;
+    color: white;
+  }
+}
+.form-control {
+  height: 37px;
+}
+
+.k-picker-wrap .k-select, .k-picker-wrap .k-input {
+    height: 2.10em !important;
+}

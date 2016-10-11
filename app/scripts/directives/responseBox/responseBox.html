@@ -1,0 +1,21 @@
+<div>
+  <style>
+    .response-box {
+      width: 100%;
+      color : white;
+      background-color: #5cb85c;
+      border-radius: 5px;
+      margin: 20px 0;
+      padding: 5px 10px;
+      text-align: center;
+    }
+    .response-error {
+      background-color: #A22B38;
+    }
+  </style>
+
+  <div class="response-box" ng-if="config.display && config.message" ng-class="{'response-error' : config.error}">
+    {{config.message}}
+  </div>
+
+</div>

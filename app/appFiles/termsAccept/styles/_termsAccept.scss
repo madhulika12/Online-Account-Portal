@@ -1,0 +1,17 @@
+#terms-accept-view {
+  .service-title {
+    display: none;
+  }
+  #terms-window {
+    box-shadow: inset 0px 0px 1px 1px lightgray;
+    background-color: lighten(lightgray, 16);
+    max-height: 500px;
+    overflow-y: scroll;
+    .text-body > ol {
+      padding-left: 20px;
+    }
+    ol, ul {
+      padding-left: 3%;
+    }
+  }
+}

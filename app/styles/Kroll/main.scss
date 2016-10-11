@@ -1,0 +1,45 @@
+@import "../variables";
+
+@import "../../appFiles/header/styles/headerVariables";
+@import "../jumbotron/jumbotronVariables";
+@import "../../appFiles/login/styles/loginVariables";
+// @import "../../appFiles/forgotPasswordResponse/styles/forgotPasswordResponseVariables";
+@import "../submitButton/submitButtonVariables";
+@import "../../appFiles/footer/styles/footerVariables";
+
+@import "../../appFiles/footer/styles/Kroll/footer";
+@import "../../appFiles/header/styles/Kroll/header";
+@import "../../appFiles/login/styles/Kroll/login";
+@import "../submitButton/Kroll/submitButton";
+
+// @font-face{
+//   font-family:'InterStateLight';
+//   src : url('../fonts/Kroll/????.woff') format('woff');
+// }
+
+
+#{$allText} {
+  font-family: "ff-dagny-web-pro";
+}
+
+h1, .wrapper h1 {
+  font-size: 2.813rem;
+  line-height: 1.045;
+  font-weight: 400;
+  color: #2b5d82;
+}
+
+h2, .wrapper h2 {
+  font-size: 2.11rem;
+  line-height: 1.1849;
+  font-weight: 400;
+  color: #006778;
+}
+
+h3, .wrapper h3 {
+  font-size: 1.333rem;
+  line-height: 2.16;
+  font-weight: 400;
+  color: #5e5250;
+  letter-spacing: .08em;
+}

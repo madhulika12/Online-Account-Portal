@@ -1,0 +1,11 @@
+.submitButton {
+    background-color: $primBlue;
+    border: none;
+    &:hover, &:focus, &:active {
+      background-color: darken($primBlue, 10%)
+    }
+}
+
+// .submitButton:focus:active {
+//     @extend .submitButton:active;
+// }

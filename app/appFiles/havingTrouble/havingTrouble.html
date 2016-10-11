@@ -1,0 +1,94 @@
+<!-- MODAL CODE  -->
+
+<div class="modal fade" id="havingTroubleModal" tabindex="-1" role="dialog">
+      <div class="vertical-alignment-helper">
+  <div class="modal-dialog vertical-align-center" role="document">
+    <div class="modal-content">
+      <div class="modal-header btn-danger">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+
+
+
+        <h4 class="modal-title " style="color:#fff; font-size: 1.5em">
+           <span class="glyphicon glyphicon-warning-sign" style="color:#fff"></span>
+              Having Trouble Logging In
+        </h4>
+      </div>
+      <div class="modal-body" style="font-size: 1.5em">
+        <p ><strong>Please note:</strong> We have made security enhancements. If you haven’t logged in to your account since June 1, 2016, please <a href="" ng-click="havingTrouble.dismissToRecoverAccount()">CLICK HERE</a>.</p>
+        <p>If you have logged in since June 1, 2016, but are currently having trouble with your password or username <a href="" data-dismiss="modal"> close this pop-up.</a></p>
+      </div>
+    </div>
+  </div>
+  </div>
+</div>
+
+<!-- END OF MODAL -->
+
+<main id="having-trouble-view">
+
+  <div class="row">
+    <div class="col-sm-3 col-md-3"></div>
+    <div class="col-sm-6 col-md-6">
+
+
+      <response-box config="havingTrouble.responseBoxConfig"></response-box>
+
+      <form name="havingTrouble.form" validation-highlights>
+        <div class="global-form form-section">
+          <h2>Forgot Password?</h2>
+          <!-- <h4 class="form-section-headings">RESET PASSWORD</h4> -->
+          <p>Use this form to reset your password.</p>
+          <div input-linker="match">
+            <div class="form-group">
+              <label for="username">USERNAME<span class="required">*</span></label>
+              <input
+                type="text"
+                class="form-control input"
+                name="username"
+                ng-model="havingTrouble.forgotPassData.Username"
+                ng-pattern="havingTrouble.regex.username"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="confirmUsername">CONFIRM USERNAME<span class="required">*</span></label>
+              <input
+                type="text"
+                class="form-control input"
+                name="confirmUsername"
+                ng-model="havingTrouble.forgotPassConfirmData.Username"
+                ng-pattern="havingTrouble.regex.username"
+                required
+              />
+            </div>
+            <div></div>
+          </div>
+          <div class="global-form-button-holder">
+            <!-- <a href="/#/forgot-username">Forgot Username?</a> -->
+            <kendo-button
+              class="submitButton processingBtn"
+              ng-disabled="havingTrouble.form.$invalid" ng-click="havingTrouble.forgotPasswordRequest($event)"
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
+            >RESET PASSWORD</kendo-button>
+          </div>
+        </div>
+
+
+      </form>
+
+      <!-- <div class="divider-line"></div> -->
+
+      <h2>Forgot Username?</h2>
+      <div class="forgot-password-link">
+        <p><a href="/#/forgot-username">Click here</a> to recover your username.</p>
+      </div>
+
+      <p class="header-text">
+        Please note, if this is your first time logging in to the portal after June 1, please <a href="/#/account/recover-account">click here</a>.
+      </p>
+
+    </div>
+    <div class="col-sm-3 col-md-3">
+  </div>
+</main>

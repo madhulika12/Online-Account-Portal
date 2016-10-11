@@ -1,0 +1,33 @@
+.k-button.k-state-disabled {
+  &:hover, & {
+    background-color: lightgray;
+  }
+}
+
+.submitButton {
+  color: white;
+  padding: 5px 8px;
+  font-size: 13px;
+  border: none;
+}
+
+.submitButton {
+    background-color: $IDShieldColor;
+}
+
+.submitButton:hover {
+    background-color: lighten($IDShieldColor, 10%);
+    text-decoration: underline;
+}
+
+.submitButton:focus {
+    background-color: $IDShieldColor;
+}
+
+.submitButton:active {
+    background-color: $submitButtonColor;
+}
+
+.submitButton:focus:active {
+    @extend .submitButton:active;
+}

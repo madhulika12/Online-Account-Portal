@@ -1,0 +1,33 @@
+@import "jumbotronVariables";
+
+.container .wrapper {
+    margin-top: $jumbotronMarginTop;
+    border-radius: 30;
+}
+
+.wrapper p, .wrapper section {
+  text-align: $jumbotronTextAlign;
+}
+
+.input {
+  &:not(input[type="checkbox"]) {
+    height: $inputHeight;
+  }
+  margin-bottom: 0;
+}
+
+//Setting placholder colors
+
+.wrapper {
+  input::-webkit-input-placeholder { color: $placeholderText; }
+  input::-moz-placeholder { color: $placeholderText; }
+  input:-ms-input-placeholder { color: $placeholderText; }
+  input:-moz-placeholder { color: $placeholderText;  }
+}
+
+//Making the placholder text disappear when the input is focused
+
+input:focus::-webkit-input-placeholder { color:transparent; } /* Chrome/Opera/Safari */
+input:focus:-moz-placeholder { color:transparent; } /* FF 4-18 */
+input:focus::-moz-placeholder { color:transparent; } /* FF 19+ */
+input:focus:-ms-input-placeholder { color:transparent; } /* IE 10+ */

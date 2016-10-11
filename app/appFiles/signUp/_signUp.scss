@@ -1,0 +1,26 @@
+#sign-up-view {
+}
+
+.help-box {
+  margin-bottom: 50px;
+  text-align: right;
+  & span, & span a {
+    font-family: "Georgia";
+  }
+  span:first-child {
+    font-size: 1.35em;
+    font-weight: normal;
+    color: #989898;
+    font-style: italic;
+    padding-right: 40px;
+  }
+  span:last-child a {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: $IDShieldColor;
+  }
+}
+
+form > .form-section {
+  margin: 30px 0;
+}

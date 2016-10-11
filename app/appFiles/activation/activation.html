@@ -1,0 +1,66 @@
+
+<main id="activate-view">
+
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <div class="global-form-instructions">
+        <h2>ACTIVATE ACCOUNT</h2>
+      </div>
+    </div>
+  </div>
+
+  <form id="activateForm" name="activate.form" validation-highlights>
+    <div class="global-form">
+      <div class="row">
+        <div class="col-md-10 col-md-offset-1">
+          <div class="form-group">
+            <label for="membershipNum" class="form-control-label">MEMBERSHIP NUMBER</label>
+            <input
+              type="text"
+              class="form-control input"
+              ng-model="activate.data.membershipNum"
+              name="membershipNum"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="col-md-10 col-md-offset-1">
+          <div class="form-group">
+            <label for="lastName" class="form-control-label">LAST NAME</label>
+            <input
+              type="text"
+              class="form-control input"
+              ng-pattern="activate.regex.lastName"
+              ng-model="activate.data.lastName"
+              name="lastName"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="col-md-10 col-md-offset-1">
+          <div class="form-group">
+            <label for="zip" class="form-control-label">ZIP CODE</label>
+            <input
+              type="text"
+              class="form-control input"
+              ng-pattern="activate.regex.zip"
+              ng-model="activate.data.zip"
+              name="zip"
+              required
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="global-form-button-holder">
+      <kendo-button
+        class="submitButton"
+        ng-disabled="activate.form.$invalid"
+        ng-click="activate.activationRequest($event)"
+      >Submit</kendo-button>
+    </div>
+  </form>
+</main>

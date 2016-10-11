@@ -1,0 +1,74 @@
+@import "../variables";
+
+@import "../../appFiles/header/styles/headerVariables";
+@import "../jumbotron/jumbotronVariables";
+@import "../../appFiles/login/styles/loginVariables";
+// @import "../../appFiles/forgotPasswordResponse/styles/forgotPasswordResponseVariables";
+@import "../submitButton/submitButtonVariables";
+@import "../../appFiles/footer/styles/footerVariables";
+
+@import "../../appFiles/footer/styles/IDShield/footer";
+@import "../../appFiles/header/styles/IDShield/header";
+@import "../../appFiles/login/styles/IDShield/login";
+@import "../submitButton/IDShield/submitButton";
+
+#{$allText} {
+  font-family: "Arial";
+}
+
+#{$headers} {
+  font-family : "Georgia";
+  font-weight: bold;
+  text-rendering: optimizeLegibility;
+}
+
+h4 {
+  font-family: "Arial";
+  font-weight: bold;
+  font-size: 16px;
+  color: $IDShieldLighterBlue;
+}
+
+h2 {
+  font-size: 20px;
+  color: $IDShieldBlue;
+}
+
+p, span {
+  font-size: 1em;
+  color : $IDShieldTextColor;
+}
+
+
+//Form Styling
+
+.id-shield-box {
+  border : 1px solid $IDShieldBorderColor;
+  border-radius: 5px;
+}
+
+.global-form {
+  @extend .id-shield-box;
+}
+
+label {
+  font-weight: bold;
+  color: $IDShieldLighterBlue;
+  font-size: 14px;
+}
+
+.kendo-date {
+  display: block;
+  width: 100%;
+}
+
+.global-form-button-holder a {
+  color: $IDSLinkColor;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.k-picker-wrap {
+  border-radius: 0px;
+}

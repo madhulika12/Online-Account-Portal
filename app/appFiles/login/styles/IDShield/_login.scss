@@ -1,0 +1,33 @@
+.promotional-image {
+  background: url("../../images/IDShield/happy-family.png");
+}
+
+.welcome-text a {
+  color: $IDShieldColor;
+}
+
+.dual-form-container {
+  border : 1px solid $IDShieldBorderColor;
+  border-radius: 5px;
+}
+
+.forgot-password-box a {
+  color: $IDSLinkColor;
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+
+@media screen and (min-width: 991px) {
+  .grey-right-border {
+    border-right : 1px solid $IDShieldBorderColor;
+  }
+}
+
+@media screen and (max-width:990px) {
+  .sign-up-form-box {
+    border-bottom : 1px solid $IDShieldBorderColor;
+    padding-bottom: 46px;
+  }
+}

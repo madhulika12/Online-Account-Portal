@@ -1,0 +1,47 @@
+{
+   "IDSHIELD": {
+      "title": "IDSHIELD",
+      "brandingImage": {
+         "background-image": "url(\"../images/happy-family.png\")"
+      },
+      "logoUrl": "images/IDShieldLogo.png",
+      "primaryColor": "rgb(0, 39, 64)",
+      "secondaryColor": "rgb(221, 137, 38)",
+      "buttonColor": {
+         "background-color": "rgb(221, 137, 38)"
+      },
+      "buttonWithBorder": {
+         "border-color": "rgb(0, 39, 64)",
+         "background-color": "rgb(221, 137, 38)"
+      },
+      "headerLinkColor": {
+         "color": "rgb(221, 137, 38)"
+      },
+      "footerBackground": {
+         "background-color": "rgb(0, 39, 64)"
+      },
+      "headerBackground": null
+   },
+   "PRIMERICA": {
+      "title": "PRIMERICA",
+      "logoUrl": "images/america-2.jpg",
+      "primaryColor": "rgb(0, 39, 64)",
+      "secondaryColor": "firebrick",
+      "buttonColor": {
+         "background-color": "rgb(0, 39, 64)"
+      },
+      "buttonWithBorder": {
+         "border-color": "firebrick",
+         "background-color": "rgb(0, 39, 64)"
+      },
+      "headerLinkColor": {
+         "color": "firebrick"
+      },
+      "footerBackground": {
+         "background-color": "rgb(0, 39, 64)"
+      },
+      "headerBackground": {
+         "background-color": "rgb(0, 39, 64)"
+      }
+   }
+}

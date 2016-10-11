@@ -1,0 +1,20 @@
+header
+  .headerLinks {
+    color: $IDShieldColor;
+  }
+
+  .navbar-collapse {
+    //background-color: $footerBackgroundColor;
+  }
+
+.navbar-toggle.hamburger , .navbar-toggle.hamburger:hover {
+  background-color: $footerBackgroundColor;
+}
+
+header.navbar {
+  //padding: 20px;
+}
+
+// #logo-box {
+//   background-image: url('../../../../images/IDShield/IDShieldLogo.png');
+// }

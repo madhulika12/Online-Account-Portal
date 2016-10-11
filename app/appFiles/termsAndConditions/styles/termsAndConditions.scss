@@ -1,0 +1,28 @@
+#termsAndConditions {
+  p, ol, ul, li {
+    line-height: 1.6em;
+  }
+  color: #707070;
+  font-size : 120%;
+  li {
+    text-align: left;
+    ol li {
+      list-style-type : upper-alpha;
+    }
+    ol.misc-privacy-policy li {
+      list-style-type : decimal;
+    }
+  }
+  ul {
+    list-style-type: disc;
+  }
+}
+
+.termsAndConditionsBold {
+  font-weight: bold;
+  margin-bottom: 15%;
+}
+.service-title {
+  margin-left : 35px;
+  margin-bottom: 40px;
+}

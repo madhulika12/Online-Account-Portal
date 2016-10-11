@@ -1,0 +1,70 @@
+#blue-bar {
+  width: 100vw;
+  height: 50px;
+  background-color: $IDShieldBlue;
+}
+
+#update-profile-view {
+  .info-display {
+    box-sizing: border-box;
+    background-color: lighten(lightgray, 10%);
+    border: 1px solid $IDShieldBorderColor;
+    min-height: 35px;
+    width: 100%;
+    padding: 8px 12px 6px;
+    p {
+      margin-bottom: 1px;
+    }
+  }
+
+  .input {
+    width: 100% !important;
+  }
+  .global-form-button-holder {
+    padding : 10px 0 0;
+  }
+  .global-form {
+    margin-top: 30px;
+  }
+}
+
+
+// #updateAccountH2 {
+//     margin-bottom: 3%
+// }
+//
+// #warningBox {
+//     display: inline;
+// }
+//
+// .update-profile-btn {
+//     background-color: #E19A45;
+// }
+//
+// .update-profile-btn {
+//     color: #fff;
+// }
+//
+// .update-profile-btn:hover {
+//     background-color: #E19A45;
+// }
+//
+// .update-profile-btn:visited {
+//     background-color: #E19A45;
+// }
+//
+// #emailPanel {
+//     margin-top: 3%;
+// }
+//
+// .inputBlocks {
+//     display: block;
+// }
+//
+// .inputBorder {
+//     border: 1px solid lightgray;
+// }
+
+.updateAccount div.error-message span {
+    width: 100% !important;
+}

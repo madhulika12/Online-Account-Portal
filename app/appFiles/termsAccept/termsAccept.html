@@ -1,0 +1,46 @@
+<main id="terms-accept-view">
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <div class="global-form-instructions">
+        <h2>TERMS &amp; CONDITIONS</h2>
+        <section>
+          <p>We have updated some of our policies. Please accept the terms and conditions below before continuing.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+  <div id="terms-window" class="global-form" ng-include="'appFiles/termsAndConditions/termsAndConditions.html'">
+  </div>
+
+  <form name="termsAccept.form" validation-highlights>
+     <div>
+       <div class="checkbox col-xs-12">
+         <label for="acceptTerms">
+           <input
+            type="checkbox"
+            class="input"
+            id="acceptTerms"
+            name="acceptTerms"
+            ng-model="termsAccept.TermsAccept"
+            required
+          /> I agree to the above Terms and Conditions
+         </label>
+       </div>
+
+       <div class="col-xs-12">
+         <response-box config="termsAccept.responseBoxConfig"></response-box>
+       </div>
+
+       <div class="global-form-button-holder">
+         <!-- g-disabled="signUp.form.$invalid"  -->
+        <kendo-button
+          class="submitButton processingBtn" 
+          ng-disabled="termsAccept.form.$invalid" ng-click="termsAccept.acceptTerms($event)"
+          data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
+        >Accept Terms and Conditions</kendo-button>
+       </div>
+     </div>
+  </form>
+
+
+</main>

@@ -1,0 +1,65 @@
+[ng\:cloak], [ng-cloak], .ng-cloak {
+  display: none !important;
+}
+
+header {
+  padding : 0 15px;
+  img.navbar-brand {
+   height: $headerImgHeight;
+   padding: 15px 0 0;
+  }
+
+  .navbar-toggle.hamburger , .navbar-toggle.hamburger:hover {
+    margin-top : 15px;
+    .icon-bar {
+      background-color: $headerLinksMediaQueryColor;
+    }
+  }
+}
+
+a.headerLinks {
+  text-decoration: none;
+  font-weight: bold;
+}
+
+div.collapse a.headerLinks:first-of-type {
+  //margin-right: 1%;
+}
+
+#header:hover {
+  background-color: #fff;
+}
+
+//Shrinks the navbar image on smaller screens:
+
+@media screen and (max-width: 767px) {
+  header {
+    padding: 0;
+    img.navbar-brand {
+      height: $headerImgHeightSmall;
+    }
+
+  }
+
+  #header {
+    .headerLinks {
+      //margin-top: 3px;
+      color: #fff;
+    }
+    li:nth-child(n+2) {
+      border: 1px solid #fff;
+    }
+    li{
+       background-color: $footerBackgroundColor;
+    }
+    li > a:hover {
+      background-color: $footerBackgroundColor;
+    }
+  }
+}
+
+.navbar-toggle.hamburger , .navbar-toggle.hamburger:hover {
+  .icon-bar {
+    background-color: $headerLinksMediaQueryColor;
+  }
+}

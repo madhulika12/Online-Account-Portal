@@ -1,0 +1,154 @@
+<main id="recover-account-view">
+
+  <!-- USERNAME MODAL TEMPLATE -->
+
+  <div class='modal fade recover-page-modal' id='username-modal'>
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <button type='button' class='close' data-dismiss='modal'>
+            <span>&times;</span>
+          </button>
+          <h2 class='modal-title'>FORGOT USERNAME</h2>
+        </div>
+        <div class='modal-body'>
+          <div>
+            <p>Your username is:</p>
+
+            <p class="centered bold">{{recover.usernameData.Username}}</p>
+
+            <p>If you would also like to reset your password, please select the “Reset Password” button below. Otherwise select “Back to Login.”</p>
+          </div>
+
+        </div>
+
+        <div class='modal-footer'>
+          <div>
+            <button type='button' class="submitButton" data-dismiss='modal' ng-click='recover.resetPass()'>Reset Password</button>
+            <button type='button' class="submitButton" data-dismiss='modal' ng-click='recover.backToLogin()'>Back to Login</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- END MODAL TEMPLATE -->
+
+  <!-- USERNAME-FORCE-RESET-MODAL TEMPLATE -->
+
+  <div class='modal fade recover-page-modal' id='username-force-reset-modal'>
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <button type='button' class='close' data-dismiss='modal'>
+            <span>&times;</span>
+          </button>
+          <h2 class='modal-title'>RECOVER ACCOUNT</h2>
+        </div>
+        <div class='modal-body'>
+          <div>
+            <p>Your username is:</p>
+
+            <p class="centered bold">{{recover.usernameData.Username}}</p>
+
+            <p>Our records indicate that you haven't logged in since June 1, 2016. You will need to reset your password in order to access your account. A password reset email has been sent to the email associated with your account.</p>
+          </div>
+
+        </div>
+
+        <div class='modal-footer'>
+          <div>
+            <button type='button' class="submitButton" data-dismiss='modal' ng-click='recover.backToLogin()'>Back to Login</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- END MODAL TEMPLATE -->
+
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <div class="global-form-instructions">
+        <h2>RECOVER ACCOUNT</h2>
+        <section>
+          <p>For your security, please provide the following information so we can take you to your account.</p>
+        </section>
+      </div>
+    </div>
+    <div class="col-xs-12 col-md-6">
+      <response-box config="recover.responseBoxConfig"></response-box>
+    </div>
+  </div>
+
+  <!-- -->
+    <form name="recover.accountRecoveryForm" validation-highlights>
+      <div class="global-form">
+        <div class="row">
+          <!-- <div class="form-group col-xs-12 col-sm-6">
+            <label for="username" class="form-control-label">
+              USERNAME<span class="required">*</span>
+            </label>
+            <div class="">
+              <input type="text" ng-pattern="recover.regex.username" class="form-control input" name="username" ng-model="recover.recoveryData.Username" required/>
+            </div>
+            <p ng-if="!recover.accountRecoveryForm.username.$invalid || recover.accountRecoveryForm.username.$untouched" >Usernames should be between 6 and 64 characters, and should have no spaces.</p>
+          </div> -->
+
+          <div class="form-group col-xs-12 col-sm-6">
+            <label for="membershipNum" class="form-control-label">MEMBERSHIP NUMBER<span class="required">*</span></label>
+            <div class="">
+              <input type="text" class="form-control input"  name="membershipNum" ng-model="recover.recoveryData.MembershipNumber" required/>
+              <span uib-popover="Your IDShield membership number begins with 700, followed by 'm' or 's'." class="glyphicon glyphicon-question-sign tool-tip-icon" popover-placement="top-right" popover-trigger="'mouseenter'"></span>
+            </div>
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6">
+            <label for="lastName" class="form-control-label">LAST NAME<span class="required">*</span></label>
+            <div class="">
+              <input type="text" ng-pattern="recover.regex.lastName" class="form-control input" name="lastName" ng-model="recover.recoveryData.LastName" required/>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+
+
+
+          <div class="form-group col-xs-12 col-sm-6">
+            <label for="zip" class="form-control-label">ZIP CODE<span class="required">*</span></label>
+            <div class="">
+              <input type="text" ng-pattern="recover.regex.zip" class="form-control input" name="zip" ng-model="recover.recoveryData.ZipCode" required/>
+            </div>
+          </div>
+
+          <div class="form-group col-xs-12 col-sm-6">
+            <label for="dob" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
+            <div class="">
+              <input
+                id="dob"
+                kendo-date-picker
+                k-options="recover.kendoDateOptions"
+                k-format="'MM/dd/yyyy'"
+                placeholder="MM/DD/YYYY"
+                class="input"
+                name="dob"
+                ng-pattern="recover.regex.date"
+                ng-model="recover.recoveryData.DateOfBirth"
+                required
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="global-form-button-holder">
+        <kendo-button
+          class="submitButton processingBtn"
+          ng-disabled="recover.accountRecoveryForm.$invalid" ng-click="recover.requestRecovery($event)"
+          data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
+        >Continue</kendo-button>
+      </div>
+    </form>
+</main>

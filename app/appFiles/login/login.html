@@ -1,0 +1,137 @@
+
+<main>
+  <!-- message="login.responseBoxConfig.message" error="login.responseBoxConfig.error" display="login.responseBoxConfig.display" -->
+
+<div id="login-view" class="row">
+  <div class="col-md-4 col-xs-12">
+    <div class="promotional-image">
+    </div>
+    <div class="welcome-text">
+      <h2> WELCOME TO IDSHIELD </h2>
+      <p> Returning members, simply log in. </p>
+      <p> New here? You're in the right place, too. </p>
+      <p> Forgot your password, click <a href="/#/having-trouble">here</a> </p>
+    </div>
+  </div>
+  
+  <div class="col-md-8 col-xs-12">
+      <response-box config="login.responseBoxConfig"></response-box>
+      <div class="container">
+        <div class="dual-form-container row">
+          <div class="row">
+            <div class="col-xs-12 col-md-6 grey-right-border">
+              <div class="sign-up-form-box ">
+                <div class="form-info">
+                  <h2>SIGN UP</h2>
+                  <p> First time here? Just enter the membership number we sent to you (the number that begins with 700, followed by “m” for the primary member or “s” for the listed spouse/significant other), your last name and zip code.</p>
+                </div>
+                <form class="sign-up-form" name="login.signUpForm" validation-highlights>
+                    <div class="match-height">
+                      <div class="form-group">
+                        <label for="membershipNum">MEMBERSHIP NUMBER</label>
+                        <input
+                          type="text"
+                          class="form-control member input"
+                          ng-model="login.signUpData.MembershipNumber"
+                          name="membershipNum"
+                          required
+                        />
+
+                        <span uib-popover="Your IDShield membership number begins with 700, followed by 'm' or 's'." class="glyphicon glyphicon-question-sign tool-tip-icon" popover-placement="top-right" popover-trigger="'mouseenter'"></span>
+
+
+                      </div>
+                      <div class="form-group">
+                        <label for="lastName">LAST NAME</label>
+                        <input
+                            type = "text"
+                            class="form-control loginInput input"
+                            ng-pattern="login.regex.LastName"
+                            ng-model="login.signUpData.LastName"
+                            name="lastName"
+                            required
+                            />
+                      </div>
+                      <div class="form-group">
+                        <label for="zipCode">ZIP CODE</label>
+                        <input
+                            type="text"
+                            class="form-control input"
+                            ng-model="login.signUpData.ZipCode"
+                            ng-pattern="login.regex.ZipCode"
+                            name="zipCode"
+                            required
+                            />
+                      </div>
+                    </div>
+                    <aside class="continue-box text-right">
+                      <kendo-button
+                        class="submitButton signUpProcessingBtn"
+                        ng-disabled="login.signUpForm.$invalid"
+                        ng-click="login.activationRequest($event)"
+                        data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
+                      >CONTINUE</kendo-button>
+                    </aside>
+                </form>
+              </div>
+            </div>
+            <div class="col-xs-12 col-md-6">
+                <div class="login-form-box">
+                  <div class="form-info">
+                    <h2>LOG IN</h2>
+                    <p> Welcome back! Log in, and we'll get you on your way. </p>
+                  </div>
+                  <form class="login-form" name="login.loginForm" validation-highlights>
+                      <div class="match-height">
+                        <div class="form-group">
+                          <label for="username">USERNAME</label>
+                          <input
+                            type="text"
+                            class="form-control loginInput input"
+                            ng-model="login.loginData.Username"
+                            name="username"
+                            ng-pattern="login.regex.anything"
+                            required
+                          />
+                          <span uib-popover="Username must be between 6 and 64 characters. Spaces are not allowed." class="glyphicon glyphicon-question-sign tool-tip-icon" popover-placement="top-right" popover-trigger="'mouseenter'"></span>
+                        </div>
+                        <div class="form-group">
+                          <label for="password">PASSWORD</label>
+                          <input
+                            type = "password"
+                            class="form-control loginInput input"
+                            ng-model="login.loginData.Password"
+                            name="password"
+                            ng-pattern="login.regex.anything"
+                            required
+                          />
+                        </div>
+                      </div>
+                      <aside class="continue-box text-right">
+                        <kendo-button
+                          class="submitButton loginProcessingBtn"
+                          ng-disabled="login.loginForm.$invalid"
+                          ng-click="login.loginRequest($event)"
+                          data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> LOGGING IN"
+                        >CONTINUE</kendo-button>
+
+                      </aside>
+                  </form>
+                </div>
+            </div>
+
+          </div>
+          <div class="row forgot-password-box">
+            <a href="/#/having-trouble">Having trouble logging in?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<script>
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();
+});
+</script>

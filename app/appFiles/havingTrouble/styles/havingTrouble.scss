@@ -1,0 +1,138 @@
+#having-trouble-view {
+  .important {
+    font-size: 110%;
+  }
+  a {
+    font-size : 130%;
+
+    &:hover {
+      text-decoration: none;
+    }
+  }
+  p {
+    font-size: 120%;
+    margin-bottom: 20px;
+    a {
+      font-weight: bold;
+      font-size: 100%;
+    }
+  }
+  
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+    pointer-events:none; /* This makes sure that we can still click outside of the modal to close it */
+}
+.vertical-align-center {
+    /* To center vertically */
+    display: table-cell;
+    vertical-align: middle;
+    pointer-events:none;
+}
+.modal-content {
+    /* Bootstrap sets the size of the modal in the modal-dialog class, we need to inherit it */
+    width:inherit;
+    height:inherit;
+    /* To center horizontally */
+    margin: 0 auto;
+    pointer-events: all;
+}
+  
+#myModal .modal-dialog .modal-content .modal-body {
+  font-size: 2em !important;
+}
+
+.modal {
+  text-align: center;
+}
+
+#myModal .modal-title, glyphicon-warning-sign {
+  color: #fff !important;
+}
+
+@media screen and (min-width: 768px) { 
+  .modal:before {
+    display: inline-block;
+    vertical-align: middle;
+    content: " ";
+    height: 100%;
+  }
+}
+
+.modal-dialog {
+  display: inline-block;
+  text-align: left;
+  vertical-align: middle;
+}
+  
+#having-trouble-view {
+  text-align: center;
+}
+  
+  .btn-info a {
+    color: #fff;
+  }
+  
+  p {
+    font-size: 1.5em;
+    line-height: 1.6;
+  }
+
+  .global-form-button-holder {
+    clear : both;
+  }
+
+  .highlight, .right {
+    min-height: 600px;
+  }
+
+  .header-text {
+    margin-bottom: 30px;
+  }
+
+  .highlight {
+    border-radius: 5px;
+    padding: 60px 20px;
+    background-color: lighten(lightgray, 5%);
+    // border-right: 1px solid #ABABAB;
+    font-size: 145%;
+    text-align: center;
+    span, p {
+      margin: auto;
+      margin-bottom: 0px;
+    }
+  }
+
+  .recover-warning {
+    width: 90%;
+    margin: 30px auto;
+  }
+
+  .exclamation {
+    font-weight: bold;
+    font-size: 70px;
+    line-height: 90px;
+    height: 100px;
+    width: 100px;
+    margin: auto;
+    text-align: center;
+    vertical-align: middle;
+    background: $IDShieldColor;
+    border-radius: 100%;
+    span {
+      vertical-align: middle;
+      color: white;
+    }
+  }
+
+  .divider-line {
+    border-bottom : 1px solid #ABABAB;
+    margin: 40px -10px;
+  }
+
+  .clearfix {
+    clear: both;
+  }
+
+}

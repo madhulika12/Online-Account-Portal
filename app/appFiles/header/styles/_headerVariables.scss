@@ -1,0 +1,17 @@
+
+//These two have to be exact pixels, not percentages. Because the percentages won't resize dynamically.
+// Don't know why
+$headerImgHeight: 82px;
+$headerImgHeightSmall: 50px;
+
+$headerImgPadding: 5px;
+$headerImgMarginLeft: -10px;
+
+$headerLinksFontWeight: bold;
+$headerLinksLineHeight: 15px;
+$headerLinksMarginTop: 15px;
+
+$headerLinksMediaQueryColor: #fff;
+$headerLinksMediaQueryBorder: 1px;
+
+$headerLinksMediaQueryMargin: 0px;

@@ -1,0 +1,9 @@
+#footerContent {
+    background: $krollGradient;
+    a {
+      color: white;
+    }
+    a:hover, a:active {
+      color: darken(#fff, 20%);
+    }
+}

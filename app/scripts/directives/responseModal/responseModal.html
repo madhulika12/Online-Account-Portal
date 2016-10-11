@@ -1,0 +1,20 @@
+<div class='modal fade' id='responseModal'>
+  <div class='modal-dialog'>
+    <div class='modal-content'>
+      <div class='modal-header'>
+        <button type='button' class='close' data-dismiss='modal'>
+          <span>&times;</span>
+        </button>
+        <h4 class='modal-title'>{{title || 'Message:'}}</h4>
+      </div>
+      <div class='modal-body' ng-bind-html="message || nullMessage"></div>
+
+      <div ng-if="url">
+        <div class='modal-footer'><button type='button' ng-click='redirect()' class='btn submitButton'>Continue</button></div>
+      </div>
+      <div ng-if="!url">
+        <div class='modal-footer'><button type='button' class='btn submitButton' data-dismiss='modal'>Close</button></div>
+      </div>
+    </div>
+  </div>
+</div>

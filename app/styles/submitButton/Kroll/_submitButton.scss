@@ -1,0 +1,36 @@
+.submitButton {
+    color: white;
+    background-color: $krollYellow;
+    // border-color: $submitButtonColor;
+    border: none;
+    // width: 50%;
+    box-shadow: none;
+
+    &:hover {
+      background-color: darken($krollYellow, 3);
+    }
+    &:active, &:focus, &.k-button.k-state-focused {
+      background-color: darken($krollYellow, 7);
+      color: white;
+    }
+    &:visited {
+      background-color: $krollYellow;
+      color: white;
+    }
+}
+
+.submitButton:hover {
+    background-color: $submitButtonColor;
+}
+
+.submitButton:focus {
+    background-color: $IDShieldColor;
+}
+
+.submitButton:active {
+    background-color: $submitButtonColor;
+}
+
+.submitButton:focus:active {
+    @extend .submitButton:active;
+}

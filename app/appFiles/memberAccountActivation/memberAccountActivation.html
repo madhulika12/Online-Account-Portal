@@ -1,0 +1,104 @@
+<main>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 global-form-instructions">
+      <h2> ACCOUNT ACTIVATION </h2>
+
+      <p> To protect the security of your account, please provide your SSN and create a security question. This will ensure you are able to access your online account should you forget your login credentials. </p>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <response-box config="accActivate.responseBoxConfig"></response-box>
+    </div>
+  </div>
+
+  <form validation-highlights name="accActivate.form">
+    <div class="global-form">
+        <div class="row" input-linker="match" bad-link-text="The two inputs need to match.">
+          <div class="col-xs-12 col-sm-6 form-group">
+              <label for="ssn"> SSN <span class="required">*</span></label>
+              <input
+                type="text"
+                class = "form-control input"
+                id="ssn"
+                name="ssn"
+                ng-model="accActivate.data.SSN"
+                ng-pattern="accActivate.regex.ssn"
+                required>
+          </div>
+
+          <div class="col-xs-12 col-sm-6 form-group">
+              <label for="confirmSsn"> CONFIRM SSN <span class="required">*</span></label>
+              <input
+                type="text"
+                class = "form-control input"
+                id="confirmSsn"
+                name="confirmSsn"
+                ng-model="accActivate.confirmData.SSN"
+
+                required>
+                <!-- ng-pattern="accActivate.regex.ssn" -->
+          </div>
+        </div>
+    </div>
+    <!--<div class="checkbox">
+      <label for="acceptTerms">
+        <input type="checkbox" class="input" id="acceptTerms" name="acceptTerms" ng-model="accActivate.data.Accept" required/>
+        <span style="float: left;">I agree to the following <a href="/#/terms-and-conditions" target="_blank">Terms and Conditions</a> and <a href="/#/privacy-policy" target="_blank">Privacy Policy</a></span>
+      </label>
+    </div>-->
+
+    <main id="terms-accept-view">
+  <div class="row">
+    <div class="col-xs-12 col-md-6">
+      <div class="global-form-instructions">
+        <h2>TERMS &amp; CONDITIONS</h2>
+        <section>
+          <p>We have updated some of our policies. Please accept the terms and conditions below before continuing.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+  <div id="terms-window" class="global-form" ng-include="'appFiles/termsAndConditions/termsAndConditions.html'">
+  </div>
+
+  <form name="termsAccept.form" validation-highlights>
+     <div>
+       <div class="checkbox col-xs-12">
+         <label for="acceptTerms">
+           <input
+            type="checkbox"
+            class="input"
+            id="acceptTerms"
+            name="acceptTerms"
+            ng-model="termsAccept.TermsAccept"
+            required
+          /> I agree to the above Terms and Conditions
+         </label>
+       </div>
+
+       <div class="col-xs-12">
+         <response-box config="termsAccept.responseBoxConfig"></response-box>
+       </div>
+
+       <!--<div class="global-form-button-holder">-->
+         <!-- g-disabled="signUp.form.$invalid"  -->
+        <!--<kendo-button
+          class="submitButton processingBtn" 
+          ng-disabled="termsAccept.form.$invalid" ng-click="termsAccept.acceptTerms($event)"
+          data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
+        >Accept Terms and Conditions</kendo-button>
+       </div>-->
+     </div>
+  </form>
+
+
+</main>
+
+    <div class="global-form-button-holder">
+      <kendo-button
+        class="submitButton processingBtn"
+        ng-disabled="accActivate.form.$invalid" ng-click="accActivate.activationRequest($event)"
+        data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Creating Account"
+      >Create Account</kendo-button>
+    </div>
+  </form>
+</main>

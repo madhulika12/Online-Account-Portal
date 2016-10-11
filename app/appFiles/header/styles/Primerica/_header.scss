@@ -1,0 +1,17 @@
+#header
+  .headerLinks {
+    color: white;
+    &:hover {
+      color: black;
+    }
+  }
+
+.navbar-toggle.hamburger {
+  &, &:hover, &:active, &:focus {
+    background-color: rgb(51,153,255);
+  }
+}
+
+header.navbar-default {
+  background-color: rgb(153, 153, 153);
+}

@@ -1,0 +1,41 @@
+#footerContent {
+    .navbar-nav {
+        display: $footerNavDisplay;
+        float: $footerNavFloat;
+    }
+}
+
+.navbar-nav {          
+    li
+        a.footerLink {
+            color: $footerLinkColor;
+            font-size: $footerLinkSize;
+            padding-right: 20px;
+            margin-top: 20px;
+            margin-right: 10px;
+        }
+}
+
+#copyright {
+    color: $footerLinkColor;
+    font-size: $footerLinkSize;
+    padding-left: 15px;
+    padding-right: 20px;
+    margin-top: 10px;
+    margin-right: 10px;
+    margin-bottom: 28px;
+}
+
+#copyright
+    .glyphicon-copyright-mark {
+        font-size: $footerGlypiconFontSize;
+}
+
+@media screen and (max-width: 480px) {
+    .navbar-default
+        .navbar-nav
+            li
+                a.footerLink {
+                    padding-left: 20px !important;
+    }
+}

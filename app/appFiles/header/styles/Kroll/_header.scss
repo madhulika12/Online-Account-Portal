@@ -1,0 +1,23 @@
+header {
+  &.navbar-default a.headerLinks {
+    color: $krollOrange;
+  }
+  background-color : $krollGray;
+}
+
+.navbar-toggle.hamburger {
+  &, &:visited, &:focus, &:hover, &:active {
+    background-color: $krollBlue;
+  }
+}
+
+
+@media screen and (max-width: 767px) {
+  .navbar-collapse {
+    background-color: $krollBlue;
+  }
+}
+
+// #logo-box {
+//   background-image: url('../../../../images/Kroll/kroll_logo.png');
+// }

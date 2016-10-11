@@ -1,0 +1,19 @@
+#responseModal .modal-content {
+  border-radius: 0;
+  background-color: #e7e7e7;
+
+  .modal-header {
+    padding: 5px 15px;
+    border-bottom : 1px solid darkgray;
+  }
+  .modal-footer {
+    border: none;
+  }
+  button.btn {
+    border-radius : 0;
+    padding: 10px 14px;
+    font-size: 14px;
+    width: 25%;
+    text-align: center;
+  }
+}

@@ -1,0 +1,21 @@
+#footerContent {
+    background-color: white;
+}
+
+.navbar-default {
+  li
+    a.footerLink {
+        & {
+          color: $primBlue;
+        }
+    }
+}
+
+#copyright {
+    color: $primDarkGray;
+}
+
+#copyright
+    .glyphicon-copyright-mark {
+        font-size: $footerGlypiconFontSize;
+}

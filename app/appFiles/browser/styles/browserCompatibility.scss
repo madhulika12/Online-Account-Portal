@@ -1,0 +1,13 @@
+#browser-compat {
+  font-size: 120%;
+  p {
+    margin: 20px 0;
+  }
+  a {
+    color: $IDSLinkColor;
+    margin: 10px 0;
+    &:hover {
+      text-decoration : none;
+    }
+  }
+}

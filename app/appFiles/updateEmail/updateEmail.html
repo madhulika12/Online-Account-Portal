@@ -1,0 +1,55 @@
+<main id="update-email-view">
+
+  <div class="centered-response-box">
+    <h2>UPDATE EMAIL ADDRESS</h2>
+    <div class="global-form">
+      <h4>Your username is:</h4>
+
+      <p class="centered bold">{{upEmail.data.Username}}</p>
+      <p>
+        Your account has an email address that is already in use. (This situation is common for members in a household that share an email address.) Our security enhancements require that you update your email address and reset your password.
+      </p>
+
+      <response-box config="upEmail.responseBoxConfig"></response-box>
+
+      <form name="upEmail.form" validation-highlights>
+
+          <div class="form-group">
+            <label> EMAIL ADDRESS <span class="required">*</span></label>
+            <span ng-if="upEmail.form.email.$pending.availability">Checking availability...</span>
+            <input
+              type="email"
+              class="form-control input container"
+              id="emailAddress"
+              name="email"
+              ng-model="upEmail.updateEmailData.NewEmail"
+              ng-pattern="upEmail.regex.email"
+              ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }"
+              async-validate="emailExist"
+              required
+              />
+          </div>
+
+          <div class="global-form-button-holder">
+            <kendo-button
+              ng-disabled="upEmail.form.$invalid || upEmail.form.$pending" ng-click="upEmail.updateEmailRequest($event)"
+              class="submitButton processingBtn"
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
+            >RESET MY PASSWORD</kendo-button>
+          </div>
+<!--
+          <div class="global-form-button-holder">
+            <kendo-button
+              ng-disabled="upEmail.form.$invalid || upEmail.form.$pending" ng-click="upEmail.updateEmailRequest($event)"
+              class="submitButton processingBtn"
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
+            >BACK TO LOGIN</kendo-button>
+          </div>-->
+
+      </form>
+    </div>
+
+  </div>
+
+
+</main>

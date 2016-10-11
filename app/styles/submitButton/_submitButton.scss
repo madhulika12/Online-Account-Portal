@@ -1,0 +1,31 @@
+@import "submitButtonVariables";
+
+.submitButton {
+    color: $submitButtonTextColor;
+    border-color: $submitButtonColor;
+    margin-bottom: 1%;
+    // width: $submitButtonWidth;
+    //float: right;
+}
+
+.submitButton:hover {
+    color: $submitButtonTextColor;
+    border-color: $IDShieldColor;
+}
+
+.submitButton:focus {
+    border-color: $submitButtonColor;
+}
+
+.submitButton:active {
+    color: $submitButtonTextColor;
+    border-color: $IDShieldColor;
+}
+
+.submitButton:focus:active {
+    @extend .submitButton:active;
+}
+
+.submitButton {
+    border-color: gray;
+}

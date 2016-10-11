@@ -1,0 +1,411 @@
+
+<main id="update-profile-view">
+
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <div class="global-form-instructions">
+        <h2 id="updateAccountH2"> MY ACCOUNT </h2>
+        <p> Use this page to update your account information </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- <section class="panel panel-default collapse-box">
+    <div class="panel-body">
+      <span class="glyphicon glyphicon-warning-sign"></span>
+      <p id = "warningBox"> Updating your email address below will automatically assign your UserID as that email address. If you prefer to keep your UserID as it is today, please contact Member Services at 1-888-494-8519 </p>
+    </div>
+  </section> -->
+
+  <!-- <div>
+    <h3> Account Login </h3>
+    <p> Email Address </p>
+    <p> email </p>
+    <button type="button" class="btn btn-default update-profile-btn" data-toggle="collapse" data-target="#emailPanel">Change Email Address</button>
+
+    <div id="emailPanel" class="collapse">
+      <section class="panel panel-default">
+        <div class="panel-body">
+            <label for="emailAddress"> Email Address </label>
+            <input id="emailAddress" class="inputBlocks inputBorder" type="text"/>
+          </div>
+      </section>
+    </div>
+
+
+  </div> -->
+    <!-- <h2> Security </h2>
+    <p> Password </p>
+    <button type="button" class="btn btn-default update-profile-btn" data-toggle="collapse" data-target="#passwordPanel">Change Password</button> -->
+
+    <!-- <div id="passwordPanel" class="collapse">
+      <section class="panel panel-default">
+        <div class="panel-body">
+          <div class="blocks">
+            <label for="currentPassword"> Current Password </label>
+            <input id="currentPassword" class="inputBlocks inputBorder" type="password"/>
+          </div>
+
+          <div class = "row">
+            <div class="col-lg-6 col-md-6">
+              <label for="newPassword"> New Password </label>
+              <input id="newPassword" class="inputBorder" type="password"/>
+            </div>
+
+            <div class="col-lg-6 col-md-6">
+              <label for="confirmPassword"> Confirm Password </label>
+              <input id="confirmPassword" class="inputBorder" type="password"/>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div> -->
+
+  <response-box config="update.saveResponseBox"></response-box>
+
+  <div ng-switch="update.mode">
+    <div class="global-form updateAccount" ng-switch-when="view" >
+      <h4 class="form-section-headings"> Personal Information </h4>
+      <form>
+
+        <div class="">
+            <div class="row">
+              <!-- FIRST NAME -->
+              <div class="form-group col-xs-12 col-md-4">
+                <label for="firstName" class="form-control-label">FIRST NAME<span class="required">*</span></label>
+                <div class="info-display"> <p> {{update.updatedData.FirstName || update.currentData.FirstName }} </p> </div>
+              </div>
+              <!-- LAST NAME -->
+              <div class="form-group col-xs-12 col-md-4">
+                <label for="lastName" class="form-control-label">LAST NAME<span class="required">*</span></label>
+                <div class="info-display"> <p> {{update.updatedData.LastName || update.currentData.LastName }} </p> </div>
+              </div>
+              <!-- GENERATION -->
+              <div class="form-group col-xs-12 col-md-4">
+                <label for="generation" class="form-control-label">GENERATION</label>
+                <div class="info-display"> <p> {{update.updatedData.Generation || update.currentData.Generation }} </p> </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- MAILING ADDRESS -->
+              <div class="form-group col-xs-6">
+                <label for="mailingAddress" class="form-control-label">MAILING ADDRESS<span class="required">*</span></label>
+                <div class="info-display"> <p> {{update.updatedData.MailingAddress || update.currentData.MailingAddress }} </p> </div>
+              </div>
+
+              <!-- PHONE -->
+              <div class="form-group col-xs-6">
+                <label class="form-control-label">PHONE NUMBER<span class="required">*</span></label>
+                <div class="info-display"> <p> {{update.updatedData.Phone || update.currentData.Phone }} </p> </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <!-- CITY -->
+              <div class="form-group col-xs-12 col-md-6">
+                <label for="city" class="form-control-label">CITY<span class="required">*</span></label>
+                <div class="info-display"> <p> {{update.updatedData.City || update.currentData.City }} </p> </div>
+              </div>
+              <!-- STATE -->
+              <div class="form-group col-xs-12 col-md-4">
+                <label for="state" class="form-control-label">STATE<span class="required">*</span></label>
+                <div class="info-display"> <p> {{update.updatedData.State || update.currentData.State }} </p> </div>
+              </div>
+
+              <!-- ZIP -->
+              <div class="form-group col-xs-12 col-md-2">
+                <label for="zip" class="form-control-label">ZIP CODE<span class="required">*</span></label>
+                <div class="info-display"> <p> {{update.updatedData.ZipCode || update.currentData.ZipCode }} </p> </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <!-- DOB -->
+              <div class="form-group col-xs-6">
+                <label for="dob" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
+                <div class="info-display"> <p> {{update.updatedData.Dob || update.currentData.Dob }} </p> </div>
+              </div>
+
+              <!-- EMAIL -->
+              <div class="form-group col-xs-12 col-md-6">
+                <label for="email" class="form-control-label">EMAIL<span class="required">*</span></label>
+                <div class="info-display" > <p> {{update.updatedData.Email || update.currentData.Email }} </p> </div>
+              </div>
+
+            </div>
+
+        </div>
+
+        <div class="global-form-button-holder">
+          <div>
+            <kendo-button
+              class="submitButton"
+              ng-click="update.editOn()"
+            > Edit
+            </kendo-button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="global-form updateAccount" ng-switch-when="edit"  >
+      <h4 class="form-section-headings"> Personal Information </h4>
+      <form name="update.form" validation-highlights>
+
+        <div class="">
+            <div class="row">
+              <!-- FIRST NAME -->
+              <div class="form-group col-xs-12 col-md-4">
+                <label for="firstName" class="form-control-label">FIRST NAME<span class="required">*</span></label>
+                <div>
+                  <input type="text" name="firstName" ng-pattern="update.regex.FirstName" class="form-control input"  ng-model="update.updatedData.FirstName" id="firstName" required>
+                </div>
+              </div>
+              <!-- LAST NAME -->
+              <div class="form-group col-xs-12 col-md-4">
+                <label for="lastName" class="form-control-label">LAST NAME<span class="required">*</span></label>
+                <div>
+                  <input type="text" class="form-control input" id="lastName" name="lastName" ng-pattern="update.regex.LastName" ng-model="update.updatedData.LastName" required>
+                </div>
+              </div>
+              <!-- GENERATION -->
+              <div class="form-group col-xs-12 col-md-4">
+                <label for="generation" class="form-control-label">GENERATION</label>
+                <div>
+                  <select type="text" class="form-control input" id="generation"
+                    name="generation"
+                    ng-model="update.updatedData.Generation"
+                    ng-options="gen.val as gen.tag for gen in update.generations"
+                  >
+                  </select>
+                </div>
+              </div>
+            </div>
+
+            <div class="row">
+              <!-- MAILING ADDRESS -->
+              <div class="form-group col-xs-6">
+                <label for="mailingAddress" class="form-control-label">MAILING ADDRESS<span class="required">*</span></label>
+                <div>
+                  <input type="text" class="form-control input" id="mailingAddress" name="mailingAddress" ng-pattern="update.regex.MailingAddress" ng-model="update.updatedData.MailingAddress" required>
+                </div>
+              </div>
+
+              <!-- PHONE -->
+              <div class="form-group col-xs-6">
+                <label for="phone" class="form-control-label">PHONE NUMBER<span class="required">*</span></label>
+                <div>
+                  <input type="text" class="form-control input" id="phone" name="phone" ng-pattern="update.regex.Phone" ng-model="update.updatedData.Phone" required>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="row">
+              <!-- CITY -->
+              <div class="form-group col-xs-12 col-md-6">
+                <label for="city" class="form-control-label">CITY<span class="required">*</span></label>
+                <div>
+                  <input type="text" class="form-control input" id="city" name="city" ng-pattern="update.regex.City" ng-model="update.updatedData.City" required>
+                </div>
+              </div>
+              <!-- STATE -->
+              <div class="form-group col-xs-12 col-md-4">
+                <label for="state" class="form-control-label">STATE<span class="required">*</span></label>
+
+                <div>
+                  <select class="form-control input" id="state"
+                    name="state"
+                    ng-model="update.updatedData.State"
+                    ng-options="state.abbreviation as state.name for state in update.states"
+                    required>
+                  </select>
+                </div>
+              </div>
+
+              <!-- ZIP -->
+              <div class="form-group col-xs-12 col-md-2">
+                <label for="zip" class="form-control-label">ZIP CODE<span class="required">*</span></label>
+
+                <div>
+                  <input type="text" class="form-control input" id="zip" name="zip" ng-pattern="update.regex.ZipCode" ng-model="update.updatedData.ZipCode" required>
+                </div>
+
+              </div>
+
+            </div>
+
+            <div class="row">
+              <!-- DOB -->
+              <div class="form-group col-xs-6">
+                <label for="dob" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
+                <div>
+                  <input id="dob" kendo-date-picker
+                    k-options="update.kendoDateOptions"
+                    k-format="'MM/dd/yyyy'"
+                    placeholder="MM/DD/YYYY"
+                   class="form-control input kendo-date" name="dob" ng-pattern="update.regex.DOB" ng-model="update.updatedData.DOB" required/>
+                </div>
+              </div>
+
+              <!-- EMAIL -->
+              <div class="form-group col-xs-12 col-md-6">
+                <label for="email" class="form-control-label">EMAIL<span class="required">*</span></label>
+                <div>
+                  <input type="text" class="form-control input" id="email" ng-pattern="update.regex.Email" ng-model="update.updatedData.Email" name="email" required>
+                </div>
+              </div>
+            </div>
+        </div>
+
+        <div class="global-form-button-holder">
+          <div>
+            <kendo-button
+              class="submitButton"
+              ng-click="update.cancel()"
+              >Cancel
+            </kendo-button>
+            <kendo-button
+              class="submitButton updateProcessingBtn"
+              ng-disabled="update.form.$invalid"
+              ng-click="update.save()"
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
+            >Save</kendo-button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <response-box config="update.resetPassResponseBox"></response-box>
+
+  <div ng-switch="update.editPasswordMode" >
+  <div ng-switch-when="show" class="global-form updateAccount">
+    <h4 class="form-section-headings"> Security </h4>
+    <form name="update.resetPassForm" validation-highlights>
+      <div class="row">
+        <div class="form-group col-xs-12 col-md-6">
+          <label for="password" class="form-control-label">CURRENT PASSWORD<span class="required">*</span></label>
+                <div class="info-display"> <p> {{update.updatedData.FirstName || update.currentData.FirstName }} </p> </div>
+        </div>
+      </div>
+      <div class="row" bad-link-text="Passwords need to match.">
+        <!-- PASSWORD -->
+        <div class="form-group col-xs-12 col-md-6">
+          <label for="password" class="form-control-label">NEW PASSWORD<span class="required">*</span></label>
+                
+                <div class="info-display"> <p> {{update.updatedData.FirstName || update.currentData.FirstName }} </p> </div>
+        </div>
+
+        <!-- PASSWORD CONFIRMATION -->
+        <div class="form-group col-xs-12 col-md-6">
+          <label for="confirmPassword" class="form-control-label">CONFIRM NEW PASSWORD<span class="required">*</span></label>
+                
+                <div class="info-display"> <p> {{update.updatedData.FirstName || update.currentData.FirstName }} </p> </div>
+        </div>
+              </div>
+
+        <div class="global-form-button-holder">
+          <div>
+            <kendo-button
+              class="submitButton"
+              ng-click="update.passwordMode()"
+            > Edit
+            </kendo-button>
+          </div>
+        </div>
+
+
+
+
+      <!--<div class="global-form-button-holder">
+        <kendo-button
+          class="submitButton resetPassProcessingBtn"
+          ng-disabled="update.resetPassForm.$invalid"
+          ng-click="update.setNewPassword()"
+          data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
+        >Set New Password</kendo-button>
+      </div>-->
+
+    </form>
+  </div>
+
+
+<div class="global-form updateAccount" ng-switch-when="change"  >
+      <h4 class="form-section-headings"> Security </h4>
+    <form name="update.resetPassForm" validation-highlights>
+      <div class="row">
+        <div class="form-group col-xs-12 col-md-6">
+          <label for="password" class="form-control-label">CURRENT PASSWORD<span class="required">*</span></label>
+          <input
+            type="password"
+            class="form-control input"
+            id="password"
+            name="currentPassword"
+            ng-model="update.resetPassData.CurrentPassword"
+            required>
+        </div>
+      </div>
+      <div class="row" input-linker="match" bad-link-text="Passwords need to match.">
+        <!-- PASSWORD -->
+        <div class="form-group col-xs-12 col-md-6">
+          <label for="password" class="form-control-label">NEW PASSWORD<span class="required">*</span></label>
+          <input
+            type="password"
+            class="form-control input"
+            id="password"
+            name="newPassword"
+            ng-model="update.resetPassData.NewPassword"
+            ng-pattern="update.regex.Password"
+            required>
+        </div>
+
+        <!-- PASSWORD CONFIRMATION -->
+        <div class="form-group col-xs-12 col-md-6">
+          <label for="confirmPassword" class="form-control-label">CONFIRM NEW PASSWORD<span class="required">*</span></label>
+          <input
+            type="password"
+            class="form-control input"
+            id="confirmPassword"
+            name="confirmPassword"
+            ng-model="update.confirmData.Password"
+            required
+            />
+        </div>
+        </div>
+
+        <div class="global-form-button-holder">
+          <div>
+            <kendo-button
+              class="submitButton"
+              ng-click="update.cancelPassword()"
+              >Cancel
+            </kendo-button>
+            <kendo-button
+              class="submitButton updateProcessingBtn"
+              ng-disabled="update.form.$invalid"
+              ng-click="update.setNewPassword()"
+              data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
+            >Save</kendo-button>
+          </div>
+        </div>
+
+      </form>
+    </div>
+    </div>
+</main>
+
+<!-- <div>
+  <h2> Personal Information </h2>
+  <p> 1071 SW 101ST, Hollywood, FL 33025 </p>
+  <button type="button" class="btn btn-default update-profile-btn" data-toggle="collapse" data-target="#personalPanel">Edit Personal Info</button>
+
+  <div id="personalPanel" class="collapse">
+    Lorem ipsum dolor text....
+  </div>
+</div> -->

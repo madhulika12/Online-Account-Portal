@@ -1,0 +1,214 @@
+<main id="sign-up-view">
+  <div class="row">
+    <div class="col-xs-12 col-sm-6 col-sm-offset-6">
+      <div class="help-box">
+        <span>Get help with your order.</span>
+        <span>
+          <a href="tel:+18666960919">1.866.696.0919</a>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-12 col-sm-6">
+      <div class="global-form-instructions">
+        <h2>ACCOUNT ACTIVATION</h2>
+        <p>To protect the security of your account, please provide your SSN. This will ensure safe access to your online account should you forget your login credentials.</p>
+      </div>
+    </div>
+    <div class="col-xs-12 col-sm-6">
+      <!-- <h3>CHEVRONS > GO > HERE </h3> -->
+    </div>
+  </div>
+
+  <form id="sign-up-form" name="signUp.form" validation-highlights>
+  <!--<form id="sign-up-form" name="form" validation-highlights>-->
+
+    <div class="form-section global-form">
+      <h4 class="form-section-headings">ADDITIONAL INFORMATION</h4>
+        <div class="row">
+          <!-- FIRST NAME -->
+          <div class="form-group col-xs-12 col-md-4">
+            <label for="FirstName" class="form-control-label">FIRST NAME<span class="required">*</span></label>
+            <input type="text" name="FirstName" ng-pattern="signUp.regex.FirstName" class="form-control input"  ng-model="signUp.data.FirstName" id="FirstName" required>
+          </div>
+          <!-- LAST NAME -->
+          <div class="form-group col-xs-12 col-md-4">
+            <label for="LastName" class="form-control-label">LAST NAME<span class="required">*</span></label>
+            <input type="text" class="form-control input" id="LastName" name="LastName" ng-pattern="signUp.regex.LastName" ng-model="signUp.data.LastName" required>
+          </div>
+          <!-- GENERATION -->
+          <div class="form-group col-xs-12 col-md-4">
+            <label for="Generation" class="form-control-label">GENERATION</label>
+            <div>
+              <select type="text" class="form-control input" id="Generation"
+                name="Generation"
+                ng-model="signUp.data.Generation"
+                ng-options="gen.val as gen.tag for gen in signUp.generations"
+              >
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <!-- MAILING ADDRESS -->
+          <div class="form-group col-xs-12 col-md-6">
+            <label for="MailingAddress" class="form-control-label">MAILING ADDRESS<span class="required">*</span></label>
+            <input type="text" class="form-control input" id="MailingAddress" name="MailingAddress" ng-pattern="signUp.regex.MailingAddress" ng-model="signUp.data.MailingAddress" required>
+          </div>
+
+          <!-- PHONE number -->
+          <div class="form-group col-xs-12 col-md-6">
+            <label for="Phone" class="form-control-label">PHONE NUMBER<span class="required">*</span></label>
+            <input type="text" class="form-control input" id="Phone" name="Phone" ng-pattern="signUp.regex.Telephone" ng-model="signUp.data.Telephone" required>
+          </div>
+
+        </div>
+
+        <div class="row">
+          <!-- CITY -->
+          <div class="form-group col-xs-12 col-md-6">
+            <label for="City" class="form-control-label">CITY<span class="required">*</span></label>
+            <input type="text" class="form-control input" id="City" name="City" ng-pattern="signUp.regex.City" ng-model="signUp.data.City" required>
+          </div>
+          <!-- STATE -->
+          <div class="form-group col-xs-12 col-md-4">
+            <label for="State" class="form-control-label">STATE<span class="required">*</span></label>
+            <select class="form-control input" id="State"
+              name="State"
+              ng-model="signUp.data.State"
+              ng-options="state.abbreviation as state.name for state in signUp.states"
+              required>
+            </select>
+          </div>
+
+          <!-- ZIP -->
+          <div class="form-group col-xs-12 col-md-2">
+            <label for="ZipCode" class="form-control-label">ZIP CODE<span class="required">*</span></label>
+            <input type="text" class="form-control input" id="ZipCode" name="ZipCode" ng-pattern="signUp.regex.ZipCode" ng-model="signUp.data.Zip" required>
+          </div>
+
+        </div>
+
+         <div class="row">
+          <!-- MAILING ADDRESS -->
+          <div class="form-group col-xs-6">
+            <label for="dob" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
+            <input id="Dob" kendo-date-picker
+              k-options="signUp.kendoDateOptions"
+              k-format="'MM/dd/yyyy'"
+              placeholder="MM/DD/YYYY"
+             class="input kendo-date" name="Dob" ng-pattern="signUp.regex.Dob" ng-model="signUp.data.Dob" required/>
+          </div>
+
+        </div>
+
+        <div class="row" input-linker="match" bad-link-text="SSN's need to match.">
+           <!-- SSN -->
+           <div class="form-group col-xs-12 col-md-6">
+             <label for="Ssn" class="form-control-label">SSN<span class="required">*</span></label>
+             <input class="form-control input" id="Ssn" name="Ssn" ng-pattern="signUp.regex.Ssn" ng-model="signUp.data.Ssn" placeholder="XXXXXXXXX" required>
+           </div>
+           <!-- Confirm SSN -->
+           <div class="form-group col-xs-12 col-md-6">
+             <label for="ConfirmSsn" class="form-control-label">CONFIRM SSN<span class="required">*</span></label>
+             <input class="form-control input" id="ConfirmSsn" name="ConfirmSsn" ng-pattern="signUp.regex.Ssn" ng-model="signUp.confirmData.Ssn" placeholder="XXXXXXXXX" required>
+           </div>
+
+         </div>
+
+    </div>
+
+    <div class="form-section global-form">
+      <h4 class="align-left form-section-headings">CREATE ACCOUNT LOGIN</h4>
+
+        <div class="row">
+          <!-- USERNAME -->
+          <div class="form-group col-xs-12 col-md-6">
+            <label for="Username" class="form-control-label">USER NAME<span class="required">*</span></label>
+            <span ng-if="signUp.form.Username.$pending.availability">Checking availability...</span>
+            <input
+              type="text"
+              class="form-control input"
+              id="Username"
+              ng-model="signUp.data.Username"
+              ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }"
+              ng-pattern="signUp.regex.Username"
+              async-validate="usernameExist"
+              name="Username"
+              required
+              />
+            <span uib-popover="Username must be between 6 and 64 characters. Spaces are not allowed." class="glyphicon glyphicon-question-sign tool-tip-icon" popover-placement="top-right" popover-trigger="'mouseenter'"></span>
+          </div>
+
+          <!-- EMAIL -->
+          <div class="form-group col-xs-12 col-md-6">
+            <label for="Email" class="form-control-label">EMAIL<span class="required">*</span></label>
+            <span ng-if="signUp.form.Email.$pending.availability"> Checking availability... </span>
+            <input
+              type="text"
+              class="form-control input"
+              id="Email"
+              ng-pattern="signUp.regex.Email"
+              ng-model="signUp.data.Email"
+              ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }"
+              async-validate="emailExist"
+              name="Email"
+            required>
+          </div>
+
+        </div>
+
+        <div class="row" input-linker="match" bad-link-text="Passwords need to match.">
+          <!-- PASSWORD -->
+          <div class="form-group col-xs-12 col-md-6">
+            <label for="Password" class="form-control-label">PASSWORD<span class="required">*</span></label>
+            <input
+              type="password"
+              class="form-control input"
+              id="Password"
+              name="Password"
+              ng-model="signUp.data.Password"
+              ng-pattern="signUp.regex.Password"
+              required>
+          </div>
+
+          <!-- PASSWORD CONFIRMATION -->
+          <div class="form-group col-xs-12 col-md-6">
+            <label for="ConfirmPassword" class="form-control-label">CONFIRM PASSWORD<span class="required">*</span></label>
+            <input
+              type="password"
+              class="form-control input"
+              id="ConfirmPassword"
+              name="ConfirmPassword"
+              ng-model="signUp.confirmData.Password"
+              ng-pattern="signUp.regex.Password"
+              required
+              />
+          </div>
+
+        </div>
+
+    </div>
+
+    <div class="checkbox col-xs-12">
+      <label for="AcceptTerms">
+        <input type="checkbox" class="input" id="AcceptTerms" name="AcceptTerms" ng-model="signUp.data.termsAccept" required/> I agree to the following <a href="/#/terms-and-conditions" target="_blank">Terms and Conditions</a> and <a href="/#/privacy-policy" target="_blank">Privacy Policy</a>
+      </label>
+    </div>
+
+    <div class="col-xs-12">
+      <response-box config="signUp.responseBoxConfig"></response-box>
+    </div>
+
+    <div class="global-form-button-holder">
+      <kendo-button
+        class="submitButton processingBtn"
+        ng-disabled="signUp.form.$invalid || signUp.form.$pending" ng-click="signUp.sendSignUpRequest($event)"
+        data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Creating Account"
+      >Create Account</kendo-button>
+    </div>
+
+  </form>
+</main>
