@@ -83,14 +83,14 @@ angular.module('ssoApp')
   }
 
   self.forgotUserSuccess = function (res) {
-    self.data.Username = res.data.responseObject.username;
+    self.data.Username = res.data.responseObject;
     self.showUsernameModal()
   }
 
   self.sendForgotUsernameRequest = function (event) {
     event.preventDefault()
     $('.processingBtn').button('loading');
-    httpService.recoverAccount(self.recoveryData)
+    httpService.forgotUsername(self.recoveryData)
       .then(self.forgotUserSuccess, self.error)
       .finally(function () { $('.processingBtn').button('reset'); })
   }

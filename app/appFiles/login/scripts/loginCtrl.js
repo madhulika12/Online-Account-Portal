@@ -80,12 +80,12 @@ angular.module('ssoApp')
         
         if ( self.checkForTerms(res) ) {
           $location.url( res.data.responseObject.pingToken )
-
-       if ( self.checkForAccountActivation(res) ) {
+ }
+       else if ( self.checkForAccountActivation(res) ) {
           $location.url( res.data.responseObject.pingToken + "?token=" + res.data.responseObject.sessionToken )
        }
 
-        } else {
+        else {
           console.log(res.data.responseObject);
           console.log(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
           $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)

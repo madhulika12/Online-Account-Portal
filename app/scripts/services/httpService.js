@@ -95,7 +95,7 @@ angular.module('ssoApp')
     },
 
     updateProfile : function (data) {
-      var con = this._buildConfigure('POST', Constants.endpoints.updateProfile, data)
+      var con = this._buildConfigure('PUT', Constants.endpoints.updateProfile, data)
       return this.request(con)
     },
 
