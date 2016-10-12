@@ -1,6 +1,6 @@
 'use strict';
 angular.module('ssoApp')
-    .controller('updateEmailCtrl', ['tokenStorageService','$http', 'httpService', '$scope', 'Constants', 'tokenValidationService', 'displayResponseBox', '$state', 'usernameService', function(tokenStorageService, $http, httpService, $scope, Constants, tokenValidationService, displayResponseBox, $state, usernameService) {
+    .controller('updateEmailCtrl', ['$timeout','tokenStorageService','$http', 'httpService', '$scope', 'Constants', 'tokenValidationService', 'displayResponseBox', '$state', 'usernameService', function($timeout, tokenStorageService, $http, httpService, $scope, Constants, tokenValidationService, displayResponseBox, $state, usernameService) {
 
         var self = this;
 
@@ -19,6 +19,12 @@ angular.module('ssoApp')
           SessionId : null
         }
 
+    self.forgotPasswordData = {
+      LoginSourceId: 2,
+      AntiForgeryTokenId: null,
+      SessionId : null
+    }
+
         self.responseBoxConfig = {
           message : null,
           error : false,
@@ -28,7 +34,7 @@ angular.module('ssoApp')
         //UPDATE EMAIL FUNCTIONS
         //*****************************************
         self.updateEmailSuccess = function (res) {
-          self.resetPassword()
+          $timeout(self.resetPassword(), 3000);
         }
 
         self.error = function (err) {
@@ -55,7 +61,7 @@ angular.module('ssoApp')
           //TODO QUESTION use token to make request for user info, or pass the token
           // var data = { Username : "JUNK_USERNAME"}
           var data = null
-          httpService.forgotPassword(data)
+          httpService.forgotPassword(self.forgotPasswordData)
             .then(self.resetPasswordSuccess, self.error)
         }
 
@@ -64,6 +70,8 @@ angular.module('ssoApp')
           console.log("Antiforgery" + res);
           self.updateEmailData.AntiForgeryTokenId =  res.data
           self.updateEmailData.SessionId = tokenStorageService.getToken();
+          self.forgotPasswordData.AntiForgeryTokenId =  res.data
+          self.forgotPasswordData.SessionId = tokenStorageService.getToken();
         }
 
         $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')

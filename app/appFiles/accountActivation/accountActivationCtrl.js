@@ -1,6 +1,6 @@
 angular.module('ssoApp')
 
-.controller('AccountActivationCtrl', ['$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', function ($http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService){
+.controller('AccountActivationCtrl', ['loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', function (loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService){
 
   var self = this;
 
@@ -36,8 +36,9 @@ angular.module('ssoApp')
 
   self.activationSuccess = function (res) {
     //TODO write redirect code ?
-    $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
+    // $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
     // $window.location.assign(Constants.portalBaseUrl + res.data.responseObject.pingToken);
+    $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject);
   }
   
   self.invalidTokenError = function(err) {
@@ -52,7 +53,11 @@ angular.module('ssoApp')
     event.preventDefault()
     httpService.firstTimeActivate(self.data)
       // .then(self.acitvationSuccess, self.error)
-      .then(self.acitvationSuccess, self.incorrectError)
+      .then(self.activationSuccess, self.incorrectError)
+  }
+
+  self.incorrectError = function (event) {
+    console.log("Error");
   }
 
   self.populateId = function (res) {

@@ -90,7 +90,9 @@ angular.module('ssoApp')
         ZipCode : db.postalCode,
         DateOfBirth : db.dob,
         Email : db.email,
-        PhoneNumber : db.homePhone
+        PhoneNumber : db.homePhone,
+        SessionId : tokenStorageService.getToken(),
+        AntiForgeryTokenId :  self.updatedData.AntiForgeryTokenId
       }
       self.setUpdatedDataAsOld()
     }
@@ -133,7 +135,7 @@ angular.module('ssoApp')
 
   self.save = function () {
     $('.updateProcessingBtn').button('loading');
-    httpService.updateProfile(self.updatedData)
+    httpService.updateProfile(self.currentData)
       .then(self.saveSuccess, self.saveError)
       .finally(function () { $('.updateProcessingBtn').button('reset'); })
   }

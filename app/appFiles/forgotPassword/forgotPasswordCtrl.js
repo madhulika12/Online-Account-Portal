@@ -15,6 +15,7 @@ angular.module('ssoApp')
 
     self.forgotPasswordData = {
       username : null,
+      LoginSourceID: null,
       AntiForgeryTokenId: null
     }
 

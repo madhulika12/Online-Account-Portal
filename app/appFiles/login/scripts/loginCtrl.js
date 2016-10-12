@@ -53,7 +53,7 @@ angular.module('ssoApp')
       }
 
       self.checkForAccountActivation = function (res) {
-        return res.data && res.data.responseObject && res.data.responseObject.pingToken.match(/member\/account-activation/);
+        return res.data && res.data.responseObject && res.data.responseObject.pingToken.match(/account-activation/);
       }
 
       // self.loginError = function (err) {
@@ -82,7 +82,7 @@ angular.module('ssoApp')
           $location.url( res.data.responseObject.pingToken )
 
        if ( self.checkForAccountActivation(res) ) {
-          $location.url( res.data.responseObject.pingToken )
+          $location.url( res.data.responseObject.pingToken + "?token=" + res.data.responseObject.sessionToken )
        }
 
         } else {

@@ -162,14 +162,14 @@
               <div class="form-group col-xs-12 col-md-4">
                 <label for="firstName" class="form-control-label">FIRST NAME<span class="required">*</span></label>
                 <div>
-                  <input type="text" name="firstName" ng-pattern="update.regex.FirstName" class="form-control input"  ng-model="update.updatedData.FirstName" id="firstName" required>
+                  <input type="text" name="firstName" ng-pattern="update.regex.FirstName" class="form-control input"  ng-model="update.currentData.FirstName" id="firstName" required>
                 </div>
               </div>
               <!-- LAST NAME -->
               <div class="form-group col-xs-12 col-md-4">
                 <label for="lastName" class="form-control-label">LAST NAME<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="lastName" name="lastName" ng-pattern="update.regex.LastName" ng-model="update.updatedData.LastName" required>
+                  <input type="text" class="form-control input" id="lastName" name="lastName" ng-pattern="update.regex.LastName" ng-model="update.currentData.LastName" required>
                 </div>
               </div>
               <!-- GENERATION -->
@@ -178,7 +178,7 @@
                 <div>
                   <select type="text" class="form-control input" id="generation"
                     name="generation"
-                    ng-model="update.updatedData.Generation"
+                    ng-model="update.currentData.Generation"
                     ng-options="gen.val as gen.tag for gen in update.generations"
                   >
                   </select>
@@ -191,7 +191,7 @@
               <div class="form-group col-xs-6">
                 <label for="mailingAddress" class="form-control-label">MAILING ADDRESS<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="mailingAddress" name="mailingAddress" ng-pattern="update.regex.MailingAddress" ng-model="update.updatedData.MailingAddress" required>
+                  <input type="text" class="form-control input" id="mailingAddress" name="mailingAddress" ng-pattern="update.regex.MailingAddress" ng-model="update.currentData.MailingAddress" required>
                 </div>
               </div>
 
@@ -199,7 +199,7 @@
               <div class="form-group col-xs-6">
                 <label for="phone" class="form-control-label">PHONE NUMBER<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="phone" name="phone" ng-pattern="update.regex.Phone" ng-model="update.updatedData.Phone" required>
+                  <input type="text" class="form-control input" id="phone" name="phone" ng-pattern="update.regex.Phone" ng-model="update.currentData.PhoneNumber" required>
                 </div>
               </div>
 
@@ -210,7 +210,7 @@
               <div class="form-group col-xs-12 col-md-6">
                 <label for="city" class="form-control-label">CITY<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="city" name="city" ng-pattern="update.regex.City" ng-model="update.updatedData.City" required>
+                  <input type="text" class="form-control input" id="city" name="city" ng-pattern="update.regex.City" ng-model="update.currentData.City" required>
                 </div>
               </div>
               <!-- STATE -->
@@ -220,7 +220,7 @@
                 <div>
                   <select class="form-control input" id="state"
                     name="state"
-                    ng-model="update.updatedData.State"
+                    ng-model="update.currentData.State"
                     ng-options="state.abbreviation as state.name for state in update.states"
                     required>
                   </select>
@@ -232,7 +232,7 @@
                 <label for="zip" class="form-control-label">ZIP CODE<span class="required">*</span></label>
 
                 <div>
-                  <input type="text" class="form-control input" id="zip" name="zip" ng-pattern="update.regex.ZipCode" ng-model="update.updatedData.ZipCode" required>
+                  <input type="text" class="form-control input" id="zip" name="zip" ng-pattern="update.regex.ZipCode" ng-model="update.currentData.ZipCode" required>
                 </div>
 
               </div>
@@ -248,7 +248,7 @@
                     k-options="update.kendoDateOptions"
                     k-format="'MM/dd/yyyy'"
                     placeholder="MM/DD/YYYY"
-                   class="form-control input kendo-date" name="dob" ng-pattern="update.regex.DOB" ng-model="update.updatedData.DOB" required/>
+                   class="form-control input kendo-date" name="dob" ng-pattern="update.regex.DOB" ng-model="update.currentData.DateOfBirth" required/>
                 </div>
               </div>
 
@@ -256,7 +256,7 @@
               <div class="form-group col-xs-12 col-md-6">
                 <label for="email" class="form-control-label">EMAIL<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="email" ng-pattern="update.regex.Email" ng-model="update.updatedData.Email" name="email" required>
+                  <input type="text" class="form-control input" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name="email" required>
                 </div>
               </div>
             </div>
@@ -291,7 +291,7 @@
       <div class="row">
         <div class="form-group col-xs-12 col-md-6">
           <label for="password" class="form-control-label">CURRENT PASSWORD<span class="required">*</span></label>
-                <div class="info-display"> <p> {{update.updatedData.FirstName || update.currentData.FirstName }} </p> </div>
+                <div class="info-display"> <p>  </p> </div>
         </div>
       </div>
       <div class="row" bad-link-text="Passwords need to match.">
@@ -299,14 +299,14 @@
         <div class="form-group col-xs-12 col-md-6">
           <label for="password" class="form-control-label">NEW PASSWORD<span class="required">*</span></label>
                 
-                <div class="info-display"> <p> {{update.updatedData.FirstName || update.currentData.FirstName }} </p> </div>
+                <div class="info-display"> <p> </p> </div>
         </div>
 
         <!-- PASSWORD CONFIRMATION -->
         <div class="form-group col-xs-12 col-md-6">
           <label for="confirmPassword" class="form-control-label">CONFIRM NEW PASSWORD<span class="required">*</span></label>
                 
-                <div class="info-display"> <p> {{update.updatedData.FirstName || update.currentData.FirstName }} </p> </div>
+                <div class="info-display"> <p>  </p> </div>
         </div>
               </div>
 
