@@ -45,12 +45,4 @@ angular.module('ssoApp')
 
       //console.log("Outside then" + $rootScope.responseBox.error);
     }
-
-  self.populateAntiForgeryToken = function(res) {
-    console.log("Antiforgery" + res);
-    self.forgotPasswordData.AntiForgeryTokenId =  res.data
-  }
-
-  $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-    .then(self.populateAntiForgeryToken, self.error);
 }]);

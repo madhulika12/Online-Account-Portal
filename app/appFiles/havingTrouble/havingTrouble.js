@@ -1,10 +1,11 @@
 angular.module('ssoApp')
-.controller('havingTroubleCtrl', ['httpService', 'Constants', 'displayResponseBox', '$state', 'getUrl', function (httpService, Constants, displayResponseBox, $state, getUrl) {
+.controller('havingTroubleCtrl', ['$http', 'httpService', 'Constants', 'displayResponseBox', '$state', 'getUrl', function ($http, httpService, Constants, displayResponseBox, $state, getUrl) {
   var self = this;
 
   self.forgotPassData = {
     Username : null,
-    LoginSourceId : Constants.loginSourceId
+    LoginSourceId : Constants.loginSourceId,
+    AntiForgeryTokenId: null
   }
 
   self.forgotPassConfirmData = {
@@ -33,9 +34,15 @@ angular.module('ssoApp')
     displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
   }
 
+  self.populateAntiForgeryToken = function(res) {
+    console.log("Antiforgery" + res);
+    self.forgotPassData.AntiForgeryTokenId =  res.data
+  }
+
   self.forgotPasswordRequest = function (event) {
     event.preventDefault()
     $('.processingBtn').button('loading');
+
     httpService.forgotPassword(self.forgotPassData)
       .then(self.forgotPassSuccess, self.error)
       .finally(function () { $('.processingBtn').button('reset'); })
@@ -53,6 +60,15 @@ angular.module('ssoApp')
     $('#havingTroubleModal').modal('hide')
   }
 
+  self.callSecurityTokens = function() {
+          $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+    .then(self.populateAntiForgeryToken, self.error);
+  }
+
   self.showModal()
+
+  self.callSecurityTokens()
+
+
 
 }])
