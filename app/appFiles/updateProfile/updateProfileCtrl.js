@@ -2,7 +2,7 @@ angular.module('ssoApp')
 
 // SPECIAL
 
-.controller('updateProfile', ['httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', function (httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox) {
+.controller('updateProfile', ['$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', function ($timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox) {
 
   var self = this
 
@@ -135,6 +135,11 @@ angular.module('ssoApp')
 
   self.save = function () {
     $('.updateProcessingBtn').button('loading');
+    self.sendRequest()
+    // $timeout(self.sendRequest(), 3000);
+  }
+
+  self.sendRequest = function() {
     httpService.updateProfile(self.currentData)
       .then(self.saveSuccess, self.saveError)
       .finally(function () { $('.updateProcessingBtn').button('reset'); })
