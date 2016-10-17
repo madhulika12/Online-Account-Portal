@@ -2,12 +2,11 @@ angular.module('ssoApp')
 
 // SPECIAL
 
-.controller('updateProfile', ['$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', function ($timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox) {
+.controller('updateProfile', ['$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', function ($window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox) {
 
   var self = this
 
   self.mode = 'view';
-
   self.editPasswordMode = 'show';
 
   self.states = Constants.states
@@ -104,6 +103,10 @@ angular.module('ssoApp')
 
   self.editOn = function () {
     self.mode = 'edit'
+  }
+
+  self.goToDashboard = function() {
+    $window.location.assign("http://imc2-staging2.csid.com/dashboard");
   }
 
   self.passwordMode = function () {

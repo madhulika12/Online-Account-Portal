@@ -58,7 +58,7 @@ angular.module('ssoApp')
       this.addAvailabilityError(elem)       
     },
 
-  determineError : function(elem, model) {
+  determineErrorOld : function(elem, model) {
       if (model.$error.matched) {
         this.addMatchError(elem)
       } else if (model.$error.required) {
@@ -69,6 +69,18 @@ angular.module('ssoApp')
             this.addAvailabilityError(elem)
           }   
   },  
+
+    determineError : function(elem, model) {
+      if (model.$error.matched) {
+        this.addMatchError(elem)
+      } else if (model.$error.required) {
+        this.addRequiredError(elem)
+      } else if (model.$error.pattern) {
+            this.patternError(elem, model)
+        } else {
+            this.addAvailabilityError(elem)
+          }   
+  }, 
 
   checkError : function (elem, model) {
       // console.log('inputErrorService.determineError', model)

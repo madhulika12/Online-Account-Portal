@@ -18,8 +18,9 @@ angular.module('ssoApp')
 
   self.usernameData = {
     Username : null,
-    TokenId : null,
-    LoginSourceId : Constants.loginSourceId
+    AntiForgeryTokenId: null,
+    LoginSourceId : Constants.loginSourceId,
+    SessionId : null
   }
 
   self.regex = {
@@ -79,7 +80,7 @@ angular.module('ssoApp')
   }
 
   self.resetPassSuccess = function () {
-    displayResponseBox.setMessage("A password recovery email was sent your account.", false)
+    displayResponseBox.setMessage("A password recovery email was sent to your account.", false)
     $state.go('login')
   }
 
@@ -153,8 +154,11 @@ angular.module('ssoApp')
   }
 
   if (res.data.responseObject.redirectEndpoint == 'login') {
-     self.resetPassSuccess();
+    self.usernameData.Username = res.data.responseObject.username
+     self.showJustUsernameModal()
   }
+
+  self.usernameData.SessionId = tokenStorageService.getToken();
   }
 
   self.error = function (err) {
@@ -175,6 +179,7 @@ angular.module('ssoApp')
   self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);
             self.recoveryData.AntiForgeryTokenId =  res.data;
+            self.usernameData.AntiForgeryTokenId =  res.data;
           }
 
       $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')

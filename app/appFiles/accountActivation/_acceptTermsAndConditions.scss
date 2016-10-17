@@ -1,3 +1,21 @@
 k-checkbox-label {
     margin-bottom: 0px;
 }
+
+#activateForm div#terms-accept-view {
+  .service-title {
+    display: none !important;
+  }
+  div#terms-accept-view {
+    box-shadow: inset 0px 0px 1px 1px lightgray;
+    background-color: lighten(lightgray, 16);
+    max-height: 500px;
+    overflow-y: scroll !important;
+    .text-body > ol {
+      padding-left: 20px !important;
+    }
+    ol, ul {
+      padding-left: 3% !important;
+    }
+  }
+}

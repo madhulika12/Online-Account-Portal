@@ -53,7 +53,7 @@ angular.module('ssoApp')
         // RESET PASSWORD FUNCTIONS
         //***************************************************
         self.resetPasswordSuccess = function () {
-          displayResponseBox.setMessage("A password recovery email was sent your account.", false)
+          displayResponseBox.setMessage("A password recovery email was sent to your account.", false)
           $state.go('login')
         }
 

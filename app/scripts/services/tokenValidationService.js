@@ -64,7 +64,7 @@ angular.module('ssoApp')
         this.checkToken()
           .catch(function (err) {
             // console.log('validation of token error', err)
-            // $state.go('login') //changed this for account activation 
+            $state.go('login') //changed this for account activation 
            })
         return this.deferred.promise
       }

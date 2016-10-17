@@ -197,9 +197,9 @@
 
               <!-- PHONE -->
               <div class="form-group col-xs-6">
-                <label for="phone" class="form-control-label">PHONE NUMBER<span class="required">*</span></label>
+                <label for="Phone" class="form-control-label">PHONE NUMBER<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="phone" name="phone" ng-pattern="update.regex.Phone" ng-model="update.currentData.PhoneNumber" required>
+                  <input type="text" class="form-control input" id="Phone" name="phone" ng-pattern="update.regex.PhoneNumber" ng-model="update.currentData.PhoneNumber" required>
                 </div>
               </div>
 
@@ -229,10 +229,10 @@
 
               <!-- ZIP -->
               <div class="form-group col-xs-12 col-md-2">
-                <label for="zip" class="form-control-label">ZIP CODE<span class="required">*</span></label>
+                <label for="ZipCode" class="form-control-label">ZIP CODE<span class="required">*</span></label>
 
                 <div>
-                  <input type="text" class="form-control input" id="zip" name="zip" ng-pattern="update.regex.ZipCode" ng-model="update.currentData.ZipCode" required>
+                  <input type="text" class="form-control input" id="ZipCode" name="zip" ng-pattern="update.regex.ZipCode" ng-model="update.currentData.ZipCode" required>
                 </div>
 
               </div>
@@ -256,7 +256,7 @@
               <div class="form-group col-xs-12 col-md-6">
                 <label for="email" class="form-control-label">EMAIL<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name="email" required>
+                  <input type="text" class="form-control input" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" async-validate="emailExist" name="email" required>
                 </div>
               </div>
             </div>
@@ -397,6 +397,13 @@
 
       </form>
     </div>
+    </div>
+
+    <div class="global-form-button-holder">
+      <kendo-button
+        class="submitButton processingBtn dashboardBtn"
+        ng-click="update.goToDashboard()"
+      > Go To Dashboard </kendo-button>
     </div>
 </main>
 

@@ -20,7 +20,7 @@
     </div>
   </div>
 
-  <form validation-highlights name="accActivate.form">
+  <form validation-highlights name="accActivate.form" id="activateForm">
     <div class="global-form">
         <div class="row" input-linker="match" bad-link-text="The two inputs need to match.">
           <div class="col-xs-12 col-sm-6 form-group">
@@ -49,10 +49,24 @@
           </div>
         </div>
     </div>
+
+    <div class="row" id="terms-accept-view">
+    <div class="col-xs-12 col-md-6">
+      <div class="global-form-instructions">
+        <!--<h2>TERMS &amp; CONDITIONS</h2>-->
+        <section>
+          <p>We have updated some of our policies. Please accept the terms and conditions below before continuing.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+  <div id="terms-window" style = "max-height: 500px; overflow-x: scroll" class="global-form" ng-include="'appFiles/termsAndConditions/termsAndConditions.html'">
+  </div>
+
     <div class="checkbox">
       <label for="acceptTerms">
         <input type="checkbox" class="input" id="acceptTerms" name="acceptTerms" ng-model="accActivate.data.Accept" required/>
-        <span style="float: left;">I agree to the following <a href="/#/terms-and-conditions" target="_blank">Terms and Conditions</a> and <a href="/#/privacy-policy" target="_blank">Privacy Policy</a></span>
+        <span style="float: left;">I agree to the <a href="/#/terms-and-conditions" target="_blank">Terms and Conditions</a> and <a href="/#/privacy-policy" target="_blank">Privacy Policy</a></span>
       </label>
     </div>
 

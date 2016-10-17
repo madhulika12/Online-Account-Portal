@@ -15,3 +15,13 @@
 header.navbar-default {
   background-color: rgb(153, 153, 153);
 }
+
+div.navbar-header, div.navbar-collapse, header.navbar, div.headerContainer {
+  background-color: #999;
+}    
+
+div.collapse > ul.nav > li > a.headerLinks:hover {
+  background-color: #999 !important;
+  outline: none !important;
+}
+    
