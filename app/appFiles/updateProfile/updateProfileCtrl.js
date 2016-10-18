@@ -8,6 +8,7 @@ angular.module('ssoApp')
 
   self.mode = 'view';
   self.editPasswordMode = 'show';
+  self.elemVal = null;
 
   self.states = Constants.states
   self.generations = Constants.generations
@@ -94,6 +95,7 @@ angular.module('ssoApp')
         AntiForgeryTokenId :  self.updatedData.AntiForgeryTokenId
       }
       self.setUpdatedDataAsOld()
+      self.elemVal = db.email;
     }
   }
 
@@ -126,6 +128,10 @@ angular.module('ssoApp')
   //xxxxxx
   // Request/Response Functions
   //xxxxxx
+
+  self.appendDirectiveDom = function() {
+      
+  };
 
   self.saveError = function (err) {
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error - Update Profile.";
@@ -178,7 +184,7 @@ angular.module('ssoApp')
           modelCtrl.$render()
           modelCtrl.$validate()
         }
-
+    
    self.populateForm = function (res) {
           if (res && res.data && res.data.responseObject) {
             var db = res.data.responseObject
@@ -194,6 +200,8 @@ angular.module('ssoApp')
             self.setViewAndRender(self.form.State, db.stateProvince)
             self.setViewAndRender(self.form.ZipCode, db.postalCode)
             self.setViewAndRender(self.form.Email, db.email);
+
+            
 
             self.updatedData.DateOfBirth = db.dob;
             self.updatedData.PhoneNumber = db.homePhone
@@ -211,6 +219,7 @@ angular.module('ssoApp')
   
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
+
     // self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
     self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
     self.dataToPopulateForm.AntiForgeryTokenId =  res.data
@@ -242,7 +251,10 @@ angular.module('ssoApp')
       //     window.onbeforeunload = null;
       // }));
       // $(window).on('mouseout', (function () {
-      //     console.log("leaving");
-       
 
+    //   self.onReadyDOM = function () {
+    //     var inputVal = document.getElementsByClassName("appendToDom")[0];  
+    //   }
+    
+    //  $window.onload = self.onReadyDOM();
 }])

@@ -24,7 +24,8 @@ angular.module('ssoApp')
 
   self.forgotPassSuccess = function (res) {
     // console.log('havingTrouble.forgotPassSuccess res param', res)
-    displayResponseBox.setMessage("A password recovery email was sent your account.", false)
+    var message = (res.data && res.data.responseObject) ? res.data.responseObject : "A password recovery email was sent to your account.";
+    displayResponseBox.setMessage(message, false);
     $state.go('login')
   }
 

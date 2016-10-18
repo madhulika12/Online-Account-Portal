@@ -80,11 +80,10 @@ angular.module('ssoApp')
         
         if ( self.checkForTerms(res) ) {
           $location.url( res.data.responseObject.pingToken )
- }
+      }
        else if ( self.checkForAccountActivation(res) ) {
           $location.url( res.data.responseObject.pingToken + "?token=" + res.data.responseObject.sessionToken )
        }
-
         else {
           console.log(res.data.responseObject);
           console.log(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
@@ -115,6 +114,14 @@ angular.module('ssoApp')
             self.signUpData.AntiForgeryTokenId =  res.data
             self.loginData.AntiForgeryTokenId =  res.data
           }
+
+          // self.partnerName = loadBrandingService.getBaseUrl();
+
+          // if (self.partnerName.match(/idshield/)) {
+          //   self.partnerName = "IDSHIELD"
+          // } else {
+          //   self.partnerName = "PRIMERICA"
+          // }
 
       $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
         .then(self.populateAntiForgeryToken, self.error);

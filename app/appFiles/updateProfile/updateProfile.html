@@ -256,7 +256,8 @@
               <div class="form-group col-xs-12 col-md-6">
                 <label for="email" class="form-control-label">EMAIL<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" async-validate="emailExist" name="email" required>
+                  <input type="text" class="form-control input appendToDom" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" async-validate="emailExist" name="email" ng-change="update.appendDirectiveDom()" required>
+                  <!--<input type="text" class="form-control input appendToDom" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" ng-change="update.appendDirectiveDom()" name="email" required>-->
                 </div>
               </div>
             </div>

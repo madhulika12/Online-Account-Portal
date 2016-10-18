@@ -32,12 +32,12 @@ angular
           $scope.styles = loadBrandingService.getStyles()
         }
       },
-    //   'view': {
-    //     template: '',
-    //     controller: function ($state) {
-    //       $state.go('update-profile')
-    //     },
-    //   },
+      'view': {
+        template: '',
+        controller: function ($state) {
+          $state.go('login')
+        },
+      },
       'footer': {
         templateUrl: 'appFiles/footer/footer.html',
       },
