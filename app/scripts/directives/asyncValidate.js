@@ -12,14 +12,14 @@ angular.module('ssoApp')
       
       var inputCtrlVal = ctrl.$modelValue;
       var inputCtrlVal1 = inputCtrlVal;
-      console.log('async validating')
+      console.log('async validating') 
       var deferred = $q.defer()
 
       var resolve = function (res) {
         console.log('existance based sucesss', res)
         console.log(ctrl);
         deferred.resolve(res)
-      }
+      }   
 
       var reject = function (err) {
         console.log('existance based rejection', err)

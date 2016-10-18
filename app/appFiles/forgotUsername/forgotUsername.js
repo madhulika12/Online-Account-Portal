@@ -78,8 +78,9 @@ angular.module('ssoApp')
 
   self.error = function (err) {
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
-    displayResponseBox.setMessage(message, true)
-    $state.go('login')
+    // displayResponseBox.setMessage(message, true)
+    displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
+    // $state.go('login')
   }
 
   self.forgotUserSuccess = function (res) {
