@@ -2,7 +2,7 @@ angular.module('ssoApp')
 
 // SPECIAL
 
-.controller('updateProfile', ['$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', function ($window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox) {
+.controller('updateProfile', ['inputErrorService', '$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', function (inputErrorService, $window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox) {
 
   var self = this
 
@@ -130,8 +130,33 @@ angular.module('ssoApp')
   //xxxxxx
 
   self.appendDirectiveDom = function() {
-      
-  };
+  //     elem3 = $scope.update.elemVal;
+
+  //     if(elem3 != document.getElementsByClassName('appendToDom')[0].value) {
+
+  //       $http
+  //         .get('https://mws.stage.kroll.com/api/v1/member/email-userid/exist?emailUserId=' + document.getElementsByClassName('appendToDom')[0].value)
+  //           .then(function(res) {
+  //             if(res.data.errorType == 200) {
+  //               console.log("Success")
+  //             } else {
+  //               console.log("Error");
+  //               inputErrorService.addAvailabilityError(document.getElementsByClassName('appendToDom'));
+  //               // document.getElementsByClassName('appendToDom')[0].addClass("BorderColor")
+  //             }
+  //           }
+              
+  //           )
+  // }; 
+  }
+
+  self.appendSuccess = function() {
+
+  }
+
+  self.appendError = function() {
+    inputErrorService.addAvailabilityError();
+  }
 
   self.saveError = function (err) {
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error - Update Profile.";

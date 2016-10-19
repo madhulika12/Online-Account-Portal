@@ -256,7 +256,7 @@
               <div class="form-group col-xs-12 col-md-6">
                 <label for="email" class="form-control-label">EMAIL<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input appendToDom" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" async-validate="emailExist" name="email" ng-change="update.appendDirectiveDom()" required>
+                  <input type="text" class="form-control input appendToDom" email-exist-directive="emailExist" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name="email" ng-change="update.appendDirectiveDom()" required>
                   <!--<input type="text" class="form-control input appendToDom" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" ng-change="update.appendDirectiveDom()" name="email" required>-->
                 </div>
               </div>
@@ -288,7 +288,7 @@
   <div ng-switch="update.editPasswordMode" >
   <div ng-switch-when="show" class="global-form updateAccount">
     <h4 class="form-section-headings"> Security </h4>
-    <form name="update.resetPassForm" validation-highlights>
+    <form name="update.resetPassNotEditable" validation-highlights>
       <div class="row">
         <div class="form-group col-xs-12 col-md-6">
           <label for="password" class="form-control-label">CURRENT PASSWORD<span class="required">*</span></label>
@@ -389,7 +389,7 @@
             </kendo-button>
             <kendo-button
               class="submitButton updateProcessingBtn"
-              ng-disabled="update.form.$invalid"
+              ng-disabled="update.resetPassForm.$invalid"
               ng-click="update.setNewPassword()"
               data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
             >Save</kendo-button>

@@ -5,11 +5,14 @@ angular.module('ssoApp')
 
   var link = function (scope, elem, attrs, ctrl) {
 
-      elem3 = scope.$parent.update.elemVal;
+      // elem3 = scope.$parent.update.elemVal;
       
       console.log('asyncvalidators.link ctrl:', ctrl)
-      ctrl.$asyncValidators.availability = function (modelValue, viewValue) {
+
       
+
+      ctrl.$asyncValidators.availability = function (modelValue, viewValue) {
+      // if(elem3 != ctrl.$viewValue) {
       var inputCtrlVal = ctrl.$modelValue;
       var inputCtrlVal1 = inputCtrlVal;
       console.log('async validating') 
@@ -26,13 +29,14 @@ angular.module('ssoApp')
         deferred.reject(err)
       }
 
-      if(ctrl.$dirty == true && elem3 != ctrl.$viewValue) {
+      // if(ctrl.$dirty == true) {
+      // if(elem3 != ctrl.$viewValue) {
         // console.log("InputVal " + inputVal);
         console.log("InputCtrlVal " + inputCtrlVal);
         httpService[ attrs['asyncValidate'] ](viewValue)
           .then(resolve, reject)
-      }
-
+      //  }
+// 
 
       deferred.promise
         .finally(function () {
@@ -42,8 +46,9 @@ angular.module('ssoApp')
 
       return deferred.promise
     }
+      }
     // console.log('asyncvalidators.link ctrl:', ctrl)
-  }
+  // }
 
   return {
     restrict : 'A',
