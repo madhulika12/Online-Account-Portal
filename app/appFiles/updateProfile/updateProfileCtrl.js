@@ -27,18 +27,7 @@ angular.module('ssoApp')
   }
 
   self.currentData = {
-    FirstName : null,
-    LastName : null,
-    Generation : null,
-    MailingAddress : null,
-    City : null,
-    State : null,
-    ZipCode : null,
-    DateOfBirth : null,
-    Email : null,
-    AntiForgeryTokenId: null,
-    SessionId : null,
-    PhoneNumber: null
+
   }
 
   self.updatedData = {}
@@ -80,7 +69,7 @@ angular.module('ssoApp')
   self.setData = function (res) {
     var db = res.data.responseObject
     if (res.data.responseObject) {
-      self.currentData = {
+      self.setReturnedData = {
         FirstName : db.firstName,
         LastName : db.lastName,
         Generation : db.suffix,
@@ -100,7 +89,7 @@ angular.module('ssoApp')
   }
 
   self.setUpdatedDataAsOld = function () {
-    angular.copy(self.currentData, self.updatedData)
+    angular.copy(self.setReturnedData, self.currentData)
   }
 
   self.editOn = function () {
