@@ -228,10 +228,10 @@ angular
       }
   })
 //  // this block below removes the hash tag from angular urls
-//   $locationProvider.html5Mode({
-//     enabled: true,
-//     re quireBase: false
-//   });
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
 })
 
 .run(function ($rootScope) {
@@ -240,4 +240,3 @@ angular
   })
 
 })
-  

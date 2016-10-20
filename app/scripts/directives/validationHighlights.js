@@ -34,20 +34,30 @@ angular.module('ssoApp')
     // console.log("checkingValidation model", model)
     if (model.$invalid) {
       // invalidHighlight(element)
-      inputErrorService.determineError(element, model)
-      document.getElementsByClassName("updateProcessingBtn")[0].setAttribute("disabled", "disabled");
+      inputErrorService.determineError(element, model);
+
+      if (document.getElementsByClassName("updateProcessingBtn")[0]) {
+        document.getElementsByClassName("updateProcessingBtn")[0].setAttribute("disabled", "disabled");
+      }
+      
     } else if (model.$valid) {
       console.log('removing error')
       // validHighlight(element)
       inputErrorService.removeError(element)
       // document.getElementsByTagName("H1")[0].setAttribute("class", "democlass");
-            document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
+            if (document.getElementsByClassName("updateProcessingBtn")[0]) {
+        document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
+      }
+            // document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
 
     } else {
       console.log('removing error')
       // validHighlight(element)
       inputErrorService.removeError(element)
-            document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
+            if (document.getElementsByClassName("updateProcessingBtn")[0]) {
+        document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
+      }
+            // document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
 
       // document.getElementsByTagName("H1")[0].setAttribute("class", "democlass");
     }
