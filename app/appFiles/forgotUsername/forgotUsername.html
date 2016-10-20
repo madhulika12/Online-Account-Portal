@@ -95,7 +95,7 @@
           <div class="form-group col-xs-12 col-sm-6">
             <label for="membershipNum" class="form-control-label">MEMBERSHIP NUMBER<span class="required">*</span></label>
             <div class="">
-              <input type="text" class="form-control input"  name="membershipNum" ng-model="forgotUsername.recoveryData.MembershipNumber" required/>
+              <input type="text" class="form-control input" autocomplete="off" name="membershipNum" ng-model="forgotUsername.recoveryData.MembershipNumber" required/>
               <span uib-popover="Your IDShield membership number begins with 700, followed by 'm' or 's'." class="glyphicon glyphicon-question-sign tool-tip-icon" popover-placement="top-right" popover-trigger="'mouseenter'"></span>
             </div>
           </div>
@@ -103,7 +103,7 @@
           <div class="form-group col-xs-12 col-sm-4">
             <label for="lastName" class="form-control-label">LAST NAME<span class="required">*</span></label>
             <div class="">
-              <input type="text" ng-pattern="forgotUsername.regex.lastName" class="form-control input" name="lastName" ng-model="forgotUsername.recoveryData.LastName" required/>
+              <input type="text" ng-pattern="forgotUsername.regex.lastName" autocomplete="off" class="form-control input" name="lastName" ng-model="forgotUsername.recoveryData.LastName" required/>
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@
           <div class="form-group col-xs-12 col-sm-4">
             <label for="zip" class="form-control-label">ZIP CODE<span class="required">*</span></label>
             <div class="">
-              <input type="text" ng-pattern="forgotUsername.regex.zip" class="form-control input" name="zip" ng-model="forgotUsername.recoveryData.ZipCode" required/>
+              <input type="text" ng-pattern="forgotUsername.regex.zip" autocomplete="off" class="form-control input" name="zip" ng-model="forgotUsername.recoveryData.ZipCode" required/>
             </div>
           </div>
 
@@ -125,6 +125,7 @@
                 k-options="forgotUsername.kendoDateOptions"
                 k-format="'MM/dd/yyyy'"
                 placeholder="MM/DD/YYYY"
+                autocomplete="off"
                 class="input"
                 name="dob"
                 ng-pattern="forgotUsername.regex.date"

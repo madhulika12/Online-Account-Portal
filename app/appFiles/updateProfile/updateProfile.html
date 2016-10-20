@@ -162,21 +162,21 @@
               <div class="form-group col-xs-12 col-md-4">
                 <label for="firstName" class="form-control-label">FIRST NAME<span class="required">*</span></label>
                 <div>
-                  <input type="text" name="firstName" ng-pattern="update.regex.FirstName" class="form-control input"  ng-model="update.currentData.FirstName" id="firstName" required>
+                  <input type="text" name="firstName" autocomplete="off" ng-pattern="update.regex.FirstName" class="form-control input"  ng-model="update.currentData.FirstName" id="firstName" required>
                 </div>
               </div>
               <!-- LAST NAME -->
               <div class="form-group col-xs-12 col-md-4">
                 <label for="lastName" class="form-control-label">LAST NAME<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="lastName" name="lastName" ng-pattern="update.regex.LastName" ng-model="update.currentData.LastName" required>
+                  <input type="text" class="form-control input" autocomplete="off" id="lastName" name="lastName" ng-pattern="update.regex.LastName" ng-model="update.currentData.LastName" required>
                 </div>
               </div>
               <!-- GENERATION -->
               <div class="form-group col-xs-12 col-md-4">
                 <label for="generation" class="form-control-label">GENERATION</label>
                 <div>
-                  <select type="text" class="form-control input" id="generation"
+                  <select type="text" class="form-control input" autocomplete="off" id="generation"
                     name="generation"
                     ng-model="update.currentData.Generation"
                     ng-options="gen.val as gen.tag for gen in update.generations"
@@ -191,7 +191,7 @@
               <div class="form-group col-xs-6">
                 <label for="mailingAddress" class="form-control-label">MAILING ADDRESS<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="mailingAddress" name="mailingAddress" ng-pattern="update.regex.MailingAddress" ng-model="update.currentData.MailingAddress" required>
+                  <input type="text" class="form-control input" autocomplete="off" id="mailingAddress" name="mailingAddress" ng-pattern="update.regex.MailingAddress" ng-model="update.currentData.MailingAddress" required>
                 </div>
               </div>
 
@@ -199,7 +199,7 @@
               <div class="form-group col-xs-6">
                 <label for="Phone" class="form-control-label">PHONE NUMBER<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="Phone" name="phone" ng-pattern="update.regex.PhoneNumber" ng-model="update.currentData.PhoneNumber" required>
+                  <input type="text" class="form-control input" autocomplete="off" id="Phone" name="phone" ng-pattern="update.regex.PhoneNumber" ng-model="update.currentData.PhoneNumber" required>
                 </div>
               </div>
 
@@ -210,7 +210,7 @@
               <div class="form-group col-xs-12 col-md-6">
                 <label for="city" class="form-control-label">CITY<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="city" name="city" ng-pattern="update.regex.City" ng-model="update.currentData.City" required>
+                  <input type="text" class="form-control input" autocomplete="off" id="city" name="city" ng-pattern="update.regex.City" ng-model="update.currentData.City" required>
                 </div>
               </div>
               <!-- STATE -->
@@ -232,7 +232,7 @@
                 <label for="ZipCode" class="form-control-label">ZIP CODE<span class="required">*</span></label>
 
                 <div>
-                  <input type="text" class="form-control input" id="ZipCode" name="zip" ng-pattern="update.regex.ZipCode" ng-model="update.currentData.ZipCode" required>
+                  <input type="text" class="form-control input" autocomplete="off" id="ZipCode" name="zip" ng-pattern="update.regex.ZipCode" ng-model="update.currentData.ZipCode" required>
                 </div>
 
               </div>
@@ -248,6 +248,7 @@
                     k-options="update.kendoDateOptions"
                     k-format="'MM/dd/yyyy'"
                     placeholder="MM/DD/YYYY"
+                    autocomplete="off"
                    class="form-control input kendo-date" name="dob" ng-pattern="update.regex.DOB" ng-model="update.currentData.DateOfBirth" required/>
                 </div>
               </div>
@@ -256,7 +257,7 @@
               <div class="form-group col-xs-12 col-md-6">
                 <label for="email" class="form-control-label">EMAIL<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input appendToDom" email-exist-directive="emailExist" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name="email" ng-change="update.appendDirectiveDom()" required>
+                  <input type="text" class="form-control input appendToDom" autocomplete="off" email-exist-directive="emailExist" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name="email" ng-change="update.appendDirectiveDom()" required>
                   <!--<input type="text" class="form-control input appendToDom" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" ng-change="update.appendDirectiveDom()" name="email" required>-->
                 </div>
               </div>
@@ -348,6 +349,7 @@
             class="form-control input"
             id="password"
             name="currentPassword"
+            autocomplete="off"
             ng-model="update.resetPassData.CurrentPassword"
             required>
         </div>
@@ -358,6 +360,7 @@
           <label for="password" class="form-control-label">NEW PASSWORD<span class="required">*</span></label>
           <input
             type="password"
+            autocomplete="off"
             class="form-control input"
             id="password"
             name="newPassword"
@@ -372,6 +375,7 @@
           <input
             type="password"
             class="form-control input"
+            autocomplete="off"
             id="confirmPassword"
             name="confirmPassword"
             ng-model="update.confirmData.Password"

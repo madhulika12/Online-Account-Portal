@@ -29,6 +29,7 @@
                 type="text"
                 class = "form-control input"
                 id="ssn"
+                autocomplete="off"
                 name="ssn"
                 ng-model="accActivate.data.SSN"
                 ng-pattern="accActivate.regex.ssn"
@@ -40,6 +41,7 @@
               <input
                 type="text"
                 class = "form-control input"
+                autocomplete="off"
                 id="confirmSsn"
                 name="confirmSsn"
                 ng-model="accActivate.confirmData.SSN"
@@ -65,7 +67,7 @@
 
     <div class="checkbox">
       <label for="acceptTerms">
-        <input type="checkbox" class="input" id="acceptTerms" name="acceptTerms" ng-model="accActivate.data.Accept" required/>
+        <input type="checkbox" class="input" id="acceptTerms" autocomplete="off" name="acceptTerms" ng-model="accActivate.data.Accept" required/>
         <span style="float: left;">I agree to the <a href="/#/terms-and-conditions" target="_blank">Terms and Conditions</a> and <a href="/#/privacy-policy" target="_blank">Privacy Policy</a></span>
       </label>
     </div>

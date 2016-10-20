@@ -44,6 +44,7 @@
               <label for="username">USERNAME<span class="required">*</span></label>
               <input
                 type="text"
+                autocomplete="off"
                 class="form-control input"
                 name="username"
                 ng-model="havingTrouble.forgotPassData.Username"
@@ -56,6 +57,7 @@
               <input
                 type="text"
                 class="form-control input"
+                autocomplete="off"
                 name="confirmUsername"
                 ng-model="havingTrouble.forgotPassConfirmData.Username"
                 ng-pattern="havingTrouble.regex.username"

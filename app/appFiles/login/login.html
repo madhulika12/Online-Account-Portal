@@ -31,6 +31,7 @@
                         <label for="membershipNum">MEMBERSHIP NUMBER</label>
                         <input
                           type="text"
+                          autocomplete="off"
                           class="form-control member input"
                           ng-model="login.signUpData.MembershipNumber"
                           name="membershipNum"
@@ -45,6 +46,7 @@
                         <label for="lastName">LAST NAME</label>
                         <input
                             type = "text"
+                            autocomplete="off"
                             class="form-control loginInput input"
                             ng-pattern="login.regex.LastName"
                             ng-model="login.signUpData.LastName"
@@ -57,6 +59,7 @@
                         <input
                             type="text"
                             class="form-control input"
+                            autocomplete="off"
                             ng-model="login.signUpData.ZipCode"
                             ng-pattern="login.regex.ZipCode"
                             name="zipCode"
@@ -87,6 +90,7 @@
                           <label for="username">USERNAME</label>
                           <input
                             type="text"
+                            autocomplete="off"
                             class="form-control loginInput input"
                             ng-model="login.loginData.Username"
                             name="username"
@@ -100,6 +104,7 @@
                           <input
                             type = "password"
                             class="form-control loginInput input"
+                            autocomplete="off"
                             ng-model="login.loginData.Password"
                             name="password"
                             ng-pattern="login.regex.anything"
