@@ -4,8 +4,18 @@ angular.module('ssoApp')
 
 
   var link = function (scope, elem, attrs, ctrl) {
+
+      console.log("Inside the link function of emailexistDirective" )
+      console.log(scope);
+
+      var elem3;
+
       elem3 = scope.$parent.update.elemVal;
+      console.log("Elem3 outside asyncvalidators " + elem3 )
+
       ctrl.$asyncValidators.availability = function (modelValue, viewValue) {
+          console.log("Elem3 inside asyncvalidators " + elem3 )
+
       var deferred = $q.defer()
 
       var resolve = function (res) {

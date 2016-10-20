@@ -85,7 +85,11 @@ angular.module('ssoApp')
 
   self.forgotUserSuccess = function (res) {
     self.data.Username = res.data.responseObject;
-    self.showUsernameModal()
+    self.showUsernameForceResetModal()
+  }
+
+  self.showUsernameForceResetModal = function () {
+    $('#username-force-reset-modal').modal('show')
   }
 
   self.sendForgotUsernameRequest = function (event) {
