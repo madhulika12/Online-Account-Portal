@@ -30,43 +30,73 @@ angular.module('ssoApp')
 .directive('validationHighlights', function ($timeout, Constants, $compile, inputErrorService) {
 
   //checks the validity of the input element's data. Applies highlights accordingly
-  var checkValidation = function (element, model) {
+  var checkValidation = function (element, model, formCtrl) {
     // console.log("checkingValidation model", model)
     if (model.$invalid) {
       // invalidHighlight(element)
-      var name = model.$name
+      // var name = model.$name
       inputErrorService.determineError(element, model);
 
       if (document.getElementsByClassName("updateProcessingBtn")[0]) {
         document.getElementsByClassName("updateProcessingBtn")[0].setAttribute("disabled", "disabled");
       }
       
+    console.log(formCtrl.$$success.required[0].$valid);
     } else if (model.$valid) {
       console.log('removing error')
       // validHighlight(element)
       inputErrorService.removeError(element)
       // document.getElementsByTagName("H1")[0].setAttribute("class", "democlass");
+      var validVal = 0
 
-      if(model.$name == name) {
+      // for(var i = 0; i < formCtrl.$$success.required.length; i = i + 1) {
+
+      //    console.log("i " + i );
+      //    console.log(formCtrl.$$success.required[i].$name);
+      //    console.log(formCtrl.$$success.required[i].$valid);
+
+      //   // if(formCtrl.$$success.required[i].$valid) {
+      //   //   validVal = validVal + 1;
+
+      //   //   console.log(formCtrl.$$success.required.length);
+
+      //   //   // if (validVal == formCtrl.$$success.required.length) {
+      //   //   //   if (document.getElementsByClassName("updateProcessingBtn")[0]) {
+      //   //   //   document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
+      //   //   // }
+      //   //   } 
+          
+      //   }
+      if (formCtrl.$$success.required.length == 9) {
         if (document.getElementsByClassName("updateProcessingBtn")[0]) {
-        document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
+            document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
+          }
+      } 
       }
-      }
+
+
             
             // document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
 
-    } else {
-      console.log('removing error')
-      // validHighlight(element)
-      inputErrorService.removeError(element)
-            if (document.getElementsByClassName("updateProcessingBtn")[0]) {
-        document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
-      }
-            // document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
+    // } else {
+    // console.log('removing error')
+    //   // validHighlight(element)
+    //   inputErrorService.removeError(element)
+    //   // document.getElementsByTagName("H1")[0].setAttribute("class", "democlass");
+    //   var validVal = 0
+    //   for(var i = 0; i < formCtrl.$$success.required.length; i = i + 1) {
+    //     if(formCtrl.$$success.required[i].$valid) {
+    //       validVal = validVal + 1;
 
-      // document.getElementsByTagName("H1")[0].setAttribute("class", "democlass");
+    //       if (validVal == success.required.length-1) {
+    //         if (document.getElementsByClassName("updateProcessingBtn")[0]) {
+    //         document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
+    //       }
+    //       } 
+          
+    //     }
+    // }
     }
-  };
 
   var changeListenerWithDebounce = function (formCtrl) {
     var debounce = null
@@ -81,7 +111,7 @@ angular.module('ssoApp')
           debounce = null;
         }
 
-        debounce = $timeout(function () { checkValidation(angularInput, inputModel)}, 500);
+        debounce = $timeout(function () { checkValidation(angularInput, inputModel, formCtrl)}, 500);
     }
   }
 
@@ -97,7 +127,7 @@ angular.module('ssoApp')
       //ngModel controller for that particular element.
       var inputModel = formCtrl[this.name];
 
-      checkValidation(angularInput, inputModel);
+      checkValidation(angularInput, inputModel, formCtrl) ;
 
     });
   };
