@@ -79,8 +79,9 @@ angular.module('ssoApp')
       .then(self.resetPassSuccess, self.modalRequestError)
   }
 
-  self.resetPassSuccess = function () {
-    displayResponseBox.setMessage("A password recovery email was sent to your account.", false)
+  self.resetPassSuccess = function (res) {
+    var message = res.data.responseObject
+    displayResponseBox.setMessage(message, false)
     $state.go('login')
   }
 

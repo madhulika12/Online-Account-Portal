@@ -34,6 +34,7 @@ angular.module('ssoApp')
     // console.log("checkingValidation model", model)
     if (model.$invalid) {
       // invalidHighlight(element)
+      var name = model.$name
       inputErrorService.determineError(element, model);
 
       if (document.getElementsByClassName("updateProcessingBtn")[0]) {
@@ -45,9 +46,13 @@ angular.module('ssoApp')
       // validHighlight(element)
       inputErrorService.removeError(element)
       // document.getElementsByTagName("H1")[0].setAttribute("class", "democlass");
-            if (document.getElementsByClassName("updateProcessingBtn")[0]) {
+
+      if(model.$name == name) {
+        if (document.getElementsByClassName("updateProcessingBtn")[0]) {
         document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
       }
+      }
+            
             // document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
 
     } else {

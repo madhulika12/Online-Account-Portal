@@ -156,8 +156,8 @@ angular
     parent: 'user',
     views: {
       'view@' : {
-        controller: 'forgotUsernameCtrl',
-        controllerAs: 'forgotUsername',
+        controller: 'recoverAccountCtrl',
+        controllerAs: 'recover',
         templateUrl: 'appFiles/forgotUsername/forgotUsername.html'
       }
     }
