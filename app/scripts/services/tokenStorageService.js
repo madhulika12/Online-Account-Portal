@@ -29,6 +29,15 @@ angular.module('ssoApp')
     // document.cookie = "myCookie1=foo='bar'&baz='poo'";
     // document.cookie = "Kroll2=ssoSessionId="+token;
     $cookies.put(Constants.tokenCookieKey, token, optionsFifteen());
+    self.startTimer();
+  }
+
+  self.startTimer = function() {
+    // setInterval('self.showPopup()', 3000)
+  }
+
+  self.showPopup = function() {
+    // console.log("Show popup")
   }
 
   self.getToken = function () {

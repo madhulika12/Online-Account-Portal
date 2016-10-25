@@ -41,38 +41,51 @@ angular.module('ssoApp')
         document.getElementsByClassName("updateProcessingBtn")[0].setAttribute("disabled", "disabled");
       }
       
-    console.log(formCtrl.$$success.required[0].$valid);
+    // console.log(formCtrl.$$success.required[0].$valid);
     } else if (model.$valid) {
       console.log('removing error')
       // validHighlight(element)
       inputErrorService.removeError(element)
       // document.getElementsByTagName("H1")[0].setAttribute("class", "democlass");
       var validVal = 0
+      if(formCtrl.$$success.required && formCtrl.$$success.required.length == 9) {
 
-      // for(var i = 0; i < formCtrl.$$success.required.length; i = i + 1) {
+      for(var i = 0; i < formCtrl.$$success.required.length; i = i + 1) {
 
-      //    console.log("i " + i );
-      //    console.log(formCtrl.$$success.required[i].$name);
-      //    console.log(formCtrl.$$success.required[i].$valid);
+         console.log("i " + i );
+         console.log(formCtrl.$$success.required[i].$name);
+         console.log(formCtrl.$$success.required[i].$valid);
 
-      //   // if(formCtrl.$$success.required[i].$valid) {
-      //   //   validVal = validVal + 1;
+        if(formCtrl.$$success.required[i].$valid) {
+          validVal = validVal + 1;
 
-      //   //   console.log(formCtrl.$$success.required.length);
+          console.log(formCtrl.$$success.required.length);
 
-      //   //   // if (validVal == formCtrl.$$success.required.length) {
-      //   //   //   if (document.getElementsByClassName("updateProcessingBtn")[0]) {
-      //   //   //   document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
-      //   //   // }
-      //   //   } 
-          
-      //   }
-      if (formCtrl.$$success.required.length == 9) {
-        if (document.getElementsByClassName("updateProcessingBtn")[0]) {
+          if (validVal == formCtrl.$$success.required.length-1) {
+            if (document.getElementsByClassName("updateProcessingBtn")[0]) {
             document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
           }
-      } 
+          } 
+          
+        }
       }
+    }
+    }
+
+      // if(formCtrl.$$success.required) {
+      //         // if (formCtrl.$$success.required.length == 9 && formCtrl.$$success.required[0].$valid && formCtrl.$$success.required[1].$valid && formCtrl.$$success.required[2].$valid && formCtrl.$$success.required[3].$valid && formCtrl.$$success.required[4].$valid && formCtrl.$$success.required[5].$valid && formCtrl.$$success.required[7].$valid && formCtrl.$$success.required[8].$valid && formCtrl.$$success.required[9].$valid)  {
+      //           if (formCtrl.$$success.required.length == 9 && formCtrl.$$success.required[0].$valid && formCtrl.$$success.required[1].$valid && formCtrl.$$success.required[2].$valid && formCtrl.$$success.required[3].$valid && formCtrl.$$success.required[4].$valid)  {
+      //   if (document.getElementsByClassName("updateProcessingBtn")[0]) {
+      //       document.getElementsByClassName("updateProcessingBtn")[0].removeAttribute("disabled", "disabled");
+      //     } 
+      // } else {
+      //           if (document.getElementsByClassName("updateProcessingBtn")[0]) {
+      //       document.getElementsByClassName("updateProcessingBtn")[0].setAttribute("disabled", "disabled");
+      //     } 
+      // }
+      // }
+ 
+      // }
 
 
             

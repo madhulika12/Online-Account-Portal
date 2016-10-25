@@ -15,6 +15,7 @@ angular
   .module('ssoApp', ['ui.router', 'kendo.directives', 'ngSanitize', 'ngAnimate', 'ui.bootstrap', 'ngCookies'])
 
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    //   $modalProvider.options.animation = false;
   $urlRouterProvider.otherwise('/invalid');
   $stateProvider
   .state('user', {
@@ -23,23 +24,29 @@ angular
       loadBrandingService: 'loadBrandingService',
       styleSheetPromise : function (loadBrandingService) {
         return loadBrandingService.getStyleSheetPath()
-      }
+      },
     },
     views: {
       'header': {
         templateUrl: 'appFiles/header/header.html',
         controller: function ($scope, loadBrandingService) {
           $scope.styles = loadBrandingService.getStyles()
+          $scope.sessionTimeout = loadBrandingService.sessionTimeout()
+          console.log($scope.sessionTimeout)
         }
       },
       'view': {
         template: '',
         controller: function ($state) {
           $state.go('login')
+          
         },
       },
       'footer': {
         templateUrl: 'appFiles/footer/footer.html',
+        controller: function ($scope, loadBrandingService) {
+          console.log("View controller")
+        }
       },
     },
   })
@@ -93,7 +100,7 @@ angular
           'view@': {
               templateUrl: 'appFiles/termsAccept/termsAccept.html',
               controller: 'termsAcceptanceCtrl',
-              controllerAs: 'termsAccept'
+              controllerAs: 'termsAccept',
           }
       }
   })
@@ -137,6 +144,7 @@ angular
               controller: 'recoverAccountCtrl',
               controllerAs: 'recover',
               templateUrl: 'appFiles/recoverAccount/recoverAccount.html'
+
           }
       }
   })
@@ -228,11 +236,13 @@ angular
       }
   })
 //  // this block below removes the hash tag from angular urls
-  $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-  });
+//   $locationProvider.html5Mode({
+//     enabled: true,
+//     // requireBase: false
+//   });
 })
+
+
 
 .run(function ($rootScope) {
   $rootScope.$on('$stateChangeSuccess', function () {

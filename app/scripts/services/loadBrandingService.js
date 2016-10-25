@@ -2,8 +2,9 @@ angular.module('ssoApp')
 .service('loadBrandingService', ['$http', '$location', '$q', 'Constants', 'getUrl', function ($http, $location, $q, Constants, getUrl) {
 
     var deferred = $q.defer()
+    var idleTime = 0;
 
-    return {
+    var functions =  {
       deferred : deferred,
       promise : deferred.promise,
 
@@ -56,7 +57,33 @@ angular.module('ssoApp')
             lbs.deferred.resolve(err)
           })
         return this.promise
+      },
+
+        sessionTimeout : function() {
+          console.log("In session timeout function")
+            $(document).ready(function () {
+          //Increment the idle time counter every minute.
+          // timerIncrement()
+          var idleInterval = setInterval(functions.timerIncrement(), 60000); // 1 minute
+
+          //Zero the idle timer on mouse movement.
+          $(this).mousemove(function (e) {
+              idleTime = 0;
+          });
+          $(this).keypress(function (e) {
+              idleTime = 0;
+          });
+      });
+      },
+
+      timerIncrement : function() {
+          idleTime = idleTime + 1;
+          if (idleTime > 2) { // 20 minutes
+              window.location.assign('https://idshieldstage.krollportal.com/login');
+          }
       }
     }
+
+    return functions;
 
 }])

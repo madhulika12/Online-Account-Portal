@@ -9,6 +9,7 @@ angular.module('ssoApp')
   self.mode = 'view';
   self.editPasswordMode = 'show';
   self.elemVal = null;
+  self.readOnlyProp = false;
 
   self.states = Constants.states
   self.generations = Constants.generations
@@ -90,6 +91,13 @@ angular.module('ssoApp')
 
   self.setUpdatedDataAsOld = function () {
     angular.copy(self.setReturnedData, self.currentData)
+    self.setReadOnly();
+  }
+
+  self.setReadOnly = function() {
+    if (self.setReturnedData.DateOfBirth) {
+      self.readOnlyProp = true;
+    } 
   }
 
   self.editOn = function () {

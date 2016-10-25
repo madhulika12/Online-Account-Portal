@@ -249,6 +249,7 @@
                     k-format="'MM/dd/yyyy'"
                     placeholder="MM/DD/YYYY"
                     autocomplete="off"
+                    data-ng-readonly="update.readOnlyProp"
                    class="form-control input kendo-date" name="dob" ng-pattern="update.regex.DOB" ng-model="update.currentData.DateOfBirth" required/>
                 </div>
               </div>
@@ -349,6 +350,7 @@
             class="form-control input"
             id="password"
             name="currentPassword"
+            ng-pattern="update.regex.Password"
             autocomplete="off"
             ng-model="update.resetPassData.CurrentPassword"
             required>
