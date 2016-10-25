@@ -1,13 +1,14 @@
 'use strict';
 
 angular.module('ssoApp')
-    .controller('sessionTimout', ['$rootScope', 'loadBrandingService', '$http', '$scope', function($rootScope, loadBrandingService, $http, $scope) {
+    .controller('sessionTimout', ['$rootScope', 'loadBrandingService', '$http', '$scope', '$timeout', function($rootScope, loadBrandingService, $http, $scope, $timeout) {
         console.log("Outside");
 
         var self = this;
+        self.showTimer = false;
 
         self.idleTime = 0;
-        self.showTimer = false;
+        self.idleTime1 = true; 
 
         $(document).ready(function () {
           //Increment the idle time counter every minute.
@@ -26,8 +27,13 @@ angular.module('ssoApp')
           self.idleTime = self.idleTime + 1;
           if (self.idleTime > 15) { // 20 minutes
               window.location.assign('https://idshieldstage.krollportal.com/login');
-          } else if (self.idleTime > 12) {
-              self.showTimer = true;
+          } else if (self.idleTime > 1) {
+              console.log(self.idleTime)
+                  $timeout(function () {
+                        self.showTimer = true;
+                        $('#session-modal').modal('show')
+                    }, 1000);
+              
           }
       }
     }])

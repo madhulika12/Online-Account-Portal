@@ -1,0 +1,30 @@
+    <div class='modal fade recover-page-modal' id='username-modal'>
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <button type='button' class='close' data-dismiss='modal'>
+            <span>&times;</span>
+          </button>
+          <h2 class='modal-title'>FORGOT USERNAME</h2>
+        </div>
+        <div class='modal-body'>
+          <div>
+            <p>Your username is:</p>
+
+            <p class="centered bold">{{recover.usernameData.Username}}</p>
+
+            <p>If you would also like to reset your password, please select the “Reset Password” button below. Otherwise select “Back to Login.”</p>
+          </div>
+
+        </div>
+
+        <div class='modal-footer'>
+          <div>
+            <button type='button' class="submitButton" data-dismiss='modal' ng-click='recover.resetPass()'>Reset Password</button>
+            <button type='button' class="submitButton" data-dismiss='modal' ng-click='recover.backToLogin()'>Back to Login</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
