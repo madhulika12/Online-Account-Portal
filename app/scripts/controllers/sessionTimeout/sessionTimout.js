@@ -32,7 +32,7 @@ angular.module('ssoApp')
                   $timeout(function () {
                         self.showTimer = true;
                         $('#session-modal').modal('show')
-                    }, 1000);
+                    }, 500);
               
           }
       }
