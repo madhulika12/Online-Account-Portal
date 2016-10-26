@@ -6,7 +6,8 @@ angular.module('ssoApp')
 
   var optionsFifteen = function () {
     var opt = angular.copy(options)
-    var fifteenAhead = self.now() + Constants.fifteenMinutes
+    // var fifteenAhead = self.now() + Constants.fifteenMinutes
+    var fifteenAhead = self.now() + Constants.twoMinutes
     opt.expires = new Date(fifteenAhead)
     return opt
   }

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ssoApp')
-    .controller('sessionTimout', ['$rootScope', 'loadBrandingService', '$http', '$scope', '$timeout', function($rootScope, loadBrandingService, $http, $scope, $timeout) {
+    .controller('sessionTimout', ['displayResponseBox','$state','tokenStorageService', '$rootScope', 'loadBrandingService', '$http', '$scope', '$timeout', function(displayResponseBox, $state, tokenStorageService, $rootScope, loadBrandingService, $http, $scope, $timeout) {
         console.log("Outside");
 
         var self = this;
@@ -13,6 +13,7 @@ angular.module('ssoApp')
         $(document).ready(function () {
           //Increment the idle time counter every minute.
           var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+          var checkCookie = setInterval(checkCookieExist, 60000); // 1 minute
 
           //Zero the idle timer on mouse movement.
           $(this).mousemove(function (e) {
@@ -22,6 +23,15 @@ angular.module('ssoApp')
               self.idleTime = 0;
           });
       });
+
+      function checkCookieExist() {
+          var cookieVal = tokenStorageService.getToken();
+          if (!cookieVal) 
+          {
+              displayResponseBox.setMessage("Your session has ended. To continue you must log back into the system with your current credentials.", true);
+              $state.go('login')
+          }
+      }
 
       function timerIncrement() {
           self.idleTime = self.idleTime + 1;
