@@ -35,9 +35,9 @@ angular.module('ssoApp')
 
       function timerIncrement() {
           self.idleTime = self.idleTime + 1;
-          if (self.idleTime > 15) { // 20 minutes
-              window.location.assign('https://idshieldstage.krollportal.com/login');
-          } else if (self.idleTime > 1) {
+          if (self.idleTime > 14) { // 20 minutes
+              $state.go('login')
+          } else if (self.idleTime > 12) {
               console.log(self.idleTime)
                   $timeout(function () {
                         self.showTimer = true;
