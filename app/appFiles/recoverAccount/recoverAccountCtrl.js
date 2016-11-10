@@ -2,7 +2,7 @@
 
 angular.module('ssoApp')
 
-.controller('recoverAccountCtrl', ['$http','httpService', 'Constants', 'displayResponseBox', '$state', 'usernameService','tokenStorageService', function ($http, httpService, Constants, displayResponseBox, $state, usernameService, tokenStorageService) {
+.controller('recoverAccountCtrl', ['antiForgeryToken', '$http','httpService', 'Constants', 'displayResponseBox', '$state', 'usernameService','tokenStorageService', function (antiForgeryToken, $http, httpService, Constants, displayResponseBox, $state, usernameService, tokenStorageService) {
   // console.log("Inside Recover Account Controller")
 
   var self = this;
@@ -160,6 +160,8 @@ angular.module('ssoApp')
   }
 
   self.usernameData.SessionId = tokenStorageService.getToken();
+
+  antiForgeryToken.setAntiForgeryToken(res);
   }
 
   self.error = function (err) {
@@ -179,11 +181,16 @@ angular.module('ssoApp')
 
   self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);
-            self.recoveryData.AntiForgeryTokenId =  res.data;
-            self.usernameData.AntiForgeryTokenId =  res.data;
+            self.recoveryData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+            self.usernameData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+            self.checkCookie();
           }
 
-      $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-        .then(self.populateAntiForgeryToken, self.error);
+      self.checkCookie = function () {
+        tokenStorageService.refreshCookie();
+      };
+
+ 
+      self.populateAntiForgeryToken();
 
 }])

@@ -36,13 +36,15 @@ angular.module('ssoApp')
     forgotPassword : 'https://mws.stage.kroll.com/api/v1/member/forgot-password',
     forgotUsername : 'https://mws.stage.kroll.com/api/v1/member/forgot-userid',
     multiClient: 'https://mws.stage.kroll.com/api/v1/vendor/webpage-attributes',
+    // getMemberByToken: 'https://localhost:44300/api/v1/member/sign-up/load',
     getMemberByToken: 'https://mws.stage.kroll.com/api/v1/member/sign-up/load',
     validateAccountActivation: 'https://mws.stage.kroll.com/api/v1/member/session/validate',
     emailExist : 'https://mws.stage.kroll.com/api/v1/member/email-userid/exist',
     usernameExist : 'https://mws.stage.kroll.com/api/v1/member/email-userid/exist',
     updateProfile : 'https://mws.stage.kroll.com/api/v1/member/personal/update',
     antiForgeryToken : 'https://mws.stage.kroll.com/api/v1/security/tokens',
-    delCookie: 'https://mws.stage.kroll.com/api/v1/member/token/redeem'
+    delCookie: 'https://mws.stage.kroll.com/api/v1/member/token/redeem',
+    extendTimeout: 'https://mws.stage.kroll.com/api/v1/member/extend-session'
   },
   regexs : {
     email : /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/i,

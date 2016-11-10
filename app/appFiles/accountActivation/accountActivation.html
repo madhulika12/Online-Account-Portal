@@ -1,10 +1,9 @@
 <main data-ng-controller="sessionTimout as session">
-  	<div data-ng-show="session.showTimer">
+	<div data-ng-show="session.showTimer">
 		<div class='modal fade' id='session-modal'>
 		<div class='modal-dialog'>
 		<div class='modal-content'>
 			<div class='modal-header'>
-        
 			<button type='button' class='close' data-dismiss='modal'>
 				<span>&times;</span>
 			</button>
@@ -19,7 +18,7 @@
 
 			<div class='modal-footer'>
 			<div>
-				<button type='button' class="submitButton" data-dismiss='modal' ng-click='recover.resetPass()'>Continue</button>
+				<button type='button' class="submitButton" data-dismiss='modal' ng-click='session.extendCookieExpiry()'>Continue</button>
 			</div>
 
 			</div>

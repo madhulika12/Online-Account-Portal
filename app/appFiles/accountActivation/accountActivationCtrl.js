@@ -1,6 +1,6 @@
 angular.module('ssoApp')
 
-.controller('AccountActivationCtrl', ['loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', function (loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService){
+.controller('AccountActivationCtrl', ['antiForgeryToken','loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', function (antiForgeryToken, loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService){
 
   var self = this;
 
@@ -38,6 +38,7 @@ angular.module('ssoApp')
     //TODO write redirect code ?
     // $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
     // $window.location.assign(Constants.portalBaseUrl + res.data.responseObject.pingToken);
+    antiForgeryToken.setAntiForgeryToken(res);
     $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject);
   }
   
@@ -69,15 +70,15 @@ angular.module('ssoApp')
   
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
-    
-    self.data.AntiForgeryTokenId =  res.data
+    antiForgeryToken.setAntiForgeryToken(res);
+    self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
     // 
   }
 
   tokenValidationService.checkTokenAndRedirect()
     .then(self.populateId, self.invalidTokenError)
     
-  $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+  loadBrandingService.getStyleSheetPath()
     .then(self.populateAntiForgeryToken, self.error);
 
 
@@ -85,4 +86,4 @@ angular.module('ssoApp')
 
 
 
-}])
+}]);

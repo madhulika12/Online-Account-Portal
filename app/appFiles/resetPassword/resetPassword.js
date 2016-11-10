@@ -1,6 +1,6 @@
 'use strict';
 angular.module('ssoApp')
-    .controller('resetPasswordCtrl', ['$http','$scope', 'Constants', 'httpService', '$state', 'loadBrandingService', 'tokenValidationService', 'displayResponseBox', function($http, $scope, Constants, httpService, $state, loadBrandingService, tokenValidationService, displayResponseBox) {
+    .controller('resetPasswordCtrl', ['antiForgeryToken','tokenStorageService', '$http','$scope', 'Constants', 'httpService', '$state', 'loadBrandingService', 'tokenValidationService', 'displayResponseBox', function(antiForgeryToken, tokenStorageService, $http, $scope, Constants, httpService, $state, loadBrandingService, tokenValidationService, displayResponseBox) {
 
         var self = this;
 
@@ -60,6 +60,7 @@ angular.module('ssoApp')
           // console.log('resetPassword.successMessage res params', res)
           displayResponseBox.setMessage("The password for your account was successfully reset. Please use the new password to log into the mobile app as well as the web portal.", false)
           $state.go('login');
+          antiForgeryToken.setAntiForgeryToken(res);
         }
 
         self.error = function (err) {
@@ -96,11 +97,15 @@ angular.module('ssoApp')
 
       self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);
-            self.data.AntiForgeryTokenId =  res.data
+            self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+            self.checkCookie();
           }
+          
+      self.checkCookie = function () {
+        tokenStorageService.refreshCookie();
+      };
 
-      $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-        .then(self.populateAntiForgeryToken, self.error);
+      self.populateAntiForgeryToken();
 
         //*******************************************************
 

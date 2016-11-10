@@ -1,5 +1,5 @@
 angular.module('ssoApp')
-.service('loadBrandingService', ['$http', '$location', '$q', 'Constants', 'getUrl', function ($http, $location, $q, Constants, getUrl) {
+.service('loadBrandingService', ['antiForgeryToken', '$http', '$location', '$q', 'Constants', 'getUrl', function (antiForgeryToken, $http, $location, $q, Constants, getUrl) {
 
     var deferred = $q.defer()
     var idleTime = 0;
@@ -32,6 +32,7 @@ angular.module('ssoApp')
       },
 
       _setStyles : function (data) {
+        antiForgeryToken.setAntiForgeryToken(data);
         if (data.data.errorType === 404 || !data.data.responseObject) {
           this._setDefault()
         } else {

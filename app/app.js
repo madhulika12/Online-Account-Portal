@@ -55,7 +55,9 @@ angular
       parent: 'user',
       views: {
           'view@': {
-            templateUrl: 'appFiles/error/403.html'
+            templateUrl: 'appFiles/error/403.html',
+            controller: 'sessionTimout',
+            controllerAs: 'session'
           }
       },
   })
@@ -68,6 +70,17 @@ angular
               controllerAs: 'login',
               templateUrl: 'appFiles/login/login.html'
 
+          }
+      }
+  })
+
+  .state('test', {
+      url: 'test',
+      parent: 'user',
+      views: {
+          'view@': {
+              templateUrl: 'appFiles/login/login.html',
+              controller: 'test'
           }
       }
   })
@@ -89,7 +102,9 @@ angular
       parent: 'user',
       views: {
           'view@': {
-              templateUrl: 'appFiles/termsAndConditions/termsAndConditions.html'
+              templateUrl: 'appFiles/termsAndConditions/termsAndConditions.html',
+              controller: 'sessionTimout',
+              controllerAs: 'session'
           }
       }
   })
@@ -111,7 +126,9 @@ angular
       parent: 'user',
       views: {
           'view@': {
-              templateUrl: 'appFiles/browser/browser.html'
+              templateUrl: 'appFiles/browser/browser.html',
+              controller: 'sessionTimout',
+              controllerAs: 'session'
 
           }
       }
@@ -121,7 +138,9 @@ angular
       parent: 'user',
       views: {
           'view@': {
-              templateUrl: 'appFiles/contactIDShield/contactIDShield.html'
+              templateUrl: 'appFiles/contactIDShield/contactIDShield.html',
+              controller: 'sessionTimout',
+              controllerAs: 'session'
 
           }
       }
@@ -131,7 +150,9 @@ angular
       parent: 'user',
       views: {
           'view@': {
-              templateUrl: 'appFiles/privacyPolicy/privacyPolicy.html'
+              templateUrl: 'appFiles/privacyPolicy/privacyPolicy.html',
+              controller: 'sessionTimout',
+              controllerAs: 'session'
 
           }
       }
@@ -235,7 +256,7 @@ angular
           }
       }
   })
-//  // this block below removes the hash tag from angular urls
+ // this block below removes the hash tag from angular urls
   $locationProvider.html5Mode({
     enabled: true,
     requireBase: false

@@ -29,6 +29,10 @@ angular.module('ssoApp')
       this.addMessage(elem, 'This field is required.')
     },
 
+    validationErr: function(elemVal, modelMessage) {
+
+    },
+
     addValidationError : function (elem, model) {
       var pattern = elem[0].attributes.getNamedItem('ng-pattern')
       if (pattern) {

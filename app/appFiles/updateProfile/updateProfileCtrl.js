@@ -2,7 +2,7 @@ angular.module('ssoApp')
 
 // SPECIAL
 
-.controller('updateProfile', ['inputErrorService', '$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', function (inputErrorService, $window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox) {
+.controller('updateProfile', ['antiForgeryToken', 'sessionService','inputErrorService', '$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', function (antiForgeryToken, sessionService, inputErrorService, $window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox) {
 
   var self = this
 
@@ -68,7 +68,10 @@ angular.module('ssoApp')
 
 
   self.setData = function (res) {
+    antiForgeryToken.setAntiForgeryToken(res);
     var db = res.data.responseObject
+    var headers =  res.headers('XSRF-TOKEN');
+    
     if (res.data.responseObject) {
       self.setReturnedData = {
         FirstName : db.firstName,
@@ -86,6 +89,8 @@ angular.module('ssoApp')
       }
       self.setUpdatedDataAsOld()
       self.elemVal = db.email;
+      
+      self.checkCookie();
     }
   }
 
@@ -94,6 +99,10 @@ angular.module('ssoApp')
     self.setReadOnly();
   }
 
+       self.checkCookie = function () {
+        tokenStorageService.refreshCookie();
+      };
+      
   self.setReadOnly = function() {
     if (self.setReturnedData.DateOfBirth) {
       self.readOnlyProp = true;
@@ -162,6 +171,7 @@ angular.module('ssoApp')
 
   self.saveSuccess = function (res) {
     displayResponseBox.populateResponseBox(self.saveResponseBox, "Your information was successfully updated!", false)
+    antiForgeryToken.setAntiForgeryToken(res);
   }
 
   self.save = function () {
@@ -187,7 +197,9 @@ angular.module('ssoApp')
 
 
   self.setPassSuccess = function (res) {
+
     displayResponseBox.populateResponseBox(self.resetPassResponseBox, "Your information was successfully updated!", false)
+    antiForgeryToken.setAntiForgeryToken(res);
   }
 
   self.setNewPassword = function () {
@@ -236,6 +248,7 @@ angular.module('ssoApp')
             self.updatedData.ZipCode=db.postalCode
             self.updatedData.Email=db.email;
           }
+          antiForgeryToken.setAntiForgeryToken(res);
         }
 
   
@@ -244,11 +257,16 @@ angular.module('ssoApp')
 
     // self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
     self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
-    self.dataToPopulateForm.AntiForgeryTokenId =  res.data
+    self.dataToPopulateForm.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();
     self.updatedData.SessionId = tokenStorageService.getToken()
-    self.updatedData.AntiForgeryTokenId =  res.data
+    self.updatedData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
     self.resetPassData.SessionId = tokenStorageService.getToken()
-    self.resetPassData.AntiForgeryTokenId =  res.data
+    self.resetPassData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+    // 
+    // var a = sessionService.setTokenData()
+    // sessionService.data.AntiForgeryTokenId =  res.data
+    // sessionService.setTokenData.SessionId =  tokenStorageService.getToken()
+
     self.sendRequestToPopulate();
   }
 
@@ -264,8 +282,7 @@ angular.module('ssoApp')
         //     .then(self.success, self.error)
         // }; 
 
-  $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-    .then(self.populateAntiForgeryToken, self.error);
+    self.populateAntiForgeryToken();
 
       //  window.onbeforeunload = self.delCookie();
 

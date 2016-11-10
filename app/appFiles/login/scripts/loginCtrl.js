@@ -2,7 +2,7 @@
 
 //SPECIAL
 angular.module('ssoApp')
-  .controller('loginCtrl', ['$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService',function($scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService) {
+  .controller('loginCtrl', ['antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService',function(antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService) {
       // console.log("Entering Login Ctrl");
 
       var self = this;
@@ -68,6 +68,7 @@ angular.module('ssoApp')
         // $state.go('sign-up', { token : res.data.responseObject })
         tokenStorageService.setToken(res.data.responseObject);
         $state.go('sign-up')
+        antiForgeryToken.setAntiForgeryToken(res);
       }
 
        console.log(loadBrandingService._styles.pingURL);
@@ -90,6 +91,8 @@ angular.module('ssoApp')
           $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
         }
       }
+
+      antiForgeryToken.setAntiForgeryToken(res);
        }
 
       self.loginRequest = function (event) {
@@ -99,8 +102,8 @@ angular.module('ssoApp')
         httpService.login(self.loginData)
           .then(self.loginSuccess, self.error)
           .finally(function () { $('.loginProcessingBtn').button('reset'); })
-      }
-
+      };
+      
       self.activationRequest = function (event) {
         event.preventDefault();
         $('.signUpProcessingBtn').button('loading');
@@ -111,9 +114,16 @@ angular.module('ssoApp')
 
           self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);
-            self.signUpData.AntiForgeryTokenId =  res.data
-            self.loginData.AntiForgeryTokenId =  res.data
+            antiForgeryToken.setAntiForgeryToken(res);
+            self.signUpData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+            self.loginData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+            self.clearCookie();
           }
+          
+          self.clearCookie = function() {
+            tokenStorageService.deleteToken();
+          };
+          
 
           // self.partnerName = loadBrandingService.getBaseUrl();
 
@@ -123,8 +133,9 @@ angular.module('ssoApp')
           //   self.partnerName = "PRIMERICA"
           // }
 
-      $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-        .then(self.populateAntiForgeryToken, self.error);
+
+         loadBrandingService.getStyleSheetPath()
+          .then(self.populateAntiForgeryToken, self.error);
 
  }]);
 

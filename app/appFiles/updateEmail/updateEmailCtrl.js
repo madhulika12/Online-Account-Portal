@@ -1,6 +1,6 @@
 'use strict';
 angular.module('ssoApp')
-    .controller('updateEmailCtrl', ['$timeout','tokenStorageService','$http', 'httpService', '$scope', 'Constants', 'tokenValidationService', 'displayResponseBox', '$state', 'usernameService', function($timeout, tokenStorageService, $http, httpService, $scope, Constants, tokenValidationService, displayResponseBox, $state, usernameService) {
+    .controller('updateEmailCtrl', ['antiForgeryToken', '$timeout','tokenStorageService','$http', 'httpService', '$scope', 'Constants', 'tokenValidationService', 'displayResponseBox', '$state', 'usernameService', function(antiForgeryToken, $timeout, tokenStorageService, $http, httpService, $scope, Constants, tokenValidationService, displayResponseBox, $state, usernameService) {
 
         var self = this;
 
@@ -34,6 +34,7 @@ angular.module('ssoApp')
         //UPDATE EMAIL FUNCTIONS
         //*****************************************
         self.updateEmailSuccess = function (res) {
+          antiForgeryToken.setAntiForgeryToken(res);
           $timeout(self.resetPassword(), 3000);
         }
 
@@ -56,6 +57,7 @@ angular.module('ssoApp')
               var message = res.data.responseObject
               displayResponseBox.setMessage(message, false)
           // displayResponseBox.setMessage("A password recovery email was sent to your account.", false)
+          antiForgeryToken.setAntiForgeryToken(res);
           $state.go('login')
         }
 
@@ -66,17 +68,21 @@ angular.module('ssoApp')
           httpService.forgotPassword(self.forgotPasswordData)
             .then(self.resetPasswordSuccess, self.error)
         }
+        
+        self.checkCookie = function () {
+          tokenStorageService.refreshCookie();
+        }; 
 
         // tokenValidationService.checkTokenAndRedirect()
-      self.populateAntiForgeryToken = function(res) {
+      self.populateAntiForgeryToken = function() {
           console.log("Antiforgery" + res);
-          self.updateEmailData.AntiForgeryTokenId =  res.data
+          self.updateEmailData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
           self.updateEmailData.SessionId = tokenStorageService.getToken();
-          self.forgotPasswordData.AntiForgeryTokenId =  res.data
+          self.forgotPasswordData.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();
           self.forgotPasswordData.SessionId = tokenStorageService.getToken();
+          self.checkCookie();
         }
 
-        $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-          .then(self.populateAntiForgeryToken, self.error);       
+      self.populateAntiForgeryToken();       
 
     }]);
