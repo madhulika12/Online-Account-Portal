@@ -16,6 +16,10 @@ angular.module('ssoApp')
       setAntiForgeryToken : function(res){
           antiForgeryToken =  res.headers('XSRF-TOKEN');
       },
+
+      setAntiForgeryTokenFromError : function(err){
+          antiForgeryToken =  err.headers('XSRF-TOKEN');
+      },
       
       getAntiForgeryToken : function() {
         return antiForgeryToken;

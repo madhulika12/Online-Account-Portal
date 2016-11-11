@@ -166,7 +166,8 @@ angular.module('ssoApp')
 
   self.saveError = function (err) {
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error - Update Profile.";
-    displayResponseBox.populateResponseBox(self.saveResponseBox, message, true)
+    displayResponseBox.populateResponseBox(self.saveResponseBox, message, true);
+    antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 
   self.saveSuccess = function (res) {
@@ -192,7 +193,8 @@ angular.module('ssoApp')
 
   self.setPassError = function (err) {
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
-    displayResponseBox.populateResponseBox(self.resetPassResponseBox, message, true)
+    displayResponseBox.populateResponseBox(self.resetPassResponseBox, message, true);
+    antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 
 

@@ -24,7 +24,8 @@ angular.module('ssoApp')
 
   self.error = function (err) {
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
-    displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
+    displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true);
+    antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 
   self.acceptTerms = function (event) {

@@ -80,6 +80,7 @@ angular.module('ssoApp')
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
     // displayResponseBox.setMessage(message, true)
     displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
+    antiForgeryToken.setAntiForgeryTokenFromError(err);
     // $state.go('login')
   }
 

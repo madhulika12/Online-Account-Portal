@@ -43,9 +43,9 @@ angular.module('ssoApp')
             var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
           displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
         }
-
-          
-          
+        
+        antiForgeryToken.setAntiForgeryTokenFromError(err);
+               
       }
 
       self.checkForTerms = function (res) {
@@ -117,7 +117,7 @@ angular.module('ssoApp')
             antiForgeryToken.setAntiForgeryToken(res);
             self.signUpData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
             self.loginData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
-            self.clearCookie();
+            // self.clearCookie();
           }
           
           self.clearCookie = function() {

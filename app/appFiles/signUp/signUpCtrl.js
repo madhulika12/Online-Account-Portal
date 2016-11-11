@@ -63,7 +63,8 @@ angular.module('ssoApp')
         //runs if the request has an http error
         self.error = function (err) {
           var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
-          displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
+          displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true);
+          antiForgeryToken.setAntiForgeryTokenFromError(err);
           // $('.processingBtn').button('reset');
         }
 
@@ -71,6 +72,7 @@ angular.module('ssoApp')
           var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
           displayResponseBox.setMessage(message, true)
           $state.go('login')
+          antiForgeryToken.setAntiForgeryTokenFromError(err);
           // $('.processingBtn').button('reset');
         }
 
