@@ -7,8 +7,9 @@ angular.module('ssoApp')
   loginSourceId : 2,
   portalBaseUrl : 'https://loginstage.krollportal.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
   tokenCookieKey : 'ssoSessionId',
-  fifteenMinutes : 900000, 
-  twoMinutes: 60000,
+  fifteenMinutes : 900000,
+  refreshTime : 900,
+  // twoMinutes: 60000,
 
   defaultStyles : {
     stylesheet : "styles/Kroll/main.css",

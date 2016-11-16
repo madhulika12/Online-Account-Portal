@@ -5,10 +5,20 @@ angular.module('ssoApp')
   var options = {}
 
   var optionsFifteen = function () {
-    var opt = angular.copy(options)
+    var opt = {}
     var fifteenAhead = self.now() + Constants.fifteenMinutes
     // var fifteenAhead = self.now() + Constants.twoMinutes
     opt.expires = new Date(fifteenAhead)
+    return opt
+  }
+
+  var refreshOptions = function () {
+    var opt = angular.copy(options)
+    var refreshAhead1 = self.now()
+    var refreshAhead2 = refreshAhead1 + Constants.fifteenMinutes
+
+    // var fifteenAhead = self.now() + Constants.twoMinutes
+    opt.expires = new Date(refreshAhead2)
     return opt
   }
 
@@ -18,7 +28,11 @@ angular.module('ssoApp')
 
   self.refreshCookie = function () {
     var token = self.getToken()
-    self.setToken(token)
+    self.refreshToken(token)
+  }
+
+  self.refreshToken = function (token) {
+    $cookies.put(Constants.tokenCookieKey, token, refreshOptions());
   }
 
   self.setToken = function (token) {

@@ -25,7 +25,7 @@ angular.module('ssoApp')
     error : false,
     display : false
   }
-  
+
   self.responseBoxConfig = displayResponseBox.checkMessage()
 
 
@@ -42,7 +42,7 @@ angular.module('ssoApp')
     antiForgeryToken.setAntiForgeryToken(res);
     $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject);
   }
-  
+
   self.invalidTokenError = function(err) {
     console.log("Invalid TOken Error");
     // var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error.";var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error."
@@ -69,21 +69,19 @@ angular.module('ssoApp')
     tokenStorageService.setToken(self.data.SessionId);
     // self.data.MemberId = res.data.responseObject.id
   }
-  
+
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
     antiForgeryToken.setAntiForgeryToken(res);
     self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
-    // 
+    //
   }
 
   tokenValidationService.checkTokenAndRedirect()
     .then(self.populateId, self.invalidTokenError)
-    
+
   loadBrandingService.getStyleSheetPath()
     .then(self.populateAntiForgeryToken, self.error);
-
-
 
 
 

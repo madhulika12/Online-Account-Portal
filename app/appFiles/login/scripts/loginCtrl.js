@@ -43,9 +43,9 @@ angular.module('ssoApp')
             var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
           displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
         }
-        
+
         antiForgeryToken.setAntiForgeryTokenFromError(err);
-               
+
       }
 
       self.checkForTerms = function (res) {
@@ -78,7 +78,7 @@ angular.module('ssoApp')
       if (res.data.errorType == 200) {
         console.log("Login Success");
         tokenStorageService.setToken(res.data.responseObject.sessionToken);
-        
+
         if ( self.checkForTerms(res) ) {
           $location.url( res.data.responseObject.pingToken )
       }
@@ -103,7 +103,7 @@ angular.module('ssoApp')
           .then(self.loginSuccess, self.error)
           .finally(function () { $('.loginProcessingBtn').button('reset'); })
       };
-      
+
       self.activationRequest = function (event) {
         event.preventDefault();
         $('.signUpProcessingBtn').button('loading');
@@ -114,16 +114,18 @@ angular.module('ssoApp')
 
           self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);
+            self.clearCookie();
             antiForgeryToken.setAntiForgeryToken(res);
             self.signUpData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
             self.loginData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
-            // self.clearCookie();
+
           }
-          
+
           self.clearCookie = function() {
             tokenStorageService.deleteToken();
           };
-          
+
+          // self.clearCookie();
 
           // self.partnerName = loadBrandingService.getBaseUrl();
 
@@ -133,6 +135,8 @@ angular.module('ssoApp')
           //   self.partnerName = "PRIMERICA"
           // }
 
+         //
+         $('div.fade').removeClass('modal-backdrop');
 
          loadBrandingService.getStyleSheetPath()
           .then(self.populateAntiForgeryToken, self.error);
