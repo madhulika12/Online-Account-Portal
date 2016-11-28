@@ -12,9 +12,14 @@ describe('Controller: LoginCtrl', function () {
     httpService = _httpService_;
 
     //create mocks
-    spyOn(httpService, 'activate').and.callFake(function () {
-      return promiseMock.ret
-    })
+    // spyOn(httpService, 'activate').and.callFake(function () {
+    //   return promiseMock.ret
+    // })
+    spyOn(httpService, "activate").and.callFake(function() {
+      var deferred = $q.defer();
+      deferred.resolve('Activate Success');
+      return deferred.promise;
+    });
     spyOn(httpService, 'login').and.callFake(function () {
       return promiseMock.ret
     })
@@ -49,7 +54,7 @@ describe('Controller: LoginCtrl', function () {
       var event = $.Event('click');
       expect(event.isDefaultPrevented()).toBeFalsy();
       LoginCtrl.activationRequest(event);
-      $rootScope.$digest();
+      // $rootScope.$digest();
       expect(event.isDefaultPrevented()).toBeTruthy();
 
     })
@@ -93,13 +98,13 @@ describe('Controller: LoginCtrl', function () {
       ctlr = LoginCtrl
       displayResponseBox = _displayResponseBox_
 
-      spyOn(displayResponseBox, 'populateResponseBox')
+      // spyOn(displayResponseBox, 'populateResponseBox')
 
       responseError = {
         data : { errorMessage : "TEST_ERROR_MESSAGE"},
 
         deleteMessage : function () {
-          this.data.errorMessage = null
+          this.data.errorMessage = null;
           return this
         },
 
@@ -110,16 +115,19 @@ describe('Controller: LoginCtrl', function () {
       }
     }))
     it('should execute displayResponseBox.populateResponseBox with the error message if it exists', function () {
+      spyOn(displayResponseBox, 'populateResponseBox')
       ctlr.error(responseError)
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, responseError.data.errorMessage, true)
     })
 
     it('should execture displayResponseBox.populateResponseBox with te default message if there is no message in the error', function () {
+      spyOn(displayResponseBox, 'populateResponseBox')
       ctlr.error(responseError.deleteMessage())
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
     })
 
     it('should execture displayResponseBox.populateResponseBox with te default message if there is no data in the error', function () {
+      spyOn(displayResponseBox, 'populateResponseBox')
       ctlr.error(responseError.deleteData())
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
     })

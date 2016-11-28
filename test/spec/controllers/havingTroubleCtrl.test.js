@@ -10,9 +10,15 @@ describe('Controller: havingTroubleCtrl', function () {
     httpService = _httpService_
     havingTroubleCtrl = $controller('havingTroubleCtrl', {$scope: $rootScope.$new()})
 
-    spyOn(httpService, 'forgotPassword').and.callFake(function () {
-      return promiseMock.ret
-    })
+    // spyOn(httpService, 'forgotPassword').and.callFake(function () {
+    //   return promiseMock.ret
+    // })
+    spyOn(httpService, "forgotPassword").and.callFake(function() {
+      var deferred = $q.defer();
+      deferred.resolve('Forgot Password Success');
+      return deferred.promise;
+    });
+
     spyOn($state, 'go')
 
   }));
@@ -22,7 +28,7 @@ describe('Controller: havingTroubleCtrl', function () {
       var event = $.Event('click');
       expect(event.isDefaultPrevented()).toBeFalsy();
       havingTroubleCtrl.forgotPasswordRequest(event);
-      $rootScope.$digest()
+      // $rootScope.$digest()
       expect(event.isDefaultPrevented()).toBeTruthy();
     })
     it('should run httpService.forgotPassword', function () {
