@@ -16,6 +16,11 @@ describe('Controller: forgotUsernameCtrl', function () {
     spyOn(httpService, 'forgotPassword').and.callFake(function () {
       return promiseMock.ret
     })
+    spyOn(httpService, "recoverAccount").and.callFake(function() {
+        var deferred = $q.defer();
+        deferred.resolve('Remote call result');
+        return deferred.promise;
+    });
 
   }));
 
@@ -30,7 +35,7 @@ describe('Controller: forgotUsernameCtrl', function () {
     it('should run httpService.forgotUsername', function () {
       var event = $.Event('click');
       forgotUsernameCtrl.sendForgotUsernameRequest(event);
-      expect(httpService.forgotUsername).toHaveBeenCalledWith(forgotUsernameCtrl.recoveryData)
+      expect(httpService.recoverAccount).toHaveBeenCalledWith(forgotUsernameCtrl.recoveryData);
 
     })
   })
@@ -51,7 +56,7 @@ describe('Controller: forgotUsernameCtrl', function () {
       ctlr = forgotUsernameCtrl
       displayResponseBox = _displayResponseBox_
 
-      spyOn(displayResponseBox, 'populateResponseBox')
+      spyOn(displayResponseBox, 'setMessage')
 
       responseError = {
         data : { errorMessage : "TEST_ERROR_MESSAGE"},
@@ -67,19 +72,19 @@ describe('Controller: forgotUsernameCtrl', function () {
         }
       }
     }))
-    it('should execute displayResponseBox.populateResponseBox with the error message if it exists', function () {
+    it('should execute displayResponseBox.setMessage with the error message if it exists', function () {
       ctlr.error(responseError)
-      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, responseError.data.errorMessage, true)
+      expect(displayResponseBox.setMessage).toHaveBeenCalledWith(responseError.data.errorMessage, true)
     })
 
-    it('should execture displayResponseBox.populateResponseBox with te default message if there is no message in the error', function () {
+    it('should execture displayResponseBox.setMessage with te default message if there is no message in the error', function () {
       ctlr.error(responseError.deleteMessage())
-      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
+      expect(displayResponseBox.setMessage).toHaveBeenCalledWith("There was an unexpected error.", true)
     })
 
-    it('should execture displayResponseBox.populateResponseBox with te default message if there is no data in the error', function () {
+    it('should execture displayResponseBox.setMessage with te default message if there is no data in the error', function () {
       ctlr.error(responseError.deleteData())
-      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
+      expect(displayResponseBox.setMessage).toHaveBeenCalledWith("There was an unexpected error.", true)
     })
   })
 

@@ -37,7 +37,8 @@ describe('Controller: forgotPasswordCtrl', function () {
     it('should place an empty data obejct on the data key of the controller', function () {
       var dummyData = {
         username : null,
-        url : getUrl()
+        LoginSourceID: null,
+        AntiForgeryTokenId: null
       };
       expect(ForgotPasswordCtrl.forgotPasswordData).toEqual(dummyData);
     });
