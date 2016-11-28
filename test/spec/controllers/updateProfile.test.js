@@ -29,9 +29,26 @@ describe('Controller: updateProfileCtrl', function () {
     City : "Townsville",
     State : "TN",
     ZipCode : "12345",
-    DOB : "11/11/1911",
+    DateOfBirth : "11/11/1911",
     Email : "abc@123.com",
-    Phone : "1234567890"
+    PhoneNumber : "1234567890",
+    SessionId : undefined,
+    AntiForgeryTokenId :  undefined
+  }
+
+  var emptyData = {
+    FirstName : null,
+    LastName : null,
+    Generation : null,
+    MailingAddress : null,
+    City : null,
+    State : null,
+    ZipCode : null,
+    DateOfBirth : null,
+    Email : null,
+    PhoneNumber : null,
+    SessionId : null,
+    AntiForgeryTokenId :  null
   }
 
   // Initialize the controller and a mock scope
@@ -59,12 +76,13 @@ describe('Controller: updateProfileCtrl', function () {
 
   }));
 
-  describe('on instantiation', function () {
-    it('should redirect to login if there is no token', function () {
-      $rootScope.$digest()
-      expect($state.go).toHaveBeenCalled()
-    })
-  })
+  // This was changed for the signup
+  // describe('on instantiation', function () {
+  //   it('should redirect to login if there is no token', function () {
+  //     $rootScope.$digest()
+  //     expect($state.go).toHaveBeenCalled()
+  //   })
+  // })
 
   describe('setting Data', function () {
 
@@ -139,12 +157,12 @@ describe('Controller: updateProfileCtrl', function () {
 
       it('should execture displayResponseBox.populateResponseBox with te default message if there is no message in the error', function () {
         ctlr.saveError(responseError.deleteMessage())
-        expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.saveResponseBox, "There was an unexpected error.", true)
+        expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.saveResponseBox, "There was an unexpected error - Update Profile.", true)
       })
 
       it('should execture displayResponseBox.populateResponseBox with te default message if there is no data in the error', function () {
         ctlr.saveError(responseError.deleteData())
-        expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.saveResponseBox, "There was an unexpected error.", true)
+        expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.saveResponseBox, "There was an unexpected error - Update Profile.", true)
       })
     })
 
@@ -162,7 +180,7 @@ describe('Controller: updateProfileCtrl', function () {
     describe('#save', function () {
       it('should call httpService.updateProfile', function () {
         UpdateProfileCtrl.save()
-        expect(httpService.updateProfile).toHaveBeenCalledWith(UpdateProfileCtrl.updatedData)
+        expect(httpService.updateProfile).toHaveBeenCalledWith(emptyData)
       })
     })
   })

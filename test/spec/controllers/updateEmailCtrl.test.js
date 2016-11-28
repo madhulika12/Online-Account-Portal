@@ -36,13 +36,13 @@ describe('Controller: updateEmailCtrl', function () {
       expect(event.isDefaultPrevented()).toBeFalsy();
       // console.log(event)
       UpdateEmailCtrl.updateEmailRequest(event);
-      $rootScope.$digest()
+      // $rootScope.$digest()
       expect(event.isDefaultPrevented()).toBeTruthy();
     })
     it('should run httpService.updateEmail', function () {
       var event = $.Event('click');
       UpdateEmailCtrl.updateEmailRequest(event);
-      expect(httpService.updateEmail).toHaveBeenCalledWith(UpdateEmailCtrl.data)
+      expect(httpService.updateEmail).toHaveBeenCalledWith(UpdateEmailCtrl.updateEmailData)
 
     })
   })
