@@ -2,24 +2,24 @@
 
 describe('Controller: termsAccept', function () {
 
-  var TermsAcceptCtrl, Constants, httpService, $rootScope, tokenValidationService;
+  var TermsAcceptCtrl, Constants, httpService, $rootScope, tokenStorageService;
 
-  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, $state, _tokenValidationService_) {
+  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, $state, _tokenStorageService_) {
     //create shared variables
     $rootScope = _$rootScope_
     httpService = _httpService_
-    tokenValidationService = _tokenValidationService_
+    tokenStorageService = _tokenStorageService_
 
     //creat mocks
     spyOn(httpService, 'acceptTerms').and.callFake(function () {
       return promiseMock.ret
     })
-    spyOn(tokenValidationService, 'getToken').and.callFake(function () {
+    spyOn(tokenStorageService, 'getToken').and.callFake(function () {
       return "TEST_TOKEN_XXX"
     })
-    spyOn(tokenValidationService, 'checkTokenAndRedirect').and.callFake(function () {
-      return promiseMock.ret
-    })
+    // spyOn(tokenValidationService, 'checkTokenAndRedirect').and.callFake(function () {
+    //   return promiseMock.ret
+    // })
     spyOn($state, 'go')
 
     //instantiate controller
@@ -28,11 +28,8 @@ describe('Controller: termsAccept', function () {
   }));
 
   describe('on instantiation', function () {
-    xit('should place the token on it\'s data object', function () {
-      //TODO now
-    })
-    it('should validate the users token', function () {
-      expect(TermsAcceptCtrl.data.TokenId).toEqual("TEST_TOKEN_XXX")
+    it('should place the token on it\'s data object', function () {
+      expect(TermsAcceptCtrl.data.sessionId).toEqual("TEST_TOKEN_XXX")
     })
   })
 
