@@ -63,7 +63,7 @@ describe('Controller: resetPasswordCtrl', function () {
       var event = $.Event('click');
       expect(event.isDefaultPrevented()).toBeFalsy();
       resetPasswordCtrl.setPasswordRequest(event);
-      $rootScope.$digest()
+      // $rootScope.$digest()
       expect(event.isDefaultPrevented()).toBeTruthy();
 
     })

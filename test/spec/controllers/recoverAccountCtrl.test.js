@@ -5,16 +5,21 @@ describe('Controller: recoverAccountCtrl', function () {
   var RecoverAccountCtrl, Constants, $rootScope, httpService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, $state) {
+  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, $state, $q) {
 
     //create shared variables
     $rootScope = _$rootScope_;
     httpService = _httpService_;
 
     //create mocks
-    spyOn(httpService, 'recoverAccount').and.callFake(function () {
-      return promiseMock.ret
-    })
+    // spyOn(httpService, 'recoverAccount').and.callFake(function () {
+    //   return promiseMock.ret
+    // })
+    spyOn(httpService, "recoverAccount").and.callFake(function() {
+      var deferred = $q.defer();
+      deferred.resolve('recoverAccount Success');
+      return deferred.promise;
+    });
     spyOn(httpService, 'forgotPassword').and.callFake(function () {
       return promiseMock.ret
     })
@@ -98,7 +103,7 @@ describe('Controller: recoverAccountCtrl', function () {
       var event = $.Event('click');
       expect(event.isDefaultPrevented()).toBeFalsy();
       RecoverAccountCtrl.requestRecovery(event);
-      $rootScope.$digest()
+      // $rootScope.$digest()
       expect(event.isDefaultPrevented()).toBeTruthy();
     })
     it('should run httpService.requestRecovery', function () {

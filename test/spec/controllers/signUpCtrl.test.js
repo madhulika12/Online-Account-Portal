@@ -15,9 +15,14 @@ describe('Controller: SignUpCtrl', function () {
     httpService = _httpService_;
 
     //create mocks
-    spyOn(httpService, 'signUp').and.callFake(function () {
-      return promiseMock.ret
-    })
+    // spyOn(httpService, 'signUp').and.callFake(function () {
+    //   return promiseMock.ret
+    // })
+    spyOn(httpService, "signUp").and.callFake(function() {
+      var deferred = $q.defer();
+      deferred.resolve('signUp Success');
+      return deferred.promise;
+    });
     spyOn(tokenValidationService, 'checkTokenAndRedirect').and.callFake(function () {
       return $q.resolve()
     })
@@ -27,7 +32,7 @@ describe('Controller: SignUpCtrl', function () {
 
     //instantiate controller
     SignUpCtrl = $controller('signUpCtrl', { $scope: $rootScope.$new() });
-    $rootScope.$digest()
+    // $rootScope.$digest()
   }));
 
   describe('on instantiation', function () {
