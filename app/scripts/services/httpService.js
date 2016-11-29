@@ -42,6 +42,14 @@ angular.module('ssoApp')
       return this.request(con)
     },
 
+
+    extendTimeout : function (data) {
+      // console.log('httpService.login')
+      var con = this._buildConfigure('POST', Constants.endpoints.extendTimeout, data)
+      return this.request(con)
+    },
+
+
     recoverAccount : function (data) {
       var con = this._buildConfigure('POST', Constants.endpoints.recoverAccount, data)
       return this.request(con)

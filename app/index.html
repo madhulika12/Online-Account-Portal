@@ -9,7 +9,6 @@
     <!-- These two scripts grab and load the Kroll fonts -->
 
 
-
     <!-- build:css(.) styles/vendor.css -->
     <!-- endbuild -->
 
@@ -45,7 +44,7 @@
 
     <div ui-view="header" class="container"></div>
 
-    <div ui-view="view" class="container" id="main-container"></div>
+    <div ui-view="view" class="container" id="main-container" data-ng-controller="sessionTimout as session"></div>
     <div ui-view="footer"></div>
 
 
@@ -73,6 +72,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-animate.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2016.2.607/js/kendo.all.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.3/ui-bootstrap-tpls.js"></script>-->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.js"></script>
 
 
@@ -83,6 +83,9 @@
     <script src="scripts/constants/constants.js"></script>
 
     <script src="scripts/services/loadBrandingService.js"></script>
+
+       <!--<script src="scripts/services/afterSessionExpire.js"></script>-->
+
     <script src="scripts/services/displayResponseBox.js"></script>
     <script src="scripts/services/tokenValidationService.js"></script>
     <script src="scripts/services/tokenStorageService.js"></script>
@@ -90,17 +93,25 @@
     <script src="scripts/services/inputErrorService.js"></script>
     <script src="scripts/services/getUrl.js"></script>
     <script src="scripts/services/usernameService.js"></script>
+    <script src="scripts/services/sessionService.js"></script>
+    <script src="scripts/services/antiForgeryToken.js"></script>
 
 
     <script src="scripts/directives/validationHighlights.js"></script>
+    <script src="scripts/directives/emailExistDirective.js"></script>
+    <script src="scripts/directives/sessionPopup/sessionPopup.js"></script>
     <script src="scripts/directives/inputLinker.js"></script>
     <script src="scripts/directives/responseBox/responseBox.js"></script>
     <script src="scripts/directives/asyncValidate.js"></script>
 
     <!--<script src="appFiles/login/scripts/loginDirective.js"></script>-->
 
-
     <script src="scripts/controllers/linkElement.js"></script>
+    <script src="scripts/controllers/test.js"></script>
+    <script src="scripts/controllers/secondTest.js"></script>
+    <script src="scripts/controllers/sessionTimeout/sessionTimout.js"></script>
+
+    <script src="appFiles/header/headerCtrl.js"></script>
     <script src="appFiles/login/scripts/loginCtrl.js"></script>
     <script src="appFiles/resetPassword/resetPassword.js"></script>
     <script src="appFiles/signUp/signUpCtrl.js"></script>
@@ -113,8 +124,33 @@
     <script src="appFiles/havingTrouble/havingTrouble.js"></script>
     <script src="appFiles/forgotUsername/forgotUsername.js"></script>
     <script src="appFiles/updateProfile/updateProfileCtrl.js"></script>
+    <script src="appFiles/browser/browserCtrl.js"></script>
+    <script src="appFiles/contactIDShield/contactIDShieldCtrl.js"></script>
 
     <script src="scripts/controllers/validation.js"></script>
     <!-- endbuild -->
+
+    <script type="text/javascript">
+      // var idleTime = 0;
+      // $(document).ready(function () {
+      //     //Increment the idle time counter every minute.
+      //     var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
+
+      //     //Zero the idle timer on mouse movement.
+      //     $(this).mousemove(function (e) {
+      //         idleTime = 0;
+      //     });
+      //     $(this).keypress(function (e) {
+      //         idleTime = 0;
+      //     });
+      // });
+
+      // function timerIncrement() {
+      //     idleTime = idleTime + 1;
+      //     if (idleTime > 18) { // 20 minutes
+      //         window.location.assign('https://idshieldstage.krollportal.com/login');
+      //     }
+      // }
+</script>
 </body>
 </html>

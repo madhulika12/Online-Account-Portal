@@ -49,7 +49,7 @@ module.exports = function (grunt) {
         tasks: ['newer:jshint:test', 'newer:jscs:test', 'karma']
       },
       compass: {
-        files: ['<%= yeoman.app %>/**/*.{scss,sass}'],
+        files : ['<%= yeoman.app %>/**/*.{scss,sass}'],
         tasks: ['compass:server', 'postcss:server'],
         options: {
           livereload: '<%= connect.options.livereload %>'

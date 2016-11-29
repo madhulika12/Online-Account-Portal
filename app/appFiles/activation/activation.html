@@ -1,6 +1,5 @@
 
 <main id="activate-view">
-
   <div class="row">
     <div class="col-xs-12 col-md-6">
       <div class="global-form-instructions">
@@ -17,6 +16,7 @@
             <label for="membershipNum" class="form-control-label">MEMBERSHIP NUMBER</label>
             <input
               type="text"
+              autocomplete="off"
               class="form-control input"
               ng-model="activate.data.membershipNum"
               name="membershipNum"
@@ -30,6 +30,7 @@
             <label for="lastName" class="form-control-label">LAST NAME</label>
             <input
               type="text"
+              autocomplete="off"
               class="form-control input"
               ng-pattern="activate.regex.lastName"
               ng-model="activate.data.lastName"
@@ -46,6 +47,7 @@
               type="text"
               class="form-control input"
               ng-pattern="activate.regex.zip"
+              autocomplete="off"
               ng-model="activate.data.zip"
               name="zip"
               required

@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row headerContainer" data-ng-controller="sessionTimout as session">
   <header class="navbar">
     <section>
       <div class="navbar-header">
@@ -11,9 +11,9 @@
           <a href="/#/login"><img ng-attr-src="{{styles.logo}}" class="navbar-brand"/></a>
       </div>
 
-      <div class="collapse navbar-collapse">
+      <div class="collapse navbar-collapse" data-ng-controller="headerCtrl as header">
         <ul class="nav navbar-nav navbar-right" id="header">
-          <li><a href="/#/login" class="headerLinks navbar-link">Home</a></li>
+          <li><a href="{{header.homeLink}}" class="headerLinks navbar-link" ng-click="header.changeHref()">Home</a></li>
           <li><a href="/#/contact-us" class="headerLinks navbar-link">Contact Us</a></li>
         </ul>
       </div>

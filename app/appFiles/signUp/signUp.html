@@ -1,4 +1,5 @@
 <main id="sign-up-view">
+
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-6">
       <div class="help-box">
@@ -30,12 +31,12 @@
           <!-- FIRST NAME -->
           <div class="form-group col-xs-12 col-md-4">
             <label for="FirstName" class="form-control-label">FIRST NAME<span class="required">*</span></label>
-            <input type="text" name="FirstName" ng-pattern="signUp.regex.FirstName" class="form-control input"  ng-model="signUp.data.FirstName" id="FirstName" required>
+            <input type="text" autocomplete="off" name="FirstName" ng-pattern="signUp.regex.FirstName" class="form-control input"  ng-model="signUp.data.FirstName" id="FirstName" required>
           </div>
           <!-- LAST NAME -->
           <div class="form-group col-xs-12 col-md-4">
             <label for="LastName" class="form-control-label">LAST NAME<span class="required">*</span></label>
-            <input type="text" class="form-control input" id="LastName" name="LastName" ng-pattern="signUp.regex.LastName" ng-model="signUp.data.LastName" required>
+            <input type="text" autocomplete="off" class="form-control input" id="LastName" name="LastName" ng-pattern="signUp.regex.LastName" ng-model="signUp.data.LastName" required>
           </div>
           <!-- GENERATION -->
           <div class="form-group col-xs-12 col-md-4">
@@ -55,13 +56,13 @@
           <!-- MAILING ADDRESS -->
           <div class="form-group col-xs-12 col-md-6">
             <label for="MailingAddress" class="form-control-label">MAILING ADDRESS<span class="required">*</span></label>
-            <input type="text" class="form-control input" id="MailingAddress" name="MailingAddress" ng-pattern="signUp.regex.MailingAddress" ng-model="signUp.data.MailingAddress" required>
+            <input type="text" class="form-control input" autocomplete="off" id="MailingAddress" name="MailingAddress" ng-pattern="signUp.regex.MailingAddress" ng-model="signUp.data.MailingAddress" required>
           </div>
 
           <!-- PHONE number -->
           <div class="form-group col-xs-12 col-md-6">
             <label for="Phone" class="form-control-label">PHONE NUMBER<span class="required">*</span></label>
-            <input type="text" class="form-control input" id="Phone" name="Phone" ng-pattern="signUp.regex.Telephone" ng-model="signUp.data.Telephone" required>
+            <input type="text" class="form-control input" autocomplete="off" id="Phone" name="Phone" ng-pattern="signUp.regex.Telephone" ng-model="signUp.data.Telephone" required>
           </div>
 
         </div>
@@ -70,7 +71,7 @@
           <!-- CITY -->
           <div class="form-group col-xs-12 col-md-6">
             <label for="City" class="form-control-label">CITY<span class="required">*</span></label>
-            <input type="text" class="form-control input" id="City" name="City" ng-pattern="signUp.regex.City" ng-model="signUp.data.City" required>
+            <input type="text" class="form-control input" autocomplete="off" id="City" name="City" ng-pattern="signUp.regex.City" ng-model="signUp.data.City" required>
           </div>
           <!-- STATE -->
           <div class="form-group col-xs-12 col-md-4">
@@ -78,6 +79,7 @@
             <select class="form-control input" id="State"
               name="State"
               ng-model="signUp.data.State"
+              autocomplete="off"
               ng-options="state.abbreviation as state.name for state in signUp.states"
               required>
             </select>
@@ -86,7 +88,7 @@
           <!-- ZIP -->
           <div class="form-group col-xs-12 col-md-2">
             <label for="ZipCode" class="form-control-label">ZIP CODE<span class="required">*</span></label>
-            <input type="text" class="form-control input" id="ZipCode" name="ZipCode" ng-pattern="signUp.regex.ZipCode" ng-model="signUp.data.Zip" required>
+            <input type="text" class="form-control input" autocomplete="off" id="ZipCode" name="ZipCode" ng-pattern="signUp.regex.ZipCode" ng-model="signUp.data.Zip" required>
           </div>
 
         </div>
@@ -99,6 +101,7 @@
               k-options="signUp.kendoDateOptions"
               k-format="'MM/dd/yyyy'"
               placeholder="MM/DD/YYYY"
+              autocomplete="off"
              class="input kendo-date" name="Dob" ng-pattern="signUp.regex.Dob" ng-model="signUp.data.Dob" required/>
           </div>
 
@@ -108,12 +111,12 @@
            <!-- SSN -->
            <div class="form-group col-xs-12 col-md-6">
              <label for="Ssn" class="form-control-label">SSN<span class="required">*</span></label>
-             <input class="form-control input" id="Ssn" name="Ssn" ng-pattern="signUp.regex.Ssn" ng-model="signUp.data.Ssn" placeholder="XXXXXXXXX" required>
+             <input class="form-control input" autocomplete="off" id="Ssn" name="Ssn" ng-pattern="signUp.regex.Ssn" ng-model="signUp.data.Ssn" placeholder="XXXXXXXXX" required>
            </div>
            <!-- Confirm SSN -->
            <div class="form-group col-xs-12 col-md-6">
              <label for="ConfirmSsn" class="form-control-label">CONFIRM SSN<span class="required">*</span></label>
-             <input class="form-control input" id="ConfirmSsn" name="ConfirmSsn" ng-pattern="signUp.regex.Ssn" ng-model="signUp.confirmData.Ssn" placeholder="XXXXXXXXX" required>
+             <input class="form-control input" autocomplete="off" id="ConfirmSsn" name="ConfirmSsn" ng-pattern="signUp.regex.Ssn" ng-model="signUp.confirmData.Ssn" placeholder="XXXXXXXXX" required>
            </div>
 
          </div>
@@ -137,6 +140,7 @@
               ng-pattern="signUp.regex.Username"
               async-validate="usernameExist"
               name="Username"
+              autocomplete="off"
               required
               />
             <span uib-popover="Username must be between 6 and 64 characters. Spaces are not allowed." class="glyphicon glyphicon-question-sign tool-tip-icon" popover-placement="top-right" popover-trigger="'mouseenter'"></span>
@@ -154,6 +158,7 @@
               ng-model="signUp.data.Email"
               ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }"
               async-validate="emailExist"
+              autocomplete="off"
               name="Email"
             required>
           </div>
@@ -171,6 +176,7 @@
               name="Password"
               ng-model="signUp.data.Password"
               ng-pattern="signUp.regex.Password"
+              autocomplete="off"
               required>
           </div>
 
@@ -183,6 +189,7 @@
               id="ConfirmPassword"
               name="ConfirmPassword"
               ng-model="signUp.confirmData.Password"
+              autocomplete="off"
               ng-pattern="signUp.regex.Password"
               required
               />

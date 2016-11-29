@@ -2,7 +2,7 @@
 
 //SPECIAL
 angular.module('ssoApp')
-  .controller('loginCtrl', ['$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService',function($scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService) {
+  .controller('loginCtrl', ['antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService',function(antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService) {
       // console.log("Entering Login Ctrl");
 
       var self = this;
@@ -44,8 +44,8 @@ angular.module('ssoApp')
           displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
         }
 
-          
-          
+        antiForgeryToken.setAntiForgeryTokenFromError(err);
+
       }
 
       self.checkForTerms = function (res) {
@@ -68,6 +68,7 @@ angular.module('ssoApp')
         // $state.go('sign-up', { token : res.data.responseObject })
         tokenStorageService.setToken(res.data.responseObject);
         $state.go('sign-up')
+        antiForgeryToken.setAntiForgeryToken(res);
       }
 
        console.log(loadBrandingService._styles.pingURL);
@@ -77,20 +78,21 @@ angular.module('ssoApp')
       if (res.data.errorType == 200) {
         console.log("Login Success");
         tokenStorageService.setToken(res.data.responseObject.sessionToken);
-        
+
         if ( self.checkForTerms(res) ) {
           $location.url( res.data.responseObject.pingToken )
-
-       if ( self.checkForAccountActivation(res) ) {
+      }
+       else if ( self.checkForAccountActivation(res) ) {
           $location.url( res.data.responseObject.pingToken + "?token=" + res.data.responseObject.sessionToken )
        }
-
-        } else {
+        else {
           console.log(res.data.responseObject);
           console.log(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
           $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
         }
       }
+
+      antiForgeryToken.setAntiForgeryToken(res);
        }
 
       self.loginRequest = function (event) {
@@ -100,7 +102,7 @@ angular.module('ssoApp')
         httpService.login(self.loginData)
           .then(self.loginSuccess, self.error)
           .finally(function () { $('.loginProcessingBtn').button('reset'); })
-      }
+      };
 
       self.activationRequest = function (event) {
         event.preventDefault();
@@ -112,12 +114,32 @@ angular.module('ssoApp')
 
           self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);
-            self.signUpData.AntiForgeryTokenId =  res.data
-            self.loginData.AntiForgeryTokenId =  res.data
+            self.clearCookie();
+            antiForgeryToken.setAntiForgeryToken(res);
+            self.signUpData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+            self.loginData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+
           }
 
-      $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-        .then(self.populateAntiForgeryToken, self.error);
+          self.clearCookie = function() {
+            tokenStorageService.deleteToken();
+          };
+
+          // self.clearCookie();
+
+          // self.partnerName = loadBrandingService.getBaseUrl();
+
+          // if (self.partnerName.match(/idshield/)) {
+          //   self.partnerName = "IDSHIELD"
+          // } else {
+          //   self.partnerName = "PRIMERICA"
+          // }
+
+         //
+         $('div.fade').removeClass('modal-backdrop');
+
+         loadBrandingService.getStyleSheetPath()
+          .then(self.populateAntiForgeryToken, self.error);
 
  }]);
 
