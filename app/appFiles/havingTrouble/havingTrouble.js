@@ -60,10 +60,10 @@ angular.module('ssoApp')
     $('#havingTroubleModal').modal('hide')
   }
 
-  self.callSecurityTokens = function() {
-          $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-    .then(self.populateAntiForgeryToken, self.error);
-  }
+  // self.callSecurityTokens = function() {
+  //         $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+  //   .then(self.populateAntiForgeryToken, self.error);
+  // }
 
   self.showModal()
 

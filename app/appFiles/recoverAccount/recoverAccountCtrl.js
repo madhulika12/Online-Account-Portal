@@ -131,7 +131,7 @@ angular.module('ssoApp')
   self.recoverSuccess = function (res) {
     // console.log('recoverSuccess response', res)
     tokenStorageService.setToken(res.data.responseObject.sessionToken);
-    
+
     // self.usernameData.TokenId = res.data.responseObject.token
     // self.recoveryData.SessionId = tokenStorageService.setToken();
 
@@ -142,7 +142,7 @@ angular.module('ssoApp')
     //   self.redirectUpdateEmail()
     //   // self.showUpdateEmailModal(res)
     // } else if ('they need to reset their password') {
-      
+
     // } else {
     //   self.showJustUsernameModal()
      }
@@ -177,7 +177,7 @@ angular.module('ssoApp')
             self.recoveryData.AntiForgeryTokenId =  res.data;
           }
 
-      $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-        .then(self.populateAntiForgeryToken, self.error);
+      // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+      //   .then(self.populateAntiForgeryToken, self.error);
 
 }])

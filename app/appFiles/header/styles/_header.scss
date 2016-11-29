@@ -26,10 +26,6 @@ div.collapse a.headerLinks:first-of-type {
   //margin-right: 1%;
 }
 
-#header:hover {
-  background-color: #fff;
-}
-
 //Shrinks the navbar image on smaller screens:
 
 @media screen and (max-width: 767px) {
@@ -45,9 +41,6 @@ div.collapse a.headerLinks:first-of-type {
     .headerLinks {
       //margin-top: 3px;
       color: #fff;
-    }
-    li:nth-child(n+2) {
-      border: 1px solid #fff;
     }
     li{
        background-color: $footerBackgroundColor;

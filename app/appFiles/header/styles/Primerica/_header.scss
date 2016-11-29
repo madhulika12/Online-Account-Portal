@@ -1,17 +1,52 @@
 #header
   .headerLinks {
     color: white;
-    &:hover {
+    &:hover, &:focus {
       color: black;
+      background-color: #999;
     }
+    // &:visited {
+    //   color: #fff;
+    //   background: #999;
+    // }
   }
 
 .navbar-toggle.hamburger {
   &, &:hover, &:active, &:focus {
-    background-color: rgb(51,153,255);
+    background-color: rgba(232,232,232,0.9);
   }
 }
 
-header.navbar-default {
+header div.collapse {
   background-color: rgb(153, 153, 153);
+}
+
+.navbar-collapse.collapse {
+  height: 90px;
+}
+
+@media screen and (max-width: 767px) {
+  .navbar-collapse.collapse {
+    height: auto;
+  }
+
+  header {
+    padding: 0px 15px;
+    background-color: rgb(153, 153, 153);
+  }
+  #header {
+    .headerLinks {
+      //margin-top: 3px;
+      color: #fff;
+    }
+    li:nth-child(n+2) {
+      border-top: 1px solid #3c3c3c;
+    }
+    li{
+       background-color: rgb(153, 153, 153);
+    }
+    li > a:hover {
+      background-color: rgb(153, 153, 153);
+    }
+  }
 }

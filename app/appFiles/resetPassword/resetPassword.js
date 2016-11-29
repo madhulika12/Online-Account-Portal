@@ -91,16 +91,16 @@ angular.module('ssoApp')
         })
 
 
-        tokenValidationService.checkJWT()
-          .catch(self.showResetModal)
+        // tokenValidationService.checkJWT()
+        //   .catch(self.showResetModal)
 
       self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);
             self.data.AntiForgeryTokenId =  res.data
           }
 
-      $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-        .then(self.populateAntiForgeryToken, self.error);
+      // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+      //   .then(self.populateAntiForgeryToken, self.error);
 
         //*******************************************************
 

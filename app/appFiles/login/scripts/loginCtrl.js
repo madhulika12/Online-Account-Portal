@@ -44,8 +44,8 @@ angular.module('ssoApp')
           displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
         }
 
-          
-          
+
+
       }
 
       self.checkForTerms = function (res) {
@@ -77,7 +77,7 @@ angular.module('ssoApp')
       if (res.data.errorType == 200) {
         console.log("Login Success");
         tokenStorageService.setToken(res.data.responseObject.sessionToken);
-        
+
         if ( self.checkForTerms(res) ) {
           $location.url( res.data.responseObject.pingToken )
  }
@@ -116,9 +116,9 @@ angular.module('ssoApp')
             self.loginData.AntiForgeryTokenId =  res.data
           }
 
-      $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-        .then(self.populateAntiForgeryToken, self.error);
-
+ //      $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+ //        .then(self.populateAntiForgeryToken, self.error);
+ //
  }]);
 
  // $scope.$on('$locationChangeStart', function (event, next, current) {

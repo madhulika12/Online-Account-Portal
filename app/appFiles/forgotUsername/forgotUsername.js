@@ -44,13 +44,13 @@ angular.module('ssoApp')
 
   self.backToLogin = function () {
     $('#username-modal').modal('hide')
-    
+
     $('#username-modal').on('hidden.bs.modal', function () {
       $state.go('login')
     })
   }
 
-  self.backToLoginAfterResetPassword = function (success) { 
+  self.backToLoginAfterResetPassword = function (success) {
     $('#username-modal').modal('hide')
 
     // $('#username-modal').on('hidden.bs.modal', function () {
@@ -101,6 +101,6 @@ angular.module('ssoApp')
     self.data.AntiForgeryTokenId =  res.data
   }
 
-  $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-    .then(self.populateAntiForgeryToken, self.error);
+//   $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+//     .then(self.populateAntiForgeryToken, self.error);
 }])

@@ -25,7 +25,7 @@ angular.module('ssoApp')
     error : false,
     display : false
   }
-  
+
   self.responseBoxConfig = displayResponseBox.checkMessage()
 
 
@@ -40,7 +40,7 @@ angular.module('ssoApp')
     // $window.location.assign(Constants.portalBaseUrl + res.data.responseObject.pingToken);
     $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject);
   }
-  
+
   self.invalidTokenError = function(err) {
     console.log("Invalid TOken Error");
     var message = (!err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error.";
@@ -66,19 +66,19 @@ angular.module('ssoApp')
     tokenStorageService.setToken(self.data.SessionId);
     // self.data.MemberId = res.data.responseObject.id
   }
-  
+
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
-    
+
     self.data.AntiForgeryTokenId =  res.data
-    // 
+    //
   }
 
   tokenValidationService.checkTokenAndRedirect()
     .then(self.populateId, self.invalidTokenError)
-    
-  $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-    .then(self.populateAntiForgeryToken, self.error);
+
+  // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+  //   .then(self.populateAntiForgeryToken, self.error);
 
 
 

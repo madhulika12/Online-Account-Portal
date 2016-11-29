@@ -15,6 +15,18 @@ header.navbar {
   //padding: 20px;
 }
 
+#header:hover {
+  background-color: #fff;
+}
+
 // #logo-box {
 //   background-image: url('../../../../images/IDShield/IDShieldLogo.png');
 // }
+
+@media screen and (max-width: 767px) {
+  #header {
+    li:nth-child(n+2) {
+      border: 1px solid #fff;
+    }
+  }
+}

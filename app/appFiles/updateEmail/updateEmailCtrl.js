@@ -74,7 +74,7 @@ angular.module('ssoApp')
           self.forgotPasswordData.SessionId = tokenStorageService.getToken();
         }
 
-        $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-          .then(self.populateAntiForgeryToken, self.error);       
+        // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+        //   .then(self.populateAntiForgeryToken, self.error);
 
     }]);

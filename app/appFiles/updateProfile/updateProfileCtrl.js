@@ -200,7 +200,7 @@ angular.module('ssoApp')
           }
         }
 
-  
+
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
     // self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
@@ -218,15 +218,15 @@ angular.module('ssoApp')
             // .then(self.populateForm, self.error)
             .then(self.setData, self.error)
         }
-  
+
         //  self.delCookie = function() {
         //   var ssoSessionId = tokenStorageService.getToken();
         //   httpService.delCookie(self.resetPassData.SessionId)
         //     .then(self.success, self.error)
-        // }; 
+        // };
 
-  $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-    .then(self.populateAntiForgeryToken, self.error);
+  // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+  //   .then(self.populateAntiForgeryToken, self.error);
 
       //  window.onbeforeunload = self.delCookie();
 
@@ -235,6 +235,6 @@ angular.module('ssoApp')
       // }));
       // $(window).on('mouseout', (function () {
       //     console.log("leaving");
-       
+
 
 }])

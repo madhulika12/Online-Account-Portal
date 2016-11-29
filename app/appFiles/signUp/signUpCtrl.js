@@ -130,8 +130,8 @@ angular.module('ssoApp')
             self.sendRequestToPopulate();
           }
 
-      $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-        .then(self.populateAntiForgeryToken, self.error);
+      // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+      //   .then(self.populateAntiForgeryToken, self.error);
 
         self.sendRequestToPopulate = function() {
           httpService.getMember(self.dataToPopulateForm)
