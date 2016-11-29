@@ -68,10 +68,16 @@ angular.module('ssoApp')
     .then(self.populateAntiForgeryToken, self.error);
     self.checkCookie();
   }
-  
+
   self.checkCookie = function () {
     tokenStorageService.refreshCookie();
   }
+
+  // self.callSecurityTokens = function() {
+  //         $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+  //   .then(self.populateAntiForgeryToken, self.error);
+  // }
+
 
   self.showModal()
 

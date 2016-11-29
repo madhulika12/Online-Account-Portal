@@ -74,11 +74,15 @@ angular.module('ssoApp')
     console.log("Antiforgery" + res);
     antiForgeryToken.setAntiForgeryToken(res);
     self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
-    //
+
+    self.data.AntiForgeryTokenId =  res.data
   }
 
   tokenValidationService.checkTokenAndRedirect()
     .then(self.populateId, self.invalidTokenError)
+
+  // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+  //   .then(self.populateAntiForgeryToken, self.error);
 
   loadBrandingService.getStyleSheetPath()
     .then(self.populateAntiForgeryToken, self.error);

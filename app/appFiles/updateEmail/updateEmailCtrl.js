@@ -69,10 +69,10 @@ angular.module('ssoApp')
           httpService.forgotPassword(self.forgotPasswordData)
             .then(self.resetPasswordSuccess, self.error)
         }
-        
+
         self.checkCookie = function () {
           tokenStorageService.refreshCookie();
-        }; 
+        };
 
         // tokenValidationService.checkTokenAndRedirect()
       self.populateAntiForgeryToken = function() {
@@ -84,6 +84,7 @@ angular.module('ssoApp')
           self.checkCookie();
         }
 
-      self.populateAntiForgeryToken();       
+      self.populateAntiForgeryToken();
+
 
     }]);

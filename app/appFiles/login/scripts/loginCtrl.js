@@ -44,7 +44,11 @@ angular.module('ssoApp')
           displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
         }
 
+<<<<<<< HEAD
         antiForgeryToken.setAntiForgeryTokenFromError(err);
+=======
+
+>>>>>>> master
 
       }
 
@@ -140,7 +144,6 @@ angular.module('ssoApp')
 
          loadBrandingService.getStyleSheetPath()
           .then(self.populateAntiForgeryToken, self.error);
-
  }]);
 
  // $scope.$on('$locationChangeStart', function (event, next, current) {

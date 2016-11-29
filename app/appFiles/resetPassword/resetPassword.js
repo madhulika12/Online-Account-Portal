@@ -93,8 +93,8 @@ angular.module('ssoApp')
         })
 
 
-        tokenValidationService.checkJWT()
-          .catch(self.showResetModal)
+        // tokenValidationService.checkJWT()
+        //   .catch(self.showResetModal)
 
       self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);
@@ -106,7 +106,12 @@ angular.module('ssoApp')
         tokenStorageService.refreshCookie();
       };
 
+<<<<<<< HEAD
       self.populateAntiForgeryToken();
+=======
+      // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+      //   .then(self.populateAntiForgeryToken, self.error);
+>>>>>>> master
 
         //*******************************************************
 
