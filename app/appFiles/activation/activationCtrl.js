@@ -40,11 +40,4 @@ angular.module('ssoApp')
     httpService.activate(self.data)
       .then(self.activationSuccess, self.error)
   }
-
-
-
-
-
-
-
 }])
