@@ -107,8 +107,8 @@ describe('Service: httpService', function () {
   })
 
   describe('getMember', function () {
-    it('should fire a GET to the getMember endpoint with the data', function () {
-      expectRequest('GET', Constants.endpoints.getMemberByToken, testData)
+    it('should fire a POST to the getMember endpoint with the data', function () {
+      expectRequest('POST', Constants.endpoints.getMemberByToken, testData)
       httpService.getMember(testData)
       $httpBackend.flush()
     })
@@ -117,7 +117,7 @@ describe('Service: httpService', function () {
   describe('emailExist', function () {
     it('should fire a GET to the emailExist endpoint with the data', function () {
       var test = { 'email' : testData }
-      expectRequest('GET', Constants.endpoints.emailExist + '?email=%7B%7D', testData)
+      expectRequest('GET', Constants.endpoints.emailExist + '?emailUserId=%7B%7D', testData)
       httpService.emailExist(test)
       $httpBackend.flush()
     })
@@ -126,7 +126,7 @@ describe('Service: httpService', function () {
   describe('usernameExist', function () {
     it('should fire a GET to the usernameExist endpoint with the data', function () {
       var test = { 'userid' : testData }
-      expectRequest('GET', Constants.endpoints.usernameExist + '?userid=%7B%7D', testData)
+      expectRequest('GET', Constants.endpoints.usernameExist + '?emailUserId=%7B%7D', testData)
       httpService.usernameExist(test)
       $httpBackend.flush()
     })
