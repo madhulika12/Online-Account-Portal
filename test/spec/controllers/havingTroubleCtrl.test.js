@@ -2,12 +2,14 @@
 
 describe('Controller: havingTroubleCtrl', function () {
 
-  var havingTroubleCtrl, Constants, httpService, $rootScope;
+  var havingTroubleCtrl, Constants, httpService, $rootScope, displayResponseBox, $state;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _httpService_, $state) {
-    $rootScope = _$rootScope_
-    httpService = _httpService_
+  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _httpService_, _$state_, _displayResponseBox_) {
+    $rootScope = _$rootScope_;
+    httpService = _httpService_;
+    displayResponseBox = _displayResponseBox_;
+    $state = _$state_;
     havingTroubleCtrl = $controller('havingTroubleCtrl', {$scope: $rootScope.$new()})
 
     // spyOn(httpService, 'forgotPassword').and.callFake(function () {
@@ -39,12 +41,15 @@ describe('Controller: havingTroubleCtrl', function () {
     })
   })
 
-  xdescribe('forgotPassSuccess', function () {
+  describe('forgotPassSuccess', function () {
     it('should set the responseBox with the password recover message', function () {
-      //TODO now
+      spyOn(displayResponseBox, 'setMessage')
+      havingTroubleCtrl.forgotPassSuccess("Anything");
+      expect(displayResponseBox.setMessage).toHaveBeenCalled()
     })
     it('should redirect to the login page', function () {
-      //TODO now
+      havingTroubleCtrl.forgotPassSuccess("Anything");
+      expect($state.go).toHaveBeenCalledWith('login')
     })
   })
 
@@ -75,15 +80,27 @@ describe('Controller: havingTroubleCtrl', function () {
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, responseError.data.errorMessage, true)
     })
 
-    it('should execture displayResponseBox.populateResponseBox with te default message if there is no message in the error', function () {
+    it('should execute displayResponseBox.populateResponseBox with the default message if there is no message in the error', function () {
       ctlr.error(responseError.deleteMessage())
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
     })
 
-    it('should execture displayResponseBox.populateResponseBox with te default message if there is no data in the error', function () {
+    it('should execute displayResponseBox.populateResponseBox with the default message if there is no data in the error', function () {
       ctlr.error(responseError.deleteData())
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
     })
+  })
+
+  describe('populateAntiForgeryToken', function () {
+    it('should popluate the AntiForgeryToken into self.forgotPassData ', function() {
+      var mockToken = { data: "MOCK_ANTI_FORGERY__TOKEN" };
+      havingTroubleCtrl.populateAntiForgeryToken(mockToken);
+      expect(havingTroubleCtrl.forgotPassData.AntiForgeryTokenId).toBe(mockToken.data);
+    })
+  })
+
+  describe('dismissToRecoverAccount', function () {
+    // TODO: Write Tests for Bootstrap Modals?
   })
 
 })
