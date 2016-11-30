@@ -157,7 +157,7 @@ describe('Controller: forgotUsernameCtrl', function () {
       forgotUsernameCtrl.populateAntiForgeryToken(mockToken);
       expect(forgotUsernameCtrl.recoveryData.AntiForgeryTokenId).toBe(mockToken.data);
     })
-    it('should popluate the AntiForgeryToken into self.data ', function() {
+    it('should populate the AntiForgeryToken into self.data ', function() {
       var mockToken = { data: "MOCK_ANTI_FORGERY__TOKEN" };
       forgotUsernameCtrl.populateAntiForgeryToken(mockToken);
       expect(forgotUsernameCtrl.data.AntiForgeryTokenId).toBe(mockToken.data);

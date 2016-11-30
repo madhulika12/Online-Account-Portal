@@ -53,6 +53,7 @@ describe('Controller: activationCtrl', function () {
       var event = $.Event('click');
       expect(event.isDefaultPrevented()).toBeFalsy();
       ActivationCtrl.activationRequest(event);
+      ActivationCtrl.error();
       shared.$rootScope.$digest()
       expect(event.isDefaultPrevented()).toBeTruthy();
 
