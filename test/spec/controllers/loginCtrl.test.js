@@ -2,14 +2,19 @@
 
 describe('Controller: LoginCtrl', function () {
 
-  var LoginCtrl, httpService, $rootScope, positiveActivate, httpError;
+  var LoginCtrl, httpService, $rootScope, positiveActivate, httpError, $location, tokenStorageService, $state, $window, loadBrandingService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, $state, $q, _httpService_, _$rootScope_) {
+  beforeEach(inject(function ($controller, _$state_, $q, _httpService_, _$rootScope_, _$location_, _$window_, _tokenStorageService_, _loadBrandingService_) {
 
     //set shared variables
     $rootScope = _$rootScope_;
     httpService = _httpService_;
+    $location = _$location_;
+    tokenStorageService = _tokenStorageService_;
+    $state = _$state_;
+    $window = _$window_;
+    loadBrandingService = _loadBrandingService_;
 
     //create mocks
     // spyOn(httpService, 'activate').and.callFake(function () {
@@ -43,11 +48,12 @@ describe('Controller: LoginCtrl', function () {
 
   }));
 
-  xdescribe('on instantiation', function () {
-    it('should check for a stored response box message and set it on the responseBoxConfig key', function () {
-      //TODO now
-    })
-  })
+  // Code in controller is currently commented out. 
+  // xdescribe('on instantiation', function () {
+  //   it('should check for a stored response box message and set it on the responseBoxConfig key', function () {
+  //     //TODO now
+  //   })
+  // })
 
   describe('activationRequest', function () {
     it('prevents the default event', function () {
@@ -65,9 +71,20 @@ describe('Controller: LoginCtrl', function () {
     })
   })
 
-  xdescribe('activationSuccess', function () {
-    it('should redirect to the sign-up view with the string provided by the response object as the token query paramenter', function () {
-      //TODO now
+  describe('activationSuccess', function () {
+      var mockToken = { data: { responseObject: "TEST_TOKEN" } };
+    it('should store the string provided by the response object using token storage service', function () {
+      spyOn(tokenStorageService, 'setToken');
+
+      LoginCtrl.activationSuccess(mockToken);
+      expect(tokenStorageService.setToken).toHaveBeenCalledWith(mockToken.data.responseObject);
+    })
+
+    it('should change the state to sign-up', function () {
+      spyOn(tokenStorageService, 'setToken');
+
+      LoginCtrl.activationSuccess(mockToken);
+      expect($state.go).toHaveBeenCalledWith("sign-up");
     })
   })
 
@@ -86,9 +103,52 @@ describe('Controller: LoginCtrl', function () {
     })
   })
 
-  xdescribe('loginSuccess', function () {
-    it('should redirect to the url provided in the response object', function () {
-      //TODO when written
+  describe('loginSuccess', function () {
+    var mockData;
+    beforeEach(function(){
+      mockData = { 
+        data: { 
+          errorType: 200,
+          responseObject: {
+            sessionToken: "TEST_SESSION",
+            pingToken: "TEST_PING"
+          }
+        }
+      };
+
+      spyOn(tokenStorageService, 'setToken');
+      spyOn($location, 'url');
+    })
+    it('should store the sessionToken if the errortype is 200', function () {
+      LoginCtrl.loginSuccess(mockData);
+      expect(tokenStorageService.setToken).toHaveBeenCalledWith(mockData.data.responseObject.sessionToken);
+    })
+
+    it('should assign the window location based on the ping-token if checkForTerms is not triggered', function () {
+      spyOn($window.location, 'assign');
+      LoginCtrl.loginSuccess(mockData);
+      expect($window.location.assign).toHaveBeenCalledWith(loadBrandingService._styles.pingURL + mockData.data.responseObject.pingToken);
+    })
+
+    it('should redirect the page if the pingToken contains terms-accept', function () {
+      var checkThis = "terms-accept";
+      mockData.data.responseObject.pingToken = checkThis;
+      LoginCtrl.loginSuccess(mockData);
+      expect($location.url).toHaveBeenCalledWith(checkThis);
+    })
+
+    // ? Is this how this is supposed to perform? This would never be reach since it triggers the above location change first!
+    xit('should redirect the page if the pingToken contains terms-accept and account-activation ??', function () {
+      var checkThis = "terms-accept&account-activation";
+      mockData.data.responseObject.pingToken = checkThis;
+      LoginCtrl.loginSuccess(mockData);
+      expect($location.url).toHaveBeenCalledWith(checkThis);
+    })
+
+    it('should do nothing if the errortype is not 200', function () {
+      mockData.data.errorType = 500;
+      LoginCtrl.loginSuccess(mockData);
+      expect(tokenStorageService.setToken).not.toHaveBeenCalled();
     })
   })
 
@@ -130,6 +190,58 @@ describe('Controller: LoginCtrl', function () {
       spyOn(displayResponseBox, 'populateResponseBox')
       ctlr.error(responseError.deleteData())
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
+    })
+
+    it('should follow the location described by the pingToken if it exists', function () {
+      responseError.data.responseObject = { pingToken: "TEST" };
+      spyOn($location, 'url');
+      ctlr.error(responseError);
+      expect($location.url).toHaveBeenCalledWith(responseError.data.responseObject.pingToken);
+    })
+  })
+
+  describe('checkForTerms', function () {
+    it('should return an answer of  whether the pingToken equals terms-accept', function () {
+      var testingFor = "terms-accept";
+      var mockResponse = { data: { responseObject: { pingToken: testingFor } } };
+      var answer = LoginCtrl.checkForTerms(mockResponse);
+      expect(answer).toBeTruthy();
+    })
+
+    it('should be null if it does not match terms-accept', function () {
+      var testingFor = "yarp";
+      var mockResponse = { data: { responseObject: { pingToken: testingFor } } };
+      var answer = LoginCtrl.checkForTerms(mockResponse);
+      expect(answer).toBeFalsy();
+    })
+  })
+
+  describe('checkForAccountActivation', function () {
+    it('should return an answer of  whether the pingToken equals account-activation', function () {
+      var testingFor = "account-activation";
+      var mockResponse = { data: { responseObject: { pingToken: testingFor } } };
+      var answer = LoginCtrl.checkForAccountActivation(mockResponse);
+      expect(answer).toBeTruthy();
+    })
+
+    it('should be null if it does not match account-activation', function () {
+      var testingFor = "yarp";
+      var mockResponse = { data: { responseObject: { pingToken: testingFor } } };
+      var answer = LoginCtrl.checkForAccountActivation(mockResponse);
+      expect(answer).toBeFalsy();
+    })
+  })
+
+  describe('populateAntiForgeryToken', function () {
+    it('should popluate the AntiForgeryToken into self.signUpData ', function() {
+      var mockToken = { data: "MOCK_ANTI_FORGERY_TOKEN" };
+      LoginCtrl.populateAntiForgeryToken(mockToken);
+      expect(LoginCtrl.signUpData.AntiForgeryTokenId).toBe(mockToken.data);
+    })
+    it('should populate the AntiForgeryToken into self.loginData ', function() {
+      var mockToken = { data: "MOCK_ANTI_FORGERY_TOKEN" };
+      LoginCtrl.populateAntiForgeryToken(mockToken);
+      expect(LoginCtrl.loginData.AntiForgeryTokenId).toBe(mockToken.data);
     })
   })
 

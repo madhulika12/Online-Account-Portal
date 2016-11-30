@@ -74,24 +74,25 @@ angular.module('ssoApp')
 
        self.loginSuccess = function (res) {
 
-      if (res.data.errorType == 200) {
-        console.log("Login Success");
-        tokenStorageService.setToken(res.data.responseObject.sessionToken);
-        
-        if ( self.checkForTerms(res) ) {
-          $location.url( res.data.responseObject.pingToken )
+        if (res.data.errorType == 200) {
+          console.log("Login Success");
+          tokenStorageService.setToken(res.data.responseObject.sessionToken);
 
-       if ( self.checkForAccountActivation(res) ) {
-          $location.url( res.data.responseObject.pingToken + "?token=" + res.data.responseObject.sessionToken )
-       }
+          if ( self.checkForTerms(res) ) {
+            $location.url( res.data.responseObject.pingToken )
 
-        } else {
-          console.log(res.data.responseObject);
-          console.log(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
-          $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
-        }
-      }
-       }
+            // ? Is this how this is supposed to perform? This would never be reach since it triggers the above location change first!
+            if ( self.checkForAccountActivation(res) ) {
+              $location.url( res.data.responseObject.pingToken + "?token=" + res.data.responseObject.sessionToken )
+            };
+
+          } else {
+            console.log(res.data.responseObject);
+            console.log(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
+            $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
+          };
+        };
+       };
 
       self.loginRequest = function (event) {
         // console.log('loginCtrl.loginRequest')
