@@ -35,15 +35,7 @@ describe('Controller: SignUpCtrl', function () {
 
     //instantiate controller
     SignUpCtrl = $controller('signUpCtrl', { $scope: $rootScope.$new() });
-    // $rootScope.$digest()
   }));
-
-  // Doesn't look like this is done anymore
-  // describe('on instantiation', function () {
-  //   it('should call tokenValidationService.checkToken', function () {
-  //     expect(tokenValidationService.checkTokenAndRedirect).toHaveBeenCalled()
-  //   })
-  // })
 
   describe('sendSignUpRequest', function () {
     it('should call the httpService.signUp method with the signUp data', function () {
@@ -112,30 +104,46 @@ describe('Controller: SignUpCtrl', function () {
     })
   })
 
-  describe('requestMemberData', function () {
-    it('should execture the httpService.getMember method with the query string token', function () {
-      //TODO now
-    })
-    it('on a positive response it should execute populateForm with the response', function () {
-
-    })
-  })
-
   describe('setViewAndRender', function () {
+    var mockModelController;
+    var mockData = {};
+    beforeEach(function(){
+      mockModelController = jasmine.createSpyObj('mockModelController', ['$setViewValue', '$render', '$validate']);
+    })
     it('should set the view value with the modelCtrl passed to it', function () {
-      //TODO now
+      SignUpCtrl.setViewAndRender(mockModelController, mockData);
+      expect(mockModelController.$setViewValue).toHaveBeenCalledWith(mockData)
     })
     it('should run the modelCtrl\'s $render method', function () {
-      //TODO now
+      SignUpCtrl.setViewAndRender(mockModelController, mockData);
+      expect(mockModelController.$render).toHaveBeenCalled();
     })
     it('should run the modelCtrl\'s $validate method', function () {
-      //TODO now
+      SignUpCtrl.setViewAndRender(mockModelController, mockData);
+      expect(mockModelController.$validate).toHaveBeenCalled();
     })
   })
 
   describe('populateForm', function () {
-    it('should execture setViewAndRender with the individual data points passed to it', function () {
-      //TODO now
+    beforeEach(function(){
+      spyOn(SignUpCtrl, 'setViewAndRender');
+      SignUpCtrl.form = {};
+    })
+    it('should execute setViewAndRender with the individual data points passed to it', function () {
+      var mockUserData = { data: { responseObject: { id: 9000 } } };
+      var inputsRendered = ["Dob", "Phone", "FirstName", "LastName", "Generation", "MailingAddress", "City", "State", "ZipCode", "Email"]
+      SignUpCtrl.populateForm(mockUserData);
+      expect(SignUpCtrl.setViewAndRender.calls.count()).toBe(inputsRendered.length)
+    })
+    it('should assign the MemberId based on the response object', function () {
+      var mockUserData = { data: { responseObject: { id: 9000 } } };
+      SignUpCtrl.populateForm(mockUserData);
+      expect(SignUpCtrl.data.MemberId).toBe(9000)
+    })
+    it('should do nothing if response data is missing', function () {
+      var mockUserData = { data: {} };
+      SignUpCtrl.populateForm(mockUserData);
+      expect(SignUpCtrl.data.MemberId).toBe(null)
     })
   })
 
