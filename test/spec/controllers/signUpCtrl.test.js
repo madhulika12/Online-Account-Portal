@@ -2,17 +2,20 @@
 
 describe('Controller: SignUpCtrl', function () {
 
-  var SignUpCtrl, httpService, $rootScope, $window, tokenValidationService, Constants;
+  var SignUpCtrl, httpService, $rootScope, $window, tokenValidationService, loadBrandingService, displayResponseBox, $state, tokenStorageService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, $document, $q, _httpService_, _$window_, _tokenValidationService_, _Constants_) {
+  beforeEach(inject(function ($controller, _$rootScope_, $document, $q, _httpService_, _$window_, _tokenValidationService_, _loadBrandingService_, _displayResponseBox_, _$state_, _tokenStorageService_) {
 
     //create shared variables
     $rootScope = _$rootScope_;
     $window = _$window_;
-    Constants = _Constants_;
+    loadBrandingService = _loadBrandingService_;
     tokenValidationService = _tokenValidationService_;
     httpService = _httpService_;
+    displayResponseBox = _displayResponseBox_;
+    $state = _$state_;
+    tokenStorageService = _tokenStorageService_;
 
     //create mocks
     // spyOn(httpService, 'signUp').and.callFake(function () {
@@ -42,8 +45,6 @@ describe('Controller: SignUpCtrl', function () {
   //   })
   // })
 
-  //TODO populateForm and requestMemberData
-
   describe('sendSignUpRequest', function () {
     it('should call the httpService.signUp method with the signUp data', function () {
       var event = $.Event('click');
@@ -54,36 +55,62 @@ describe('Controller: SignUpCtrl', function () {
       expect(httpService.signUp).toHaveBeenCalledWith(SignUpCtrl.data)
     });
 
-    xdescribe('on positive response, positiveSignUpRedirect', function () {
+    describe('on positive response, positiveSignUpRedirect', function () {
       it('should redirect to the ice portal', function () {
-
         spyOn($window.location, 'assign')
-        var event = $.Event('click');
-        expect(event.isDefaultPrevented()).toBeFalsy();
+        var mockResponse = { data : { responseObject : "URL_TEST" } };
 
-        promiseMock.setResolve({ data : { responseObject : "URL_TEST"}})
-        SignUpCtrl.sendSignUpRequest(event)
-        $rootScope.$digest()
-        expect($window.location.assign).toHaveBeenCalledWith(Constants.portalBaseUrl + "URL_TEST")
+        SignUpCtrl.positiveSignUpRedirect(mockResponse);
+
+        expect($window.location.assign).toHaveBeenCalledWith(loadBrandingService._styles.pingURL + mockResponse.data.responseObject)
       })
     })
 
-    xdescribe('on negative response, error', function () {
+    describe('on negative response, invalidTokenError', function () {
+      var testResponseError;
+      beforeEach(function () {
+        spyOn(displayResponseBox, 'setMessage')
 
-      it('should place an error message on the response box config', function () {
-        var event = $.Event('click');
-        expect(event.isDefaultPrevented()).toBeFalsy();
-
-        promiseMock.setReject({ data : { errorMessage: "TEST_123_321"}})
-
-        SignUpCtrl.sendSignUpRequest(event)
-        $rootScope.$digest()
-        expect(SignUpCtrl.responseBoxConfig.message).toEqual("TEST_123_321")
+        testResponseError = {
+          data : { errorMessage : "TEST_ERROR_MESSAGE" } ,
+        }
       })
 
+      it('should execute displayResponseBox.setMessage with the error message if it exists', function () {
+        SignUpCtrl.invalidTokenError(testResponseError)
+        expect(displayResponseBox.setMessage).toHaveBeenCalledWith(testResponseError.data.errorMessage, true)
+      })
+
+      it('should execute displayResponseBox.setMessage with the default message if there is no message in the error', function () {
+        testResponseError.data = { errorMessage: undefined };
+        SignUpCtrl.invalidTokenError(testResponseError)
+        expect(displayResponseBox.setMessage).toHaveBeenCalledWith("There was an unexpected error.", true)
+      })
+
+      it('should execute redirect to login', function () {
+        spyOn($state, 'go');
+        SignUpCtrl.invalidTokenError(testResponseError)
+        expect($state.go).toHaveBeenCalledWith("login");
+      })
     })
 
   });
+
+  describe('on error', function () {
+    it('should execute displayResponseBox.populateResponseBox with the error message if it exists', function () {
+      var mockError = { data : { errorMessage : "TEST_ERROR_MESSAGE" } };
+      spyOn(displayResponseBox, 'populateResponseBox')
+      SignUpCtrl.error(mockError)
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(SignUpCtrl.responseBoxConfig, mockError.data.errorMessage, true)
+    })
+
+    it('should execute displayResponseBox.populateResponseBox with the default message if there is no message in the error', function () {
+      var mockError = { data : {} };
+      spyOn(displayResponseBox, 'populateResponseBox')
+      SignUpCtrl.error(mockError)
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(SignUpCtrl.responseBoxConfig, "There was an unexpected error.", true)
+    })
+  })
 
   describe('requestMemberData', function () {
     it('should execture the httpService.getMember method with the query string token', function () {
@@ -110,6 +137,44 @@ describe('Controller: SignUpCtrl', function () {
     it('should execture setViewAndRender with the individual data points passed to it', function () {
       //TODO now
     })
+  })
+
+  describe('populateAntiForgeryToken', function () {
+    var mockToken, storedToken;
+    beforeEach(function(){
+      mockToken = { data: "MOCK_ANTI_FORGERY_TOKEN" };
+      storedToken = tokenStorageService.getToken();
+      spyOn(SignUpCtrl, 'sendRequestToPopulate')
+    })
+
+    it('should populate the AntiForgeryToken into self.data ', function() {
+      SignUpCtrl.populateAntiForgeryToken(mockToken);
+      expect(SignUpCtrl.data.AntiForgeryTokenId).toBe(mockToken.data);
+    })
+    it('should populate the AntiForgeryToken into self.dataToPopulateForm ', function() {
+      SignUpCtrl.populateAntiForgeryToken(mockToken);
+      expect(SignUpCtrl.dataToPopulateForm.AntiForgeryTokenId).toBe(mockToken.data);
+    })
+    it('should populate the storedToken into self.data.SessionId ', function() {
+      SignUpCtrl.populateAntiForgeryToken(mockToken);
+      expect(SignUpCtrl.data.SessionId).toBe(storedToken);
+    })
+    it('should populate the storedToken into self.dataToPopulateForm.SessionId ', function() {
+      SignUpCtrl.populateAntiForgeryToken(mockToken);
+      expect(SignUpCtrl.dataToPopulateForm.SessionId).toBe(storedToken);
+    })
+    it('should call sendRequestToPopulate ', function() {
+      SignUpCtrl.populateAntiForgeryToken(mockToken);
+      expect(SignUpCtrl.sendRequestToPopulate).toHaveBeenCalled();
+    })
+  })
+
+  describe('sendRequestToPopulate', function () {
+    it('should call httpService.getMember with the dataToPopulateForm then either populate the form or error', function() {
+      SignUpCtrl.sendRequestToPopulate();
+      expect(httpService.getMember).toHaveBeenCalledWith(SignUpCtrl.dataToPopulateForm);
+    })
+
   })
 
 });
