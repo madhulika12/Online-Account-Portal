@@ -2,16 +2,21 @@
 
 describe('Controller: resetPasswordCtrl', function () {
 
-  var resetPasswordCtrl, $timeout, httpService, $rootScope, $state;
+  var resetPasswordCtrl, $timeout, httpService, $rootScope, $state, displayResponseBox, $httpBackend;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _$timeout_, _httpService_, _$state_) {
+  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _$timeout_, _httpService_, _$state_, _displayResponseBox_, _$httpBackend_) {
 
     //create shared variables
     httpService = _httpService_;
     $timeout = _$timeout_;
     $rootScope = _$rootScope_;
     $state = _$state_;
+    displayResponseBox = _displayResponseBox_;
+    $httpBackend = _$httpBackend_;
+
+    $httpBackend.when('GET', 'https://mws.stage.kroll.com/api/v1/security/tokens')
+    .respond(200, { responseObject: {access_token: "test", refresh_token: "test"}, errorMessage: 'What now?!?' });
 
     //create mocks
     spyOn($http, 'post').and.callFake(function (item) {
@@ -30,10 +35,9 @@ describe('Controller: resetPasswordCtrl', function () {
     //setting spies and attributes on controller
     resetPasswordCtrl.form = {
       password : {
-        $viewValue : "test123"
+        $viewValue : "Test1234"
       }
     }
-    spyOn(resetPasswordCtrl, 'checkRequirements')
 
   }));
 
@@ -43,19 +47,52 @@ describe('Controller: resetPasswordCtrl', function () {
     })
   });
 
-  xdescribe('checkRequirements', function () {
+  describe('checkRequirements', function () {
+    beforeEach(function(){
+    })
     it('should check if the new password is the correct length', function () {
-      //TODO now
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.length).toBeTruthy();
+
+      resetPasswordCtrl.form.password.$viewValue = "2Short";
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.length).toBeFalsy();
     })
     it('should check if the new password has a lowercase letter', function () {
-      //TODO now
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.lowerCase).toBeTruthy();
+
+      resetPasswordCtrl.form.password.$viewValue = "YELLING1!";
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.lowerCase).toBeFalsy();
     })
     it('should check if the new password has an uppercase letter', function () {
-      //TODO now
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.upperCase).toBeTruthy();
+
+      resetPasswordCtrl.form.password.$viewValue = "whisper1!";
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.upperCase).toBeFalsy();
     })
     it('should check if the new password has a number', function () {
-      //TODO now
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.number).toBeTruthy();
+
+      resetPasswordCtrl.form.password.$viewValue = "NoNumber";
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.number).toBeFalsy();
     })
+
+    //
+    it('should fail if form is empty', function () {
+      resetPasswordCtrl.form.password.$viewValue = undefined;
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.length).toBe(null);
+      expect(resetPasswordCtrl.valid.lowerCase).toBe(null);
+      expect(resetPasswordCtrl.valid.upperCase).toBe(null);
+      expect(resetPasswordCtrl.valid.number).toBe(null);
+    })
+    //
   })
 
   describe('setPasswordRequest', function () {
@@ -74,20 +111,22 @@ describe('Controller: resetPasswordCtrl', function () {
     })
   })
 
-  xdescribe('successMessage', function () {
+  describe('successMessage', function () {
     it('should set the responseBox message with the successful password reset message', function () {
-      //TODO now
+      var successfulResetMessage = "The password for your account was successfully reset. Please use the new password to log into the mobile app as well as the web portal.";
+      spyOn(displayResponseBox, 'setMessage')
+      resetPasswordCtrl.successMessage();
+      expect(displayResponseBox.setMessage).toHaveBeenCalledWith(successfulResetMessage, false)
     })
     it('should redirect to the login screen', function () {
-      //TODO now
+      resetPasswordCtrl.successMessage();
+      expect($state.go).toHaveBeenCalledWith('login');
     })
   })
 
   describe('error', function () {
-    var ctlr, responseError, displayResponseBox;
-    beforeEach(inject(function (_displayResponseBox_) {
-      ctlr = resetPasswordCtrl
-      displayResponseBox = _displayResponseBox_
+    var responseError;
+    beforeEach(function () {
 
       spyOn(displayResponseBox, 'populateResponseBox')
 
@@ -104,20 +143,20 @@ describe('Controller: resetPasswordCtrl', function () {
           return this
         }
       }
-    }))
+    })
     it('should execute displayResponseBox.populateResponseBox with the error message if it exists', function () {
-      ctlr.error(responseError)
-      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, responseError.data.errorMessage, true)
+      resetPasswordCtrl.error(responseError)
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(resetPasswordCtrl.responseBoxConfig, responseError.data.errorMessage, true)
     })
 
-    it('should execture displayResponseBox.populateResponseBox with te default message if there is no message in the error', function () {
-      ctlr.error(responseError.deleteMessage())
-      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
+    it('should execute displayResponseBox.populateResponseBox with the default message if there is no message in the error', function () {
+      resetPasswordCtrl.error(responseError.deleteMessage())
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(resetPasswordCtrl.responseBoxConfig, "There was an unexpected error.", true)
     })
 
-    it('should execture displayResponseBox.populateResponseBox with te default message if there is no data in the error', function () {
-      ctlr.error(responseError.deleteData())
-      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
+    it('should execute displayResponseBox.populateResponseBox with the default message if there is no data in the error', function () {
+      resetPasswordCtrl.error(responseError.deleteData())
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(resetPasswordCtrl.responseBoxConfig, "There was an unexpected error.", true)
     })
   })
 
@@ -133,6 +172,23 @@ describe('Controller: resetPasswordCtrl', function () {
   xdescribe('backToLogin', function () {
     it('should hide the password-reset-expired-modal', function () {
       //TODO now
+    })
+  })
+
+  describe('populateAntiForgeryToken', function () {
+    it('should popluate the AntiForgeryToken into self.data ', function() {
+      var mockToken = { data: "MOCK_ANTI_FORGERY_TOKEN" };
+      resetPasswordCtrl.populateAntiForgeryToken(mockToken);
+      expect(resetPasswordCtrl.data.AntiForgeryTokenId).toBe(mockToken.data);
+    })
+  })
+
+  describe('$watch', function () {
+    it('should should call checkRequirements each digest cycle ', function() {
+      spyOn(resetPasswordCtrl, 'checkRequirements');
+      $rootScope.$digest();
+      $httpBackend.flush();
+      expect(resetPasswordCtrl.checkRequirements).toHaveBeenCalled();
     })
   })
 });
