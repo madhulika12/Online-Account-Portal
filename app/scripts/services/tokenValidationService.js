@@ -1,13 +1,12 @@
 angular.module('ssoApp')
-  .service('tokenValidationService', ['displayResponseBox', '$http', '$location', '$q', 'Constants', '$state', '$stateParams', 'httpService', 'antiForgeryToken',  'getUrl', function (displayResponseBox, $http, $location, $q, Constants, $state, $stateParams, httpService, antiForgeryToken, getUrl) {
+  .service('tokenValidationService', ['displayResponseBox', '$http', '$location', '$q', 'Constants', '$state', '$stateParams', 'httpService', 'antiForgeryToken', 'getUrl', function (displayResponseBox, $http, $location, $q, Constants, $state, $stateParams, httpService, antiForgeryToken, getUrl) {
 
     return {
       deferred : null,
       token : null,
       data : {
-        Token: null,
-        ClientUrl: getUrl(),
-        AntiForgeryTokenId: null
+        SessionId: null ,
+        ClientUrl: getUrl()
       },
 
       _tokenInvalid : function (err) {
@@ -51,10 +50,10 @@ angular.module('ssoApp')
       },
 
       checkToken : function () {
-        this.data.Token = this.getToken();
+        this.data.SessionId = this.getToken();
         this.deferred = $q.defer()
 
-        if (this.data.Token) {
+        if (this.data.SessionId) {
           this._requestTokenValidation()
         } else {
           this._tokenInvalid({ data : { errorMessage : "Missing token" } })
@@ -66,7 +65,6 @@ angular.module('ssoApp')
 
 
       checkTokenAndRedirect : function () {
-        this.data.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();
         this.checkToken()
           .catch(function (err) {
             // console.log('validation of token error', err)

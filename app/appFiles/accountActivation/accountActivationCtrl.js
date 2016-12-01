@@ -1,6 +1,6 @@
 angular.module('ssoApp')
 
-.controller('AccountActivationCtrl', ['antiForgeryToken','loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', function (antiForgeryToken, loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService){
+.controller('AccountActivationCtrl', ['antiForgeryToken','loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', 'getUrl', function (antiForgeryToken, loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService, getUrl){
 
   var self = this;
 
@@ -9,7 +9,7 @@ angular.module('ssoApp')
     SessionId : null,
     Accept: false,
     AntiForgeryToken: null,
-    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
+    ClientUrl : getUrl()
   }
 
   self.confirmData = {
@@ -76,7 +76,7 @@ angular.module('ssoApp')
     antiForgeryToken.setAntiForgeryToken(res);
     self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
 
-    self.data.AntiForgeryTokenId =  res.data
+    // self.data.AntiForgeryTokenId =  res.data
   }
 
   tokenValidationService.checkTokenAndRedirect()
