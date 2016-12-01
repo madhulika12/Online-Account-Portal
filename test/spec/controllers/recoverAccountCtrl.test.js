@@ -2,14 +2,18 @@
 
 describe('Controller: recoverAccountCtrl', function () {
 
-  var RecoverAccountCtrl, Constants, $rootScope, httpService;
+  var RecoverAccountCtrl, Constants, $rootScope, httpService, $state, usernameService, displayResponseBox, tokenStorageService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, $state, $q) {
+  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, _$state_, $q, _usernameService_, _displayResponseBox_, _tokenStorageService_) {
 
     //create shared variables
     $rootScope = _$rootScope_;
     httpService = _httpService_;
+    $state = _$state_;
+    usernameService = _usernameService_;
+    displayResponseBox = _displayResponseBox_;
+    tokenStorageService = _tokenStorageService_;
 
     //create mocks
     // spyOn(httpService, 'recoverAccount').and.callFake(function () {
@@ -30,41 +34,110 @@ describe('Controller: recoverAccountCtrl', function () {
     RecoverAccountCtrl = $controller('recoverAccountCtrl', {$scope: $rootScope.$new()})
   }));
 
-  xdescribe('requestPasswordReset', function () {
-    it('should execute httpService.forgotPassword with the username stored in recoverData', function () {
-      //TODO now
+
+  describe('redirectUpdateEmail', function () {
+    it('should store the username from self.usernameData', function () {
+      spyOn(usernameService, 'storeUsername');
+      RecoverAccountCtrl.redirectUpdateEmail();
+      expect(usernameService.storeUsername).toHaveBeenCalledWith(RecoverAccountCtrl.usernameData.Username)
+    })
+
+    it('should redirect to the updateEmail page', function () {
+      RecoverAccountCtrl.redirectUpdateEmail();
+      expect($state.go).toHaveBeenCalledWith("update-email");
     })
   })
 
-  xdescribe('resetPassSuccess', function () {
+  // Generic modal request functions
+
+
+  describe('modalRequestError', function () {
+    it('should pass the error on to the error method', function () {
+      spyOn(RecoverAccountCtrl, 'error');
+      var mockError = "YARP";
+      RecoverAccountCtrl.modalRequestError(mockError);
+      expect(RecoverAccountCtrl.error).toHaveBeenCalledWith(mockError);
+    })
+    xit('should hide the recover page modal', function () {
+      // Bootstrap Modal tests
+    })
+  })
+
+  describe('resetPass', function () {
+    it('should call the forgotPassword method from the httpService', function () {
+      RecoverAccountCtrl.resetPass();
+      expect(httpService.forgotPassword).toHaveBeenCalledWith(RecoverAccountCtrl.usernameData);
+    })
+  })
+
+  describe('resetPassSuccess', function () {
     it('should execute displayResponseBox.setMessage with the email recovery message', function () {
-      //TODO now
+      spyOn(displayResponseBox, 'setMessage');
+      RecoverAccountCtrl.resetPassSuccess();
+      expect(displayResponseBox.setMessage).toHaveBeenCalledWith("A password recovery email was sent your account.", false);
     })
     it('should redirect to the login page', function () {
-      //TODO now
+      RecoverAccountCtrl.resetPassSuccess();
+      expect($state.go).toHaveBeenCalledWith("login");
     })
   })
 
-  xdescribe('redirectUpdateEmail', function () {
-    it('should redirect to the updateEmail page with the token provided', function () {
-      //TODO now
-    })
-  })
+  // Recover Account Functions
 
-  xdescribe('recoverSuccess', function () {
-    it('should execute redirectUpdateEmail with a token screen if ....?????', function () {
-      //TODO when that is written
-    })
-    it('should execute requestPasswordReset if ....?????', function () {
-      //TODO when that is written
-    })
+  describe('recoverSuccess', function () {
+    var mockResponse;
+    beforeEach(function(){
+      spyOn(tokenStorageService, 'setToken');
+
+      mockResponse = { 
+        data: { 
+          responseObject: { 
+            sessionToken: "SUPER_TEST",
+            username: "THOR"
+          } 
+        } 
+      };
+    });
+    it('should set the token in tokenStorage from the response given', function () {
+      var answer = mockResponse.data.responseObject.sessionToken;
+      RecoverAccountCtrl.recoverSuccess(mockResponse);
+      expect(tokenStorageService.setToken).toHaveBeenCalledWith(answer);
+    });
+    it('should set the username to self.usernameData.Username if the redirectEndpoint is forgot-username', function () {
+      mockResponse.data.responseObject.redirectEndpoint = "forgot-username";
+      spyOn(RecoverAccountCtrl, 'showUsernameForceResetModal');
+      RecoverAccountCtrl.recoverSuccess(mockResponse);
+      expect(RecoverAccountCtrl.usernameData.Username).toBe(mockResponse.data.responseObject.username);
+    });
+    it('should call showUsernameForceResetModal if the redirectEndpoint is forgot-username', function () {
+      mockResponse.data.responseObject.redirectEndpoint = "forgot-username";
+      spyOn(RecoverAccountCtrl, 'showUsernameForceResetModal');
+      RecoverAccountCtrl.recoverSuccess(mockResponse);
+      expect(RecoverAccountCtrl.showUsernameForceResetModal).toHaveBeenCalled();
+    });
+    it('should set the username to self.usernameData.Username if the redirectEndpoint is account/update-email', function () {
+      mockResponse.data.responseObject.redirectEndpoint = "account/update-email";
+      spyOn(RecoverAccountCtrl, 'redirectUpdateEmail');
+      RecoverAccountCtrl.recoverSuccess(mockResponse);
+      expect(RecoverAccountCtrl.usernameData.Username).toBe(mockResponse.data.responseObject.username);
+    });
+    it('should call redirectUpdateEmail if the redirectEndpoint is account/update-email', function () {
+      mockResponse.data.responseObject.redirectEndpoint = "account/update-email";
+      spyOn(RecoverAccountCtrl, 'redirectUpdateEmail');
+      RecoverAccountCtrl.recoverSuccess(mockResponse);
+      expect(RecoverAccountCtrl.redirectUpdateEmail).toHaveBeenCalled();
+    });
+    it('should call resetPassSuccess if the redirectEndpoint is login', function () {
+      mockResponse.data.responseObject.redirectEndpoint = "login";
+      spyOn(RecoverAccountCtrl, 'resetPassSuccess');
+      RecoverAccountCtrl.recoverSuccess(mockResponse);
+      expect(RecoverAccountCtrl.resetPassSuccess).toHaveBeenCalled();
+    });
   })
 
   describe('error', function () {
-    var ctlr, responseError, displayResponseBox;
-    beforeEach(inject(function (_displayResponseBox_) {
-      ctlr = RecoverAccountCtrl
-      displayResponseBox = _displayResponseBox_
+    var responseError;
+    beforeEach(function () {
 
       spyOn(displayResponseBox, 'populateResponseBox')
 
@@ -81,20 +154,20 @@ describe('Controller: recoverAccountCtrl', function () {
           return this
         }
       }
-    }))
+    })
     it('should execute displayResponseBox.populateResponseBox with the error message if it exists', function () {
-      ctlr.error(responseError)
-      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, responseError.data.errorMessage, true)
+      RecoverAccountCtrl.error(responseError)
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(RecoverAccountCtrl.responseBoxConfig, responseError.data.errorMessage, true)
     })
 
     it('should execture displayResponseBox.populateResponseBox with te default message if there is no message in the error', function () {
-      ctlr.error(responseError.deleteMessage())
-      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
+      RecoverAccountCtrl.error(responseError.deleteMessage())
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(RecoverAccountCtrl.responseBoxConfig, "There was an unexpected error.", true)
     })
 
     it('should execture displayResponseBox.populateResponseBox with te default message if there is no data in the error', function () {
-      ctlr.error(responseError.deleteData())
-      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
+      RecoverAccountCtrl.error(responseError.deleteData())
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(RecoverAccountCtrl.responseBoxConfig, "There was an unexpected error.", true)
     })
   })
 
@@ -110,6 +183,14 @@ describe('Controller: recoverAccountCtrl', function () {
       var event = $.Event('click');
       RecoverAccountCtrl.requestRecovery(event);
       expect(httpService.recoverAccount).toHaveBeenCalledWith(RecoverAccountCtrl.recoveryData)
+    })
+  })
+
+  describe('populateAntiForgeryToken', function () {
+    it('should popluate the AntiForgeryToken into self.recoveryData ', function() {
+      var mockToken = { data: "MOCK_ANTI_FORGERY__TOKEN" };
+      RecoverAccountCtrl.populateAntiForgeryToken(mockToken);
+      expect(RecoverAccountCtrl.recoveryData.AntiForgeryTokenId).toBe(mockToken.data);
     })
   })
 
