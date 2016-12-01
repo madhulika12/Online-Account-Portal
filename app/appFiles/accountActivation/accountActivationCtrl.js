@@ -8,7 +8,8 @@ angular.module('ssoApp')
     SSN : null,
     SessionId : null,
     Accept: false,
-    AntiForgeryToken: null
+    AntiForgeryToken: null,
+    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
   }
 
   self.confirmData = {
@@ -48,7 +49,7 @@ angular.module('ssoApp')
     // var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error.";var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error."
     var message = "Your session has expired, please enter your username and password to continue the activation process."
     displayResponseBox.setMessage(message, true)
-    $state.go('login');
+    // $state.go('login');
     antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 

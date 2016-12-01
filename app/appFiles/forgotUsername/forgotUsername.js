@@ -7,7 +7,8 @@ angular.module('ssoApp')
     AntiForgeryTokenId: null,
     LastName: null,
     ZipCode: null,
-    DateOfBirth: null
+    DateOfBirth: null,
+    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
   }
 
   self.regex = {

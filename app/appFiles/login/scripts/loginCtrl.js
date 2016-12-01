@@ -15,14 +15,16 @@ angular.module('ssoApp')
         MembershipNumber: null,
         ZipCode: null,
         LastName: null,
-        AntiForgeryTokenId: null
+        AntiForgeryTokenId: null,
+        ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
       }
 
       self.loginData = {
         Username: null,
         Password: null,
         LoginSourceId: Constants.loginSourceId,
-        AntiForgeryTokenId: null
+        AntiForgeryTokenId: null,
+        ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
       }
 
       self.regex = {
@@ -44,11 +46,9 @@ angular.module('ssoApp')
           displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
         }
 
-<<<<<<< HEAD
         antiForgeryToken.setAntiForgeryTokenFromError(err);
-=======
 
->>>>>>> master
+
 
       }
 

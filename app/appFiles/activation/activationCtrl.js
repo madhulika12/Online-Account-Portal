@@ -20,7 +20,8 @@ angular.module('ssoApp')
   self.data = {
     membershipNum : null,
     lastName : null,
-    zip : null
+    zip : null,
+    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
   }
 
   self.regex = {

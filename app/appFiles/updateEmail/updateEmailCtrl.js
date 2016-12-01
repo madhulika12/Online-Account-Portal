@@ -76,7 +76,7 @@ angular.module('ssoApp')
 
         // tokenValidationService.checkTokenAndRedirect()
       self.populateAntiForgeryToken = function() {
-          console.log("Antiforgery" + res);
+          // console.log("Antiforgery" + res);
           self.updateEmailData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
           self.updateEmailData.SessionId = tokenStorageService.getToken();
           self.forgotPasswordData.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();

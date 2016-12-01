@@ -14,13 +14,15 @@ angular.module('ssoApp')
     ZipCode: null,
     DateOfBirth: null,
     AntiForgeryTokenId: null,
+    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
   }
 
   self.usernameData = {
     Username : null,
     AntiForgeryTokenId: null,
     LoginSourceId : Constants.loginSourceId,
-    SessionId : null
+    SessionId : null,
+    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
   }
 
   self.regex = {
