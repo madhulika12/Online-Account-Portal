@@ -1,6 +1,6 @@
 'use strict';
 angular.module('ssoApp')
-    .controller('resetPasswordCtrl', ['antiForgeryToken','tokenStorageService', '$http','$scope', 'Constants', 'httpService', '$state', 'loadBrandingService', 'tokenValidationService', 'displayResponseBox', function(antiForgeryToken, tokenStorageService, $http, $scope, Constants, httpService, $state, loadBrandingService, tokenValidationService, displayResponseBox) {
+    .controller('resetPasswordCtrl', ['antiForgeryToken','tokenStorageService', '$http','$scope', 'Constants', 'httpService', '$state', 'loadBrandingService', 'tokenValidationService', 'displayResponseBox', 'getUrl',  function(antiForgeryToken, tokenStorageService, $http, $scope, Constants, httpService, $state, loadBrandingService, tokenValidationService, displayResponseBox, getUrl) {
 
         var self = this;
 
@@ -36,7 +36,8 @@ angular.module('ssoApp')
         self.data = {
           Password : null,
           Jwt : tokenValidationService.getJWT(),
-          AntiForgeryTokenId: null
+          AntiForgeryTokenId: null,
+          ClientUrl: getUrl()
         }
 
         self.responseBoxConfig = {
