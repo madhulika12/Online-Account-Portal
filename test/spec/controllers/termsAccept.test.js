@@ -4,11 +4,12 @@ describe('Controller: termsAccept', function () {
 
   var TermsAcceptCtrl, Constants, httpService, $rootScope, tokenStorageService;
 
-  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, $state, _tokenStorageService_) {
+  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, $state, _tokenStorageService_, _Constants_) {
     //create shared variables
     $rootScope = _$rootScope_
     httpService = _httpService_
     tokenStorageService = _tokenStorageService_
+    Constants = _Constants_;
 
     //creat mocks
     spyOn(httpService, 'acceptTerms').and.callFake(function () {
@@ -51,7 +52,12 @@ describe('Controller: termsAccept', function () {
 
   describe('success', function () {
     it('should redirect the user to the ICE Portal', function () {
-      //TODO when that is written
+      spyOn($window.location, 'assign');
+      var testResponse = { data: { responseObject: { pingToken: "SUPERTEST" } } };
+      var testUrl = Constants.portalBaseUrl + testResponse.data.responseObject.pingToken;
+
+      TermsAcceptCtrl.success(testResponse);
+      expect($window.location.assign).toHaveBeenCalledWith(testUrl);
     })
   })
 
@@ -90,6 +96,22 @@ describe('Controller: termsAccept', function () {
     it('should execture displayResponseBox.populateResponseBox with te default message if there is no data in the error', function () {
       ctlr.error(responseError.deleteData())
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
+    })
+  })
+
+  describe('populateId', function () {
+    it('should place the MemberId on the controllers data object', function () {
+      var mockData = { data: { responseObject: { id: 9001 } } };
+      TermsAcceptCtrl.populateId(mockData);
+      expect(TermsAcceptCtrl.data.MemberId).toEqual(9001)
+    })
+  })
+
+  describe('populateAntiForgeryToken', function () {
+    it('should place the AntiForgeryTokenId on the controllers data object', function () {
+      var mockData = { data: "Just some antiforgery tokens" };
+      TermsAcceptCtrl.populateAntiForgeryToken(mockData);
+      expect(TermsAcceptCtrl.data.AntiForgeryTokenId).toEqual(mockData.data)
     })
   })
 

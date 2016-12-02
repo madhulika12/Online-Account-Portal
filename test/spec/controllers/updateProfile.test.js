@@ -2,7 +2,7 @@
 
 describe('Controller: updateProfileCtrl', function () {
 
-  var UpdateProfileCtrl, httpService, $rootScope, $state, displayResponseBox;
+  var UpdateProfileCtrl, httpService, $rootScope, $state, displayResponseBox, tokenStorageService;
 
   var dummyResponse = {
     data : {
@@ -52,12 +52,13 @@ describe('Controller: updateProfileCtrl', function () {
   }
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, _$state_, _displayResponseBox_) {
+  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, _$state_, _displayResponseBox_, _tokenStorageService_) {
     //create shared variables
     $rootScope = _$rootScope_
     httpService = _httpService_
     $state = _$state_
     displayResponseBox = _displayResponseBox_
+    tokenStorageService = _tokenStorageService_;
 
 
     //create mocks
@@ -65,6 +66,9 @@ describe('Controller: updateProfileCtrl', function () {
       return promiseMock.ret
     })
     spyOn(httpService, 'changePassword').and.callFake(function () {
+      return promiseMock.ret
+    })
+    spyOn(httpService, 'getMember').and.callFake(function () {
       return promiseMock.ret
     })
     spyOn($state, 'go')
@@ -85,6 +89,12 @@ describe('Controller: updateProfileCtrl', function () {
   // })
 
   describe('setting Data', function () {
+    describe('#setData', function () {
+      it('should do nothing if no data is passed to it', function () {
+        UpdateProfileCtrl.setData({ data: {} })
+        expect(UpdateProfileCtrl.setUpdatedDataAsOld).not.toHaveBeenCalled();
+      })
+    })
 
     describe('#setData', function () {
       it('should set data that is passed to it', function () {
@@ -108,7 +118,13 @@ describe('Controller: updateProfileCtrl', function () {
       UpdateProfileCtrl.editOn()
       expect(UpdateProfileCtrl.mode).toEqual('edit')
     })
+  })
 
+  describe('#passwordMode', function () {
+    it('should set the editPasswordMode to change', function () {
+      UpdateProfileCtrl.passwordMode()
+      expect(UpdateProfileCtrl.editPasswordMode).toEqual('change')
+    })
   })
 
   describe('#cancel', function () {
@@ -124,7 +140,13 @@ describe('Controller: updateProfileCtrl', function () {
       UpdateProfileCtrl.cancel()
       expect(UpdateProfileCtrl.mode).toEqual('view')
     })
+  })
 
+  describe('#cancelPassword', function () {
+    it('should set the editPasswordMode to show', function () {
+      UpdateProfileCtrl.cancelPassword()
+      expect(UpdateProfileCtrl.editPasswordMode).toEqual('show')
+    })
   })
 
   describe('updating personal info', function () {
@@ -132,9 +154,6 @@ describe('Controller: updateProfileCtrl', function () {
       var ctlr, responseError;
       beforeEach(inject(function (_displayResponseBox_) {
         ctlr = UpdateProfileCtrl
-
-
-
 
         responseError = {
           data : { errorMessage : "TEST_ERROR_MESSAGE"},
@@ -155,26 +174,22 @@ describe('Controller: updateProfileCtrl', function () {
         expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.saveResponseBox, responseError.data.errorMessage, true)
       })
 
-      it('should execture displayResponseBox.populateResponseBox with te default message if there is no message in the error', function () {
+      it('should execute displayResponseBox.populateResponseBox with the default message if there is no message in the error', function () {
         ctlr.saveError(responseError.deleteMessage())
         expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.saveResponseBox, "There was an unexpected error - Update Profile.", true)
       })
 
-      it('should execture displayResponseBox.populateResponseBox with te default message if there is no data in the error', function () {
+      it('should execute displayResponseBox.populateResponseBox with the default message if there is no data in the error', function () {
         ctlr.saveError(responseError.deleteData())
         expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.saveResponseBox, "There was an unexpected error - Update Profile.", true)
       })
     })
 
     describe('#saveSuccess', function () {
-
       it('should call populateResponseBox', function () {
-
         UpdateProfileCtrl.saveSuccess()
         expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(UpdateProfileCtrl.saveResponseBox, "Your information was successfully updated!", false)
-
       })
-
     })
 
     describe('#save', function () {
@@ -190,9 +205,6 @@ describe('Controller: updateProfileCtrl', function () {
       var ctlr, responseError;
       beforeEach(inject(function (_displayResponseBox_) {
         ctlr = UpdateProfileCtrl
-
-
-
 
         responseError = {
           data : { errorMessage : "TEST_ERROR_MESSAGE"},
@@ -213,12 +225,12 @@ describe('Controller: updateProfileCtrl', function () {
         expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.resetPassResponseBox, responseError.data.errorMessage, true)
       })
 
-      it('should execture displayResponseBox.populateResponseBox with te default message if there is no message in the error', function () {
+      it('should execute displayResponseBox.populateResponseBox with the default message if there is no message in the error', function () {
         ctlr.setPassError(responseError.deleteMessage())
         expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.resetPassResponseBox, "There was an unexpected error.", true)
       })
 
-      it('should execture displayResponseBox.populateResponseBox with te default message if there is no data in the error', function () {
+      it('should execute displayResponseBox.populateResponseBox with the default message if there is no data in the error', function () {
         ctlr.setPassError(responseError.deleteData())
         expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.resetPassResponseBox, "There was an unexpected error.", true)
       })
@@ -238,12 +250,104 @@ describe('Controller: updateProfileCtrl', function () {
         UpdateProfileCtrl.setNewPassword()
         expect(httpService.changePassword).toHaveBeenCalledWith(UpdateProfileCtrl.resetPassData)
       })
-
     })
   })
 
+  describe('setViewAndRender', function () {
+    var mockModelController;
+    var mockData = {};
+    beforeEach(function(){
+      mockModelController = jasmine.createSpyObj('mockModelController', ['$setViewValue', '$render', '$validate']);
+    })
+    it('should set the view value with the modelCtrl passed to it', function () {
+      UpdateProfileCtrl.setViewAndRender(mockModelController, mockData);
+      expect(mockModelController.$setViewValue).toHaveBeenCalledWith(mockData)
+    })
+    it('should run the modelCtrl\'s $render method', function () {
+      UpdateProfileCtrl.setViewAndRender(mockModelController, mockData);
+      expect(mockModelController.$render).toHaveBeenCalled();
+    })
+    it('should run the modelCtrl\'s $validate method', function () {
+      UpdateProfileCtrl.setViewAndRender(mockModelController, mockData);
+      expect(mockModelController.$validate).toHaveBeenCalled();
+    })
+  })
 
+  describe('populateForm', function () {
+    beforeEach(function(){
+      spyOn(UpdateProfileCtrl, 'setViewAndRender');
+      UpdateProfileCtrl.form = {};
+    })
+    it('should execute setViewAndRender with the individual data points passed to it', function () {
+      var inputsRendered = ["Dob", "Phone", "FirstName", "LastName", "Generation", "MailingAddress", "City", "State", "ZipCode", "Email"]
+      UpdateProfileCtrl.populateForm(dummyResponse);
+      expect(UpdateProfileCtrl.setViewAndRender.calls.count()).toBe(inputsRendered.length)
+    })
 
+    it('should update all the data if there is a data.responseObject', function () {
+      UpdateProfileCtrl.populateForm(dummyResponse);
+      expect(UpdateProfileCtrl.updatedData.DateOfBirth).toBe(current.DateOfBirth)
+      expect(UpdateProfileCtrl.updatedData.PhoneNumber).toBe(current.PhoneNumber)
+      expect(UpdateProfileCtrl.updatedData.FirstName).toBe(current.FirstName)
+      expect(UpdateProfileCtrl.updatedData.LastName).toBe(current.LastName)
+      expect(UpdateProfileCtrl.updatedData.Generation).toBe(current.Generation)
+      expect(UpdateProfileCtrl.updatedData.MailingAddress).toBe(current.MailingAddress)
+      expect(UpdateProfileCtrl.updatedData.City).toBe(current.City)
+      expect(UpdateProfileCtrl.updatedData.State).toBe(current.State)
+      expect(UpdateProfileCtrl.updatedData.ZipCode).toBe(current.ZipCode)
+      expect(UpdateProfileCtrl.updatedData.Email).toBe(current.Email)
+    }) 
 
+    it('should do nothing if response data is missing', function () {
+      var mockUserData = { data: {} };
+      UpdateProfileCtrl.populateForm(mockUserData);
+      expect(UpdateProfileCtrl.updatedData.Email).toBe(undefined)
+    })
+  })
 
+  describe('populateAntiForgeryToken', function () {
+    var mockToken, mockStoredToken;
+    beforeEach(function(){
+      mockToken = { data: "MOCK_ANTI_FORGERY__TOKEN" };
+      mockStoredToken = tokenStorageService.getToken();
+    }) 
+    it('should populate the AntiForgeryToken into self.dataToPopulateForm', function() {
+      UpdateProfileCtrl.populateAntiForgeryToken(mockToken);
+      expect(UpdateProfileCtrl.dataToPopulateForm.AntiForgeryTokenId).toBe(mockToken.data);
+    })
+    it('should populate the AntiForgeryToken into self.updatedData', function() {
+      UpdateProfileCtrl.populateAntiForgeryToken(mockToken);
+      expect(UpdateProfileCtrl.updatedData.AntiForgeryTokenId).toBe(mockToken.data);
+    })
+    it('should populate the AntiForgeryToken into self.resetPassData', function() {
+      UpdateProfileCtrl.populateAntiForgeryToken(mockToken);
+      expect(UpdateProfileCtrl.resetPassData.AntiForgeryTokenId).toBe(mockToken.data);
+    })
+
+    it('should populate the SessionId into self.dataToPopulateForm', function() {
+      UpdateProfileCtrl.populateAntiForgeryToken(mockToken);
+      expect(UpdateProfileCtrl.dataToPopulateForm.SessionId).toBe(mockStoredToken);
+    })
+    it('should populate the SessionId into self.updatedData', function() {
+      UpdateProfileCtrl.populateAntiForgeryToken(mockToken);
+      expect(UpdateProfileCtrl.updatedData.SessionId).toBe(mockStoredToken);
+    })
+    it('should populate the SessionId into self.resetPassData', function() {
+      UpdateProfileCtrl.populateAntiForgeryToken(mockToken);
+      expect(UpdateProfileCtrl.resetPassData.SessionId).toBe(mockStoredToken);
+    })
+
+    it('should call sendRequestToPopulate', function() {
+      spyOn(UpdateProfileCtrl, 'sendRequestToPopulate');
+      UpdateProfileCtrl.populateAntiForgeryToken(mockToken);
+      expect(UpdateProfileCtrl.sendRequestToPopulate).toHaveBeenCalled();
+    })
+  })
+
+  describe('sendRequestToPopulate', function () {
+    it('should call httpService.getMember', function () {
+      UpdateProfileCtrl.sendRequestToPopulate()
+      expect(httpService.getMember).toHaveBeenCalledWith(UpdateProfileCtrl.dataToPopulateForm)
+    })
+  })
 })

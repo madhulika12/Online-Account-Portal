@@ -2,10 +2,10 @@
 
 describe('Controller: resetPasswordCtrl', function () {
 
-  var resetPasswordCtrl, $timeout, httpService, $rootScope, $state, displayResponseBox, $httpBackend;
+  var resetPasswordCtrl, $timeout, httpService, $rootScope, $state, displayResponseBox, $httpBackend, tokenValidationService;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _$timeout_, _httpService_, _$state_, _displayResponseBox_, _$httpBackend_) {
+  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _$timeout_, _httpService_, _$state_, _displayResponseBox_, _$httpBackend_, _tokenValidationService_) {
 
     //create shared variables
     httpService = _httpService_;
@@ -14,6 +14,7 @@ describe('Controller: resetPasswordCtrl', function () {
     $state = _$state_;
     displayResponseBox = _displayResponseBox_;
     $httpBackend = _$httpBackend_;
+    tokenValidationService = _tokenValidationService_;
 
     $httpBackend.when('GET', 'https://mws.stage.kroll.com/api/v1/security/tokens')
     .respond(200, { responseObject: {access_token: "test", refresh_token: "test"}, errorMessage: 'What now?!?' });
@@ -27,6 +28,7 @@ describe('Controller: resetPasswordCtrl', function () {
     })
 
     spyOn($state, 'go')
+    spyOn(tokenValidationService, 'checkJWT').and.callThrough();
 
 
     //instantiate controller
@@ -41,9 +43,9 @@ describe('Controller: resetPasswordCtrl', function () {
 
   }));
 
-  xdescribe('on instantiation', function () {
+  describe('on instantiation', function () {
     it('should run checkToken', function () {
-      //TODO now
+      expect(tokenValidationService.checkJWT).toHaveBeenCalled();
     })
   });
 
@@ -83,7 +85,6 @@ describe('Controller: resetPasswordCtrl', function () {
       expect(resetPasswordCtrl.valid.number).toBeFalsy();
     })
 
-    //
     it('should fail if form is empty', function () {
       resetPasswordCtrl.form.password.$viewValue = undefined;
       resetPasswordCtrl.checkRequirements();
@@ -92,7 +93,6 @@ describe('Controller: resetPasswordCtrl', function () {
       expect(resetPasswordCtrl.valid.upperCase).toBe(null);
       expect(resetPasswordCtrl.valid.number).toBe(null);
     })
-    //
   })
 
   describe('setPasswordRequest', function () {
