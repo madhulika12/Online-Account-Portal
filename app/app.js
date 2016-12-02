@@ -257,6 +257,7 @@ angular
       }
   })
  // this block below removes the hash tag from angular urls
+
   // $locationProvider.html5Mode({
   //   enabled: true,
   //   requireBase: false

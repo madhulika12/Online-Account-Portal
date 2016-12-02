@@ -20,7 +20,8 @@ angular.module('ssoApp')
   self.data = {
     membershipNum : null,
     lastName : null,
-    zip : null
+    zip : null,
+    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
   }
 
   self.regex = {
@@ -40,11 +41,4 @@ angular.module('ssoApp')
     httpService.activate(self.data)
       .then(self.activationSuccess, self.error)
   }
-
-
-
-
-
-
-
 }])

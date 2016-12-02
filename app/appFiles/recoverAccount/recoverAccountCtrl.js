@@ -14,13 +14,15 @@ angular.module('ssoApp')
     ZipCode: null,
     DateOfBirth: null,
     AntiForgeryTokenId: null,
+    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
   }
 
   self.usernameData = {
     Username : null,
     AntiForgeryTokenId: null,
     LoginSourceId : Constants.loginSourceId,
-    SessionId : null
+    SessionId : null,
+    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
   }
 
   self.regex = {
@@ -133,7 +135,7 @@ angular.module('ssoApp')
   self.recoverSuccess = function (res) {
     // console.log('recoverSuccess response', res)
     tokenStorageService.setToken(res.data.responseObject.sessionToken);
-    
+
     // self.usernameData.TokenId = res.data.responseObject.token
     // self.recoveryData.SessionId = tokenStorageService.setToken();
 
@@ -144,7 +146,7 @@ angular.module('ssoApp')
     //   self.redirectUpdateEmail()
     //   // self.showUpdateEmailModal(res)
     // } else if ('they need to reset their password') {
-      
+
     // } else {
     //   self.showJustUsernameModal()
      }
@@ -191,7 +193,8 @@ angular.module('ssoApp')
         tokenStorageService.refreshCookie();
       };
 
- 
+
       self.populateAntiForgeryToken();
+
 
 }])

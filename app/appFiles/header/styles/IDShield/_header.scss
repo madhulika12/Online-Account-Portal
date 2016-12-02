@@ -3,10 +3,6 @@ header
     color: $IDShieldColor;
   }
 
-  .navbar-collapse {
-    //background-color: $footerBackgroundColor;
-  }
-
 .navbar-toggle.hamburger , .navbar-toggle.hamburger:hover {
   background-color: $footerBackgroundColor;
 }
@@ -15,6 +11,14 @@ header.navbar {
   //padding: 20px;
 }
 
-// #logo-box {
-//   background-image: url('../../../../images/IDShield/IDShieldLogo.png');
-// }
+#header:hover {
+  background-color: #fff;
+}
+
+@media screen and (max-width: 767px) {
+  #header {
+    li:nth-child(n+2) {
+      border: 1px solid #fff;
+    }
+  }
+}

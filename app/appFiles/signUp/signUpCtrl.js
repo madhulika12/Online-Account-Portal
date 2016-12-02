@@ -118,7 +118,7 @@ angular.module('ssoApp')
             self.setViewAndRender(self.form.State, db.stateProvince)
             self.setViewAndRender(self.form.ZipCode, db.postalCode)
             self.setViewAndRender(self.form.Email, db.email);
-            
+
           }
           self.checkCookie();
           antiForgeryToken.setAntiForgeryToken(res);
@@ -134,7 +134,7 @@ angular.module('ssoApp')
           httpService.getMember(self.dataToPopulateForm)
             .then(self.populateForm, self.error)
         }
-        
+
           self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);
             self.data.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();
@@ -146,7 +146,8 @@ angular.module('ssoApp')
 
         self.populateAntiForgeryToken();
 
-        
+
+
 
     //   console.log(document.getElementById("Email"))
 
