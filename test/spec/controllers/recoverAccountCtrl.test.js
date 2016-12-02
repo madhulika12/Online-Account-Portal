@@ -48,18 +48,35 @@ describe('Controller: recoverAccountCtrl', function () {
     })
   })
 
+  // Showing Modal Function
+   describe('showJustUsernameModal', function () {
+    it('should show the username modal', function () {
+      var spyModal = spyOn( $.fn, 'modal' );
+      RecoverAccountCtrl.showJustUsernameModal();
+      expect( spyModal ).toHaveBeenCalledWith( 'show' );
+    })
+  })
+
+  describe('showUsernameForceResetModal', function () {
+    it('should show the username-force-reset-modal', function () {
+      var spyModal = spyOn( $.fn, 'modal' );
+      RecoverAccountCtrl.showUsernameForceResetModal();
+      expect( spyModal ).toHaveBeenCalledWith( 'show' );
+    })
+  }) 
+
   // Generic modal request functions
-
-
   describe('modalRequestError', function () {
+      var mockError = "YARP";
     it('should pass the error on to the error method', function () {
       spyOn(RecoverAccountCtrl, 'error');
-      var mockError = "YARP";
       RecoverAccountCtrl.modalRequestError(mockError);
       expect(RecoverAccountCtrl.error).toHaveBeenCalledWith(mockError);
     })
-    xit('should hide the recover page modal', function () {
-      // Bootstrap Modal tests
+    it('should hide the recover page modal', function () {
+      var spyModal = spyOn( $.fn, 'modal' );
+      RecoverAccountCtrl.modalRequestError(mockError);
+      expect( spyModal ).toHaveBeenCalledWith( 'hide' );
     })
   })
 
@@ -82,8 +99,35 @@ describe('Controller: recoverAccountCtrl', function () {
     })
   })
 
-  // Recover Account Functions
+  // Redirecting to Login Functions
+  describe('backToLogin', function () {
+    it('should call backToLoginFromModal if there is a modal (length > 0)', function () {
+      var fakeElements = ["Test1", "Test2"];
+      spyOn(window, "$").and.returnValue(fakeElements);
+      spyOn( RecoverAccountCtrl, 'backToLoginFromModal' );
+      RecoverAccountCtrl.backToLogin()
+      expect( RecoverAccountCtrl.backToLoginFromModal ).toHaveBeenCalled();
+    })  
+    it('should go back to login using state if there is not a modal', function () {
+      RecoverAccountCtrl.backToLogin()
+      expect($state.go).toHaveBeenCalledWith("login");
+    })
+  })
 
+  describe('backToLoginFromModal', function () {
+    it('should add a listener to recover-page-modals to redirect once the modal is hidden', function () {
+      var spyModalOn = spyOn( $.fn, 'one' );
+      RecoverAccountCtrl.backToLoginFromModal()
+      expect( spyModalOn ).toHaveBeenCalled();
+    })  
+    it('should hide the recover-page-modal', function () {
+      var spyModal = spyOn( $.fn, 'modal' );
+      RecoverAccountCtrl.backToLoginFromModal()
+      expect( spyModal ).toHaveBeenCalledWith( 'hide' );
+    })
+  })
+
+  // Recover Account Functions
   describe('recoverSuccess', function () {
     var mockResponse;
     beforeEach(function(){

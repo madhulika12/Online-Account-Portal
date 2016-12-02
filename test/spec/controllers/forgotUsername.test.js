@@ -131,7 +131,10 @@ describe('Controller: forgotUsernameCtrl', function () {
 
   describe('resetPassError', function () {
     it('should hide the username modal', function () {
-      //TODO now (Bootstrap Modal Calls)
+      spyOn(forgotUsernameCtrl, 'error');
+      var spyModal = spyOn( $.fn, 'modal' );
+      forgotUsernameCtrl.resetPassError()
+      expect( spyModal ).toHaveBeenCalledWith( 'hide' );
     })
     it('should call the error method', function() {
       spyOn(forgotUsernameCtrl, 'error');
@@ -141,15 +144,26 @@ describe('Controller: forgotUsernameCtrl', function () {
     })
   })
 
-  xdescribe('backToLogin', function () {
+  describe('backToLogin', function () {
     it('should hide the username-modal', function () {
-      //TODO now (Bootstrap Modal Calls)
+      var spyModal = spyOn( $.fn, 'modal' );
+      forgotUsernameCtrl.backToLogin()
+      expect( spyModal ).toHaveBeenCalledWith( 'hide' );
     })
-    it('should redirect to the login page once the modal has been hidden', function () {
-      //TODO now (Bootstrap Modal Calls event)
+    it('should ad a listenet to redirect once the modal is hidden', function () {
+      var spyModalOn = spyOn( $.fn, 'on' );
+      forgotUsernameCtrl.backToLogin()
+      expect( spyModalOn ).toHaveBeenCalled();
     })
   })
 
+  describe('showUsernameModal', function () {
+    it('should show the username-modal', function () {
+      var spyModal = spyOn( $.fn, 'modal' );
+      forgotUsernameCtrl.showUsernameModal()
+      expect( spyModal ).toHaveBeenCalledWith( 'show' );
+    })  
+  })
 
   describe('populateAntiForgeryToken', function () {
     it('should popluate the AntiForgeryToken into self.recoveryData ', function() {

@@ -99,8 +99,25 @@ describe('Controller: havingTroubleCtrl', function () {
     })
   })
 
+  describe('showModal', function () {
+    it('should show the #havingTroubleModal', function () {
+      var spyModal = spyOn( $.fn, 'modal' );
+      havingTroubleCtrl.showModal()
+      expect( spyModal ).toHaveBeenCalledWith( 'show' );
+    })  
+  })
+
   describe('dismissToRecoverAccount', function () {
-    // TODO: Write Tests for Bootstrap Modals?
+    it('should hide the havingTroubleModal', function () {
+      var spyModal = spyOn( $.fn, 'modal' );
+      havingTroubleCtrl.dismissToRecoverAccount()
+      expect( spyModal ).toHaveBeenCalledWith( 'hide' );
+    })
+    it('should add a listener to redirect once the modal is hidden', function () {
+      var spyModalOn = spyOn( $.fn, 'one' );
+      havingTroubleCtrl.dismissToRecoverAccount()
+      expect( spyModalOn ).toHaveBeenCalled();
+    })  
   })
 
 })

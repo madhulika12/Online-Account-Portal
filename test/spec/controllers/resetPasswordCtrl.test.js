@@ -160,18 +160,24 @@ describe('Controller: resetPasswordCtrl', function () {
     })
   })
 
-  xdescribe('showResetModal', function () {
+  describe('showResetModal', function () {
     it('should show the password-reset-expired-modal', function () {
-      //TODO now
+      var spyModal = spyOn( $.fn, 'modal' );
+      resetPasswordCtrl.showResetModal()
+      expect( spyModal ).toHaveBeenCalledWith( 'show' );
     })
     it('should set a listener on the hidden.bs.modal event which redirects to the login', function () {
-      //TODO now
+      var spyModalOn = spyOn( $.fn, 'on' );
+      resetPasswordCtrl.showResetModal()
+      expect( spyModalOn ).toHaveBeenCalled();
     })
   })
 
-  xdescribe('backToLogin', function () {
+  describe('backToLogin', function () {
     it('should hide the password-reset-expired-modal', function () {
-      //TODO now
+      var spyModal = spyOn( $.fn, 'modal' );
+      resetPasswordCtrl.backToLogin()
+      expect( spyModal ).toHaveBeenCalledWith( 'hide' );
     })
   })
 
