@@ -1,6 +1,6 @@
 angular.module('ssoApp')
 
-.controller('AccountActivationCtrl', ['antiForgeryToken','loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', function (antiForgeryToken, loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService){
+.controller('AccountActivationCtrl', ['antiForgeryToken','loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', 'getUrl', function (antiForgeryToken, loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService, getUrl){
 
   var self = this;
 
@@ -8,7 +8,8 @@ angular.module('ssoApp')
     SSN : null,
     SessionId : null,
     Accept: false,
-    AntiForgeryToken: null
+    AntiForgeryToken: null,
+    ClientUrl : getUrl()
   }
 
   self.confirmData = {
@@ -48,7 +49,7 @@ angular.module('ssoApp')
     // var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error.";var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error."
     var message = "Your session has expired, please enter your username and password to continue the activation process."
     displayResponseBox.setMessage(message, true)
-    $state.go('login');
+    // $state.go('login');
     antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 
@@ -74,11 +75,15 @@ angular.module('ssoApp')
     console.log("Antiforgery" + res);
     antiForgeryToken.setAntiForgeryToken(res);
     self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
-    //
+
+    // self.data.AntiForgeryTokenId =  res.data
   }
 
   tokenValidationService.checkTokenAndRedirect()
     .then(self.populateId, self.invalidTokenError)
+
+  // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+  //   .then(self.populateAntiForgeryToken, self.error);
 
   loadBrandingService.getStyleSheetPath()
     .then(self.populateAntiForgeryToken, self.error);

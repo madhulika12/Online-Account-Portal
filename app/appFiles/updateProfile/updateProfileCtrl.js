@@ -71,7 +71,7 @@ angular.module('ssoApp')
     antiForgeryToken.setAntiForgeryToken(res);
     var db = res.data.responseObject
     var headers =  res.headers('XSRF-TOKEN');
-    
+
     if (res.data.responseObject) {
       self.setReturnedData = {
         FirstName : db.firstName,
@@ -89,7 +89,7 @@ angular.module('ssoApp')
       }
       self.setUpdatedDataAsOld()
       self.elemVal = db.email;
-      
+
       self.checkCookie();
     }
   }
@@ -102,11 +102,11 @@ angular.module('ssoApp')
        self.checkCookie = function () {
         tokenStorageService.refreshCookie();
       };
-      
+
   self.setReadOnly = function() {
     if (self.setReturnedData.DateOfBirth) {
       self.readOnlyProp = true;
-    } 
+    }
   }
 
   self.editOn = function () {
@@ -151,9 +151,9 @@ angular.module('ssoApp')
   //               // document.getElementsByClassName('appendToDom')[0].addClass("BorderColor")
   //             }
   //           }
-              
+
   //           )
-  // }; 
+  // };
   }
 
   self.appendSuccess = function() {
@@ -220,7 +220,7 @@ angular.module('ssoApp')
           modelCtrl.$render()
           modelCtrl.$validate()
         }
-    
+
    self.populateForm = function (res) {
           if (res && res.data && res.data.responseObject) {
             var db = res.data.responseObject
@@ -237,7 +237,7 @@ angular.module('ssoApp')
             self.setViewAndRender(self.form.ZipCode, db.postalCode)
             self.setViewAndRender(self.form.Email, db.email);
 
-            
+
 
             self.updatedData.DateOfBirth = db.dob;
             self.updatedData.PhoneNumber = db.homePhone
@@ -253,7 +253,7 @@ angular.module('ssoApp')
           antiForgeryToken.setAntiForgeryToken(res);
         }
 
-  
+
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
 
@@ -264,7 +264,7 @@ angular.module('ssoApp')
     self.updatedData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
     self.resetPassData.SessionId = tokenStorageService.getToken()
     self.resetPassData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
-    // 
+    //
     // var a = sessionService.setTokenData()
     // sessionService.data.AntiForgeryTokenId =  res.data
     // sessionService.setTokenData.SessionId =  tokenStorageService.getToken()
@@ -277,25 +277,12 @@ angular.module('ssoApp')
             // .then(self.populateForm, self.error)
             .then(self.setData, self.error)
         }
-  
+
         //  self.delCookie = function() {
         //   var ssoSessionId = tokenStorageService.getToken();
         //   httpService.delCookie(self.resetPassData.SessionId)
         //     .then(self.success, self.error)
-        // }; 
+        // };
 
     self.populateAntiForgeryToken();
-
-      //  window.onbeforeunload = self.delCookie();
-
-      //  $(window).on('mouseover', (function () {
-      //     window.onbeforeunload = null;
-      // }));
-      // $(window).on('mouseout', (function () {
-
-    //   self.onReadyDOM = function () {
-    //     var inputVal = document.getElementsByClassName("appendToDom")[0];  
-    //   }
-    
-    //  $window.onload = self.onReadyDOM();
 }])

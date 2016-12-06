@@ -69,14 +69,14 @@ angular.module('ssoApp')
           httpService.forgotPassword(self.forgotPasswordData)
             .then(self.resetPasswordSuccess, self.error)
         }
-        
+
         self.checkCookie = function () {
           tokenStorageService.refreshCookie();
-        }; 
+        };
 
         // tokenValidationService.checkTokenAndRedirect()
       self.populateAntiForgeryToken = function() {
-          console.log("Antiforgery" + res);
+          // console.log("Antiforgery" + res);
           self.updateEmailData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
           self.updateEmailData.SessionId = tokenStorageService.getToken();
           self.forgotPasswordData.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();
@@ -84,6 +84,7 @@ angular.module('ssoApp')
           self.checkCookie();
         }
 
-      self.populateAntiForgeryToken();       
+      self.populateAntiForgeryToken();
+
 
     }]);

@@ -15,14 +15,16 @@ angular.module('ssoApp')
         MembershipNumber: null,
         ZipCode: null,
         LastName: null,
-        AntiForgeryTokenId: null
+        AntiForgeryTokenId: null,
+        ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
       }
 
       self.loginData = {
         Username: null,
         Password: null,
         LoginSourceId: Constants.loginSourceId,
-        AntiForgeryTokenId: null
+        AntiForgeryTokenId: null,
+        ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
       }
 
       self.regex = {
@@ -45,6 +47,8 @@ angular.module('ssoApp')
         }
 
         antiForgeryToken.setAntiForgeryTokenFromError(err);
+
+
 
       }
 
@@ -141,7 +145,6 @@ angular.module('ssoApp')
 
          loadBrandingService.getStyleSheetPath()
           .then(self.populateAntiForgeryToken, self.error);
-
  }]);
 
  // $scope.$on('$locationChangeStart', function (event, next, current) {

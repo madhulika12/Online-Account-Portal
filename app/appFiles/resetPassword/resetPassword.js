@@ -1,6 +1,6 @@
 'use strict';
 angular.module('ssoApp')
-    .controller('resetPasswordCtrl', ['antiForgeryToken','tokenStorageService', '$http','$scope', 'Constants', 'httpService', '$state', 'loadBrandingService', 'tokenValidationService', 'displayResponseBox', function(antiForgeryToken, tokenStorageService, $http, $scope, Constants, httpService, $state, loadBrandingService, tokenValidationService, displayResponseBox) {
+    .controller('resetPasswordCtrl', ['antiForgeryToken','tokenStorageService', '$http','$scope', 'Constants', 'httpService', '$state', 'loadBrandingService', 'tokenValidationService', 'displayResponseBox', 'getUrl',  function(antiForgeryToken, tokenStorageService, $http, $scope, Constants, httpService, $state, loadBrandingService, tokenValidationService, displayResponseBox, getUrl) {
 
         var self = this;
 
@@ -36,7 +36,8 @@ angular.module('ssoApp')
         self.data = {
           Password : null,
           Jwt : tokenValidationService.getJWT(),
-          AntiForgeryTokenId: null
+          AntiForgeryTokenId: null,
+          ClientUrl: getUrl()
         }
 
         self.responseBoxConfig = {
@@ -92,21 +93,23 @@ angular.module('ssoApp')
           self.checkRequirements()
         })
 
-
-        tokenValidationService.checkJWT()
-          .catch(self.showResetModal)
+        // tokenValidationService.checkJWT()
+        //   .catch(self.showResetModal)
 
       self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);
             self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
             self.checkCookie();
           }
-          
+
       self.checkCookie = function () {
         tokenStorageService.refreshCookie();
       };
 
       self.populateAntiForgeryToken();
+
+      // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+      //   .then(self.populateAntiForgeryToken, self.error);
 
         //*******************************************************
 
