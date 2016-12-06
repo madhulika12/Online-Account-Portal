@@ -67,7 +67,8 @@ angular.module('ssoApp')
 
       function timerIncrement() {
           self.idleTime = self.idleTime + 1;
-          if (self.idleTime > 15) { // 20 minutes
+          // if (self.idleTime > 15) { // 20 minutes
+           if (self.idleTime > 2) { // 20 minutes
               console.log($location.path());
 
               if($location.path() == '/login') {
