@@ -42,10 +42,24 @@ describe('Service: httpService', function () {
       $httpBackend.flush()
     })
   })
+  describe('delCookie', function () {
+    it('should fire a POST to the delete Account endpoint with the data', function () {
+      expectRequest('POST', Constants.endpoints.delCookie, testData)
+      httpService.delCookie(testData)
+      $httpBackend.flush()
+    })
+  })
   describe('validate', function () {
     it('should fire a GET to the getMemberByToken endpoint with the data', function () {
       expectRequest('GET', Constants.endpoints.getMemberByToken, testData)
       httpService.validate(testData)
+      $httpBackend.flush()
+    })
+  })
+  describe('validateJWT', function () {
+    it('should fire a GET to the validateJWT endpoint with the data', function () {
+      expectRequest('GET', Constants.endpoints.validateJWT, testData)
+      httpService.validateJWT(testData)
       $httpBackend.flush()
     })
   })
@@ -70,6 +84,27 @@ describe('Service: httpService', function () {
       $httpBackend.flush()
     })
   })
+  describe('validateAccountActivation', function () {
+    it('should fire a POST to the validateAccountActivation endpoint with the data', function () {
+      expectRequest('POST', Constants.endpoints.validateAccountActivation, testData)
+      httpService.validateAccountActivation(testData)
+      $httpBackend.flush()
+    })
+  })
+  describe('antiForgeryToken', function () {
+    it('should fire a GET to the antiForgeryToken endpoint with the data', function () {
+      expectRequest('GET', Constants.endpoints.antiForgeryToken, testData)
+      httpService.antiForgeryToken(testData)
+      $httpBackend.flush()
+    })
+  })
+  describe('updateProfile', function () {
+    it('should fire a POST to the updateProfile endpoint with the data', function () {
+      expectRequest('POST', Constants.endpoints.updateProfile, testData)
+      httpService.updateProfile(testData)
+      $httpBackend.flush()
+    })
+  })
   describe('updateEmail', function () {
     it('should fire a POST to the updateEmail endpoint with the data', function () {
       expectRequest('POST', Constants.endpoints.updateEmail, testData)
@@ -78,7 +113,7 @@ describe('Service: httpService', function () {
     })
   })
   describe('forgotPassword', function () {
-    it('should fire a GET to the forgotPassword endpoint with the data', function () {
+    it('should fire a POST to the forgotPassword endpoint with the data', function () {
       expectRequest('POST', Constants.endpoints.forgotPassword, testData)
       httpService.forgotPassword(testData)
       $httpBackend.flush()
