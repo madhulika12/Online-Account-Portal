@@ -98,6 +98,7 @@ angular.module('ssoApp')
       self.loginRequest = function (event) {
         // console.log('loginCtrl.loginRequest')
         event.preventDefault()
+        
         $('.loginProcessingBtn').button('loading');
         httpService.login(self.loginData)
           .then(self.loginSuccess, self.error)
