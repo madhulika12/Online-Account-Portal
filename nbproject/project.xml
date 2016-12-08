@@ -5,5 +5,13 @@
         <data xmlns="http://www.netbeans.org/ns/clientside-project/1">
             <name>sso</name>
         </data>
+        <preferences xmlns="http://www.netbeans.org/ns/auxiliary-configuration-preferences/1">
+            <module name="org-netbeans-modules-css-prep">
+                <property name="sass.configured" value="true"/>
+            </module>
+            <module name="org-netbeans-modules-editor-indent">
+                <node name="CodeStyle"/>
+            </module>
+        </preferences>
     </configuration>
 </project>

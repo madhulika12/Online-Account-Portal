@@ -2,10 +2,10 @@
 
 describe('Controller: updateEmailCtrl', function () {
 
-  var UpdateEmailCtrl, httpService, $rootScope, $timeout, $httpBackend, $state, displayResponseBox, tokenStorageService;
+  var UpdateEmailCtrl, httpService, $rootScope, $timeout, $httpBackend, $state, displayResponseBox, tokenStorageService, antiForgeryToken;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, _$state_, _$timeout_, _$httpBackend_, _displayResponseBox_, _tokenStorageService_) {
+  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, _$state_, _$timeout_, _$httpBackend_, _displayResponseBox_, _tokenStorageService_, _antiForgeryToken_) {
     //create shared variables
     $rootScope = _$rootScope_
     httpService = _httpService_
@@ -14,6 +14,7 @@ describe('Controller: updateEmailCtrl', function () {
     $state = _$state_;
     displayResponseBox = _displayResponseBox_;
     tokenStorageService = _tokenStorageService_;
+    antiForgeryToken = _antiForgeryToken_;
 
     //create mocks
     spyOn(httpService, 'updateEmail').and.callFake(function () {
@@ -23,6 +24,8 @@ describe('Controller: updateEmailCtrl', function () {
       return promiseMock.ret
     })
     spyOn($state, 'go')
+    spyOn(antiForgeryToken, 'setAntiForgeryToken');
+    spyOn(antiForgeryToken, 'setAntiForgeryTokenFromError');
 
     //instantiate controller
     UpdateEmailCtrl = $controller('updateEmailCtrl', {$scope: $rootScope.$new()})
@@ -63,6 +66,10 @@ describe('Controller: updateEmailCtrl', function () {
       $timeout.flush(3000);
       expect(UpdateEmailCtrl.resetPassword).toHaveBeenCalled();
     })
+    it('should set the antiForgeryToken', function () {
+      UpdateEmailCtrl.updateEmailSuccess("Anything");
+      expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalledWith("Anything");
+    })
   })
 
   describe('error', function () {
@@ -98,18 +105,32 @@ describe('Controller: updateEmailCtrl', function () {
       UpdateEmailCtrl.error(responseError.deleteData())
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(UpdateEmailCtrl.responseBoxConfig, "There was an unexpected error.", true)
     })
+
+    it('should set the antiForgeryToken', function () {
+      UpdateEmailCtrl.error(responseError);
+      expect(antiForgeryToken.setAntiForgeryTokenFromError).toHaveBeenCalledWith(responseError);
+    })
   })
 
   describe('resetPasswordSuccess', function () {
+    var answer, mockResponse;
+    beforeEach(function(){
+      mockResponse = { data: { responseObject: "A password recovery email was sent your account." } };
+      answer = mockResponse.data.responseObject;
+    })
     it('should set the response box message with the email recovery message and a green background', function () {
       var defaultMessage = "A password recovery email was sent your account.";
       spyOn(displayResponseBox, 'setMessage')
-      UpdateEmailCtrl.resetPasswordSuccess()
-      expect(displayResponseBox.setMessage).toHaveBeenCalledWith(defaultMessage, false)
+      UpdateEmailCtrl.resetPasswordSuccess(mockResponse)
+      expect(displayResponseBox.setMessage).toHaveBeenCalledWith(answer, false)
     })
     it('should redirect to the login screen', function () {
-      UpdateEmailCtrl.resetPasswordSuccess();
+      UpdateEmailCtrl.resetPasswordSuccess(mockResponse);
       expect($state.go).toHaveBeenCalledWith('login');
+    })
+    it('should set the antiForgeryToken', function () {
+      UpdateEmailCtrl.resetPasswordSuccess(mockResponse);
+      expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalledWith(mockResponse);
     })
   })
 
@@ -121,27 +142,32 @@ describe('Controller: updateEmailCtrl', function () {
   })
 
   describe('populateAntiForgeryToken', function () {
-    var mockToken, mockStoredToken;
+    var mockStoredToken, mockAntiForgeryToken;
     beforeEach(function(){
-      mockToken = { data: "MOCK_ANTI_FORGERY__TOKEN" };
       mockStoredToken = tokenStorageService.getToken();
+      mockAntiForgeryToken = antiForgeryToken.getAntiForgeryToken();
+      spyOn(UpdateEmailCtrl, 'checkCookie');
     }) 
     it('should populate the AntiForgeryToken into self.updateEmailData ', function() {
-      UpdateEmailCtrl.populateAntiForgeryToken(mockToken);
-      expect(UpdateEmailCtrl.updateEmailData.AntiForgeryTokenId).toBe(mockToken.data);
+      UpdateEmailCtrl.populateAntiForgeryToken();
+      expect(UpdateEmailCtrl.updateEmailData.AntiForgeryTokenId).toBe(mockAntiForgeryToken);
     })
     it('should populate the AntiForgeryToken into self.forgotPasswordData ', function() {
-      UpdateEmailCtrl.populateAntiForgeryToken(mockToken);
-      expect(UpdateEmailCtrl.forgotPasswordData.AntiForgeryTokenId).toBe(mockToken.data);
+      UpdateEmailCtrl.populateAntiForgeryToken();
+      expect(UpdateEmailCtrl.forgotPasswordData.AntiForgeryTokenId).toBe(mockAntiForgeryToken);
     })
 
     it('should populate the SessionId into self.updateEmailData ', function() {
-      UpdateEmailCtrl.populateAntiForgeryToken(mockToken);
+      UpdateEmailCtrl.populateAntiForgeryToken();
       expect(UpdateEmailCtrl.updateEmailData.SessionId).toBe(mockStoredToken);
     })
     it('should populate the SessionId into self.forgotPasswordData ', function() {
-      UpdateEmailCtrl.populateAntiForgeryToken(mockToken);
+      UpdateEmailCtrl.populateAntiForgeryToken();
       expect(UpdateEmailCtrl.forgotPasswordData.SessionId).toBe(mockStoredToken);
+    })
+    it('should check the cookies', function() {
+      UpdateEmailCtrl.populateAntiForgeryToken();
+      expect(UpdateEmailCtrl.checkCookie).toHaveBeenCalled();
     })
   })
 

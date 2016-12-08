@@ -4,23 +4,39 @@ angular.module('ssoApp')
 
 
   var link = function (scope, elem, attrs, ctrl) {
-      // console.log('asyncvalidators.link ctrl:', ctrl)
-    ctrl.$asyncValidators.availability = function (modelValue, viewValue) {
-      // console.log('async validating')
+
+      // elem3 = scope.$parent.update.elemVal;
+      
+      console.log('asyncvalidators.link ctrl:', ctrl)
+
+      
+
+      ctrl.$asyncValidators.availability = function (modelValue, viewValue) {
+      // if(elem3 != ctrl.$viewValue) {
+      var inputCtrlVal = ctrl.$modelValue;
+      var inputCtrlVal1 = inputCtrlVal;
+      console.log('async validating') 
       var deferred = $q.defer()
 
       var resolve = function (res) {
         console.log('existance based sucesss', res)
+        console.log(ctrl);
         deferred.resolve(res)
-      }
+      }   
 
       var reject = function (err) {
         console.log('existance based rejection', err)
         deferred.reject(err)
       }
 
-      httpService[ attrs['asyncValidate'] ](viewValue)
-        .then(resolve, reject)
+      // if(ctrl.$dirty == true) {
+      // if(elem3 != ctrl.$viewValue) {
+        // console.log("InputVal " + inputVal);
+        console.log("InputCtrlVal " + inputCtrlVal);
+        httpService[ attrs['asyncValidate'] ](viewValue)
+          .then(resolve, reject)
+      //  }
+// 
 
       deferred.promise
         .finally(function () {
@@ -30,8 +46,9 @@ angular.module('ssoApp')
 
       return deferred.promise
     }
+      }
     // console.log('asyncvalidators.link ctrl:', ctrl)
-  }
+  // }
 
   return {
     restrict : 'A',

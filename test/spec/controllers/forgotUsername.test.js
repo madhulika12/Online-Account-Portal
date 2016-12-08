@@ -2,15 +2,19 @@
 
 describe('Controller: forgotUsernameCtrl', function () {
 
-  var forgotUsernameCtrl, Constants, httpService, $rootScope, $state, displayResponseBox;
+  var forgotUsernameCtrl, Constants, httpService, $rootScope, $state, displayResponseBox, antiForgeryToken;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _httpService_, _$state_, _displayResponseBox_) {
+  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _httpService_, _$state_, _displayResponseBox_, _antiForgeryToken_) {
     $rootScope = _$rootScope_;
     httpService = _httpService_;
     $state = _$state_;
     displayResponseBox = _displayResponseBox_;
+    antiForgeryToken = _antiForgeryToken_;
     forgotUsernameCtrl = $controller('forgotUsernameCtrl', {$scope: $rootScope.$new()})
+
+    spyOn(antiForgeryToken, 'setAntiForgeryToken');
+    spyOn(antiForgeryToken, 'setAntiForgeryTokenFromError');
 
     spyOn(httpService, 'forgotUsername').and.callFake(function () {
       return promiseMock.ret;
@@ -46,16 +50,21 @@ describe('Controller: forgotUsernameCtrl', function () {
     var testUsername;
     beforeEach(function(){
       testUsername = { data: { responseObject: { username: "Sideshow Bob" } } };
-      spyOn(forgotUsernameCtrl, 'showUsernameModal').and.callThrough();
+      spyOn(forgotUsernameCtrl, 'showUsernameForceResetModal').and.callThrough();
     })
     it('shoud place the username from the response object on the view', function () {
       forgotUsernameCtrl.forgotUserSuccess(testUsername);
       expect(forgotUsernameCtrl.data.Username).toBe(testUsername.data.responseObject.username);
     })
-    it('should execute the showUsernameModal method', function () {
+    it('should execute the showUsernameForceResetModal method', function () {
       forgotUsernameCtrl.forgotUserSuccess(testUsername);
-      expect(forgotUsernameCtrl.showUsernameModal).toHaveBeenCalled();
+      expect(forgotUsernameCtrl.showUsernameForceResetModal).toHaveBeenCalled();
     })
+    it('should set the antiForgeryToken', function () {
+      forgotUsernameCtrl.forgotUserSuccess(testUsername);
+      expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalledWith(testUsername)
+    })
+    
   })
 
   describe('backToLoginAfterResetPassword', function () {
@@ -88,7 +97,7 @@ describe('Controller: forgotUsernameCtrl', function () {
       ctlr = forgotUsernameCtrl;
       displayResponseBox = _displayResponseBox_;
 
-      spyOn(displayResponseBox, 'setMessage');
+      spyOn(displayResponseBox, 'populateResponseBox');
 
       responseError = {
         data : { errorMessage : "TEST_ERROR_MESSAGE"},
@@ -104,19 +113,19 @@ describe('Controller: forgotUsernameCtrl', function () {
         }
       }
     }))
-    it('should execute displayResponseBox.setMessage with the error message if it exists', function () {
+    it('should execute displayResponseBox.populateResponseBox with the error message if it exists', function () {
       ctlr.error(responseError);
-      expect(displayResponseBox.setMessage).toHaveBeenCalledWith(responseError.data.errorMessage, true);
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, responseError.data.errorMessage, true);
     })
 
-    it('should execture displayResponseBox.setMessage with te default message if there is no message in the error', function () {
+    it('should execture displayResponseBox.populateResponseBox with te default message if there is no message in the error', function () {
       ctlr.error(responseError.deleteMessage());
-      expect(displayResponseBox.setMessage).toHaveBeenCalledWith("There was an unexpected error.", true);
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true);
     })
 
-    it('should execture displayResponseBox.setMessage with te default message if there is no data in the error', function () {
+    it('should execture displayResponseBox.populateResponseBox with te default message if there is no data in the error', function () {
       ctlr.error(responseError.deleteData());
-      expect(displayResponseBox.setMessage).toHaveBeenCalledWith("There was an unexpected error.", true);
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true);
     })
   })
 
@@ -166,15 +175,13 @@ describe('Controller: forgotUsernameCtrl', function () {
   })
 
   describe('populateAntiForgeryToken', function () {
-    it('should popluate the AntiForgeryToken into self.recoveryData ', function() {
-      var mockToken = { data: "MOCK_ANTI_FORGERY__TOKEN" };
-      forgotUsernameCtrl.populateAntiForgeryToken(mockToken);
-      expect(forgotUsernameCtrl.recoveryData.AntiForgeryTokenId).toBe(mockToken.data);
+    it('should populate the AntiForgeryToken into self.recoveryData using getAntiForgeryToken', function() {
+      forgotUsernameCtrl.populateAntiForgeryToken({ data: "test" });
+      expect(forgotUsernameCtrl.recoveryData.AntiForgeryTokenId).toBe(antiForgeryToken.getAntiForgeryToken());
     })
-    it('should populate the AntiForgeryToken into self.data ', function() {
-      var mockToken = { data: "MOCK_ANTI_FORGERY__TOKEN" };
-      forgotUsernameCtrl.populateAntiForgeryToken(mockToken);
-      expect(forgotUsernameCtrl.data.AntiForgeryTokenId).toBe(mockToken.data);
+    it('should populate the AntiForgeryToken into self.data using getAntiForgeryToken', function() {
+      forgotUsernameCtrl.populateAntiForgeryToken({ data: "test" });
+      expect(forgotUsernameCtrl.data.AntiForgeryTokenId).toBe(antiForgeryToken.getAntiForgeryToken());
     })
   })
 

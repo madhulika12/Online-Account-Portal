@@ -2,10 +2,10 @@
 
 describe('Controller: resetPasswordCtrl', function () {
 
-  var resetPasswordCtrl, $timeout, httpService, $rootScope, $state, displayResponseBox, $httpBackend, tokenValidationService;
+  var resetPasswordCtrl, $timeout, httpService, $rootScope, $state, displayResponseBox, $httpBackend, tokenValidationService, antiForgeryToken;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _$timeout_, _httpService_, _$state_, _displayResponseBox_, _$httpBackend_, _tokenValidationService_) {
+  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _$timeout_, _httpService_, _$state_, _displayResponseBox_, _$httpBackend_, _tokenValidationService_, _antiForgeryToken_) {
 
     //create shared variables
     httpService = _httpService_;
@@ -15,6 +15,7 @@ describe('Controller: resetPasswordCtrl', function () {
     displayResponseBox = _displayResponseBox_;
     $httpBackend = _$httpBackend_;
     tokenValidationService = _tokenValidationService_;
+    antiForgeryToken = _antiForgeryToken_;
 
     $httpBackend.when('GET', 'https://mws.stage.kroll.com/api/v1/security/tokens')
     .respond(200, { responseObject: {access_token: "test", refresh_token: "test"}, errorMessage: 'What now?!?' });
@@ -28,6 +29,8 @@ describe('Controller: resetPasswordCtrl', function () {
     })
 
     spyOn($state, 'go')
+    spyOn(antiForgeryToken, 'setAntiForgeryToken');
+    spyOn(antiForgeryToken, 'setAntiForgeryTokenFromError');
     spyOn(tokenValidationService, 'checkJWT').and.callThrough();
 
 
@@ -122,6 +125,11 @@ describe('Controller: resetPasswordCtrl', function () {
       resetPasswordCtrl.successMessage();
       expect($state.go).toHaveBeenCalledWith('login');
     })
+    it('should set the antiForgeryToken', function () {
+      var mockToken = { data: { responseObject: "TEST_TOKEN" } };
+      resetPasswordCtrl.successMessage(mockToken);
+      expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalledWith(mockToken);
+    })
   })
 
   describe('error', function () {
@@ -158,6 +166,11 @@ describe('Controller: resetPasswordCtrl', function () {
       resetPasswordCtrl.error(responseError.deleteData())
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(resetPasswordCtrl.responseBoxConfig, "There was an unexpected error.", true)
     })
+
+    it('should set the antiForgeryToken', function () {
+      resetPasswordCtrl.error(responseError);
+      expect(antiForgeryToken.setAntiForgeryTokenFromError).toHaveBeenCalledWith(responseError);
+    })
   })
 
   describe('showResetModal', function () {
@@ -183,9 +196,14 @@ describe('Controller: resetPasswordCtrl', function () {
 
   describe('populateAntiForgeryToken', function () {
     it('should popluate the AntiForgeryToken into self.data ', function() {
-      var mockToken = { data: "MOCK_ANTI_FORGERY_TOKEN" };
-      resetPasswordCtrl.populateAntiForgeryToken(mockToken);
-      expect(resetPasswordCtrl.data.AntiForgeryTokenId).toBe(mockToken.data);
+      spyOn(resetPasswordCtrl, 'checkCookie');
+      resetPasswordCtrl.populateAntiForgeryToken("Anything");
+      expect(resetPasswordCtrl.data.AntiForgeryTokenId).toBe(antiForgeryToken.getAntiForgeryToken());
+    })
+    it('check the cookies ', function() {
+      spyOn(resetPasswordCtrl, 'checkCookie');
+      resetPasswordCtrl.populateAntiForgeryToken("Anything");
+      expect(resetPasswordCtrl.checkCookie).toHaveBeenCalled();
     })
   })
 
@@ -193,7 +211,7 @@ describe('Controller: resetPasswordCtrl', function () {
     it('should should call checkRequirements each digest cycle ', function() {
       spyOn(resetPasswordCtrl, 'checkRequirements');
       $rootScope.$digest();
-      $httpBackend.flush();
+      // $httpBackend.flush();
       expect(resetPasswordCtrl.checkRequirements).toHaveBeenCalled();
     })
   })

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('ssoApp')
-.controller('forgotPasswordCtrl', ['$scope', 'Constants', '$http', '$state', '$rootScope', 'getUrl', function($scope, Constants, $http, $state, $rootScope, getUrl) {
+.controller('forgotPasswordCtrl', ['tokenStorageService', '$scope', 'Constants', '$http', '$state', '$rootScope', 'getUrl', function(tokenStorageService, $scope, Constants, $http, $state, $rootScope, getUrl) {
 
     var self = this;
 
@@ -16,7 +16,8 @@ angular.module('ssoApp')
     self.forgotPasswordData = {
       username : null,
       LoginSourceID: null,
-      AntiForgeryTokenId: null
+      AntiForgeryTokenId: null,
+      ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
     }
 
     $rootScope.responseBox = {
@@ -46,4 +47,10 @@ angular.module('ssoApp')
 
       //console.log("Outside then" + $rootScope.responseBox.error);
     }
+
+      self.checkCookie = function () {
+        tokenStorageService.refreshCookie();
+      };
+
+      self.checkCookie();
 }]);

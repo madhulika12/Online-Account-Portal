@@ -2,7 +2,7 @@
 
 angular.module('ssoApp')
 
-.controller('recoverAccountCtrl', ['$http','httpService', 'Constants', 'displayResponseBox', '$state', 'usernameService','tokenStorageService', function ($http, httpService, Constants, displayResponseBox, $state, usernameService, tokenStorageService) {
+.controller('recoverAccountCtrl', ['antiForgeryToken', '$http','httpService', 'Constants', 'displayResponseBox', '$state', 'usernameService','tokenStorageService', function (antiForgeryToken, $http, httpService, Constants, displayResponseBox, $state, usernameService, tokenStorageService) {
   // console.log("Inside Recover Account Controller")
 
   var self = this;
@@ -14,12 +14,15 @@ angular.module('ssoApp')
     ZipCode: null,
     DateOfBirth: null,
     AntiForgeryTokenId: null,
+    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
   }
 
   self.usernameData = {
     Username : null,
-    TokenId : null,
-    LoginSourceId : Constants.loginSourceId
+    AntiForgeryTokenId: null,
+    LoginSourceId : Constants.loginSourceId,
+    SessionId : null,
+    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
   }
 
   self.regex = {
@@ -78,8 +81,9 @@ angular.module('ssoApp')
       .then(self.resetPassSuccess, self.modalRequestError)
   }
 
-  self.resetPassSuccess = function () {
-    displayResponseBox.setMessage("A password recovery email was sent your account.", false)
+  self.resetPassSuccess = function (res) {
+    var message = res.data.responseObject
+    displayResponseBox.setMessage(message, false)
     $state.go('login')
   }
 
@@ -131,7 +135,7 @@ angular.module('ssoApp')
   self.recoverSuccess = function (res) {
     // console.log('recoverSuccess response', res)
     tokenStorageService.setToken(res.data.responseObject.sessionToken);
-    
+
     // self.usernameData.TokenId = res.data.responseObject.token
     // self.recoveryData.SessionId = tokenStorageService.setToken();
 
@@ -142,7 +146,7 @@ angular.module('ssoApp')
     //   self.redirectUpdateEmail()
     //   // self.showUpdateEmailModal(res)
     // } else if ('they need to reset their password') {
-      
+
     // } else {
     //   self.showJustUsernameModal()
      }
@@ -153,14 +157,20 @@ angular.module('ssoApp')
   }
 
   if (res.data.responseObject.redirectEndpoint == 'login') {
-     self.resetPassSuccess();
+    self.usernameData.Username = res.data.responseObject.username
+     self.showJustUsernameModal()
   }
+
+  self.usernameData.SessionId = tokenStorageService.getToken();
+
+  antiForgeryToken.setAntiForgeryToken(res);
   }
 
   self.error = function (err) {
     // console.log('recoverError error', err)
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
-    displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
+    displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true);
+    antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 
   self.requestRecovery = function (event) {
@@ -174,10 +184,17 @@ angular.module('ssoApp')
 
   self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);
-            self.recoveryData.AntiForgeryTokenId =  res.data;
+            self.recoveryData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+            self.usernameData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+            self.checkCookie();
           }
 
-      $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-        .then(self.populateAntiForgeryToken, self.error);
+      self.checkCookie = function () {
+        tokenStorageService.refreshCookie();
+      };
+
+
+      self.populateAntiForgeryToken();
+
 
 }])

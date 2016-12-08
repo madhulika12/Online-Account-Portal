@@ -49,7 +49,7 @@ module.exports = function (grunt) {
         tasks: ['newer:jshint:test', 'newer:jscs:test', 'karma']
       },
       compass: {
-        files: ['<%= yeoman.app %>/**/*.{scss,sass}'],
+        files : ['<%= yeoman.app %>/**/*.{scss,sass}'],
         tasks: ['compass:server', 'postcss:server'],
         options: {
           livereload: '<%= connect.options.livereload %>'
@@ -74,7 +74,7 @@ module.exports = function (grunt) {
     // The actual grunt server settings
     connect: {
       options: {
-        port: 9000,
+        port: 10000,
         // Change this to '0.0.0.0' to access the server from outside.
         hostname: 'localhost',
         livereload: 35729

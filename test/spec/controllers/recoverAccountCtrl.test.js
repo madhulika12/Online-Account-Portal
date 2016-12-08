@@ -2,10 +2,10 @@
 
 describe('Controller: recoverAccountCtrl', function () {
 
-  var RecoverAccountCtrl, Constants, $rootScope, httpService, $state, usernameService, displayResponseBox, tokenStorageService;
+  var RecoverAccountCtrl, Constants, $rootScope, httpService, $state, usernameService, displayResponseBox, tokenStorageService, antiForgeryToken;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, _$state_, $q, _usernameService_, _displayResponseBox_, _tokenStorageService_) {
+  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, _$state_, $q, _usernameService_, _displayResponseBox_, _tokenStorageService_, _antiForgeryToken_) {
 
     //create shared variables
     $rootScope = _$rootScope_;
@@ -14,6 +14,7 @@ describe('Controller: recoverAccountCtrl', function () {
     usernameService = _usernameService_;
     displayResponseBox = _displayResponseBox_;
     tokenStorageService = _tokenStorageService_;
+    antiForgeryToken = _antiForgeryToken_;
 
     //create mocks
     // spyOn(httpService, 'recoverAccount').and.callFake(function () {
@@ -28,6 +29,8 @@ describe('Controller: recoverAccountCtrl', function () {
       return promiseMock.ret
     })
     spyOn($state, 'go')
+    spyOn(antiForgeryToken, 'setAntiForgeryToken');
+    spyOn(antiForgeryToken, 'setAntiForgeryTokenFromError');
     promiseMock.setResolve({ data : { responseObject : "TEST_RESPONSE"}})
 
     // instantiate controller
@@ -88,13 +91,15 @@ describe('Controller: recoverAccountCtrl', function () {
   })
 
   describe('resetPassSuccess', function () {
+    var mockResponse = { data: { responseObject: {message : "A password recovery email was sent your account." } } };
+    var answer = mockResponse.data.responseObject;
     it('should execute displayResponseBox.setMessage with the email recovery message', function () {
       spyOn(displayResponseBox, 'setMessage');
-      RecoverAccountCtrl.resetPassSuccess();
-      expect(displayResponseBox.setMessage).toHaveBeenCalledWith("A password recovery email was sent your account.", false);
+      RecoverAccountCtrl.resetPassSuccess(mockResponse);
+      expect(displayResponseBox.setMessage).toHaveBeenCalledWith(answer, false);
     })
     it('should redirect to the login page', function () {
-      RecoverAccountCtrl.resetPassSuccess();
+      RecoverAccountCtrl.resetPassSuccess(mockResponse);
       expect($state.go).toHaveBeenCalledWith("login");
     })
   })
@@ -171,11 +176,22 @@ describe('Controller: recoverAccountCtrl', function () {
       RecoverAccountCtrl.recoverSuccess(mockResponse);
       expect(RecoverAccountCtrl.redirectUpdateEmail).toHaveBeenCalled();
     });
-    it('should call resetPassSuccess if the redirectEndpoint is login', function () {
+    it('should set the username to self.usernameData.Username if the redirectEndpoint is login', function () {
       mockResponse.data.responseObject.redirectEndpoint = "login";
+      spyOn(RecoverAccountCtrl, 'redirectUpdateEmail');
+      RecoverAccountCtrl.recoverSuccess(mockResponse);
+      expect(RecoverAccountCtrl.usernameData.Username).toBe(mockResponse.data.responseObject.username);
+    });
+    it('should call showJustUsernameModal if the redirectEndpoint is login', function () {
+      mockResponse.data.responseObject.redirectEndpoint = "login";
+      spyOn(RecoverAccountCtrl, 'showJustUsernameModal');
+      RecoverAccountCtrl.recoverSuccess(mockResponse);
+      expect(RecoverAccountCtrl.showJustUsernameModal).toHaveBeenCalled();
+    });
+    it('finally it should set the antiForgeryToken', function () {
       spyOn(RecoverAccountCtrl, 'resetPassSuccess');
       RecoverAccountCtrl.recoverSuccess(mockResponse);
-      expect(RecoverAccountCtrl.resetPassSuccess).toHaveBeenCalled();
+      expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalledWith(mockResponse);
     });
   })
 
@@ -213,6 +229,10 @@ describe('Controller: recoverAccountCtrl', function () {
       RecoverAccountCtrl.error(responseError.deleteData())
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(RecoverAccountCtrl.responseBoxConfig, "There was an unexpected error.", true)
     })
+    it('should set the antiForgeryToken', function () {
+      RecoverAccountCtrl.error(responseError);
+      expect(antiForgeryToken.setAntiForgeryTokenFromError).toHaveBeenCalledWith(responseError);
+    });
   })
 
   describe('requestRecovery', function () {
@@ -230,11 +250,23 @@ describe('Controller: recoverAccountCtrl', function () {
     })
   })
 
-  describe('populateAntiForgeryToken', function () {
-    it('should popluate the AntiForgeryToken into self.recoveryData ', function() {
-      var mockToken = { data: "MOCK_ANTI_FORGERY__TOKEN" };
+describe('populateAntiForgeryToken', function () {
+    var mockToken;
+    beforeEach(function(){
+      mockToken = { data: "MOCK_ANTI_FORGERY_TOKEN" };
+      spyOn(RecoverAccountCtrl, 'checkCookie');
+    })
+    it('should check the cookies', function () {
       RecoverAccountCtrl.populateAntiForgeryToken(mockToken);
-      expect(RecoverAccountCtrl.recoveryData.AntiForgeryTokenId).toBe(mockToken.data);
+      expect(RecoverAccountCtrl.checkCookie).toHaveBeenCalled();
+    })
+    it('should popluate the AntiForgeryToken into self.recoveryData ', function() {
+      RecoverAccountCtrl.populateAntiForgeryToken(mockToken);
+      expect(RecoverAccountCtrl.recoveryData.AntiForgeryTokenId).toBe(antiForgeryToken.getAntiForgeryToken());
+    })
+    it('should populate the AntiForgeryToken into self.usernameData ', function() {
+      RecoverAccountCtrl.populateAntiForgeryToken(mockToken);
+      expect(RecoverAccountCtrl.usernameData.AntiForgeryTokenId).toBe(antiForgeryToken.getAntiForgeryToken());
     })
   })
 

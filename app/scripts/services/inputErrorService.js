@@ -29,6 +29,10 @@ angular.module('ssoApp')
       this.addMessage(elem, 'This field is required.')
     },
 
+    validationErr: function(elemVal, modelMessage) {
+
+    },
+
     addValidationError : function (elem, model) {
       var pattern = elem[0].attributes.getNamedItem('ng-pattern')
       if (pattern) {
@@ -58,7 +62,7 @@ angular.module('ssoApp')
       this.addAvailabilityError(elem)       
     },
 
-  determineError : function(elem, model) {
+  determineErrorOld : function(elem, model) {
       if (model.$error.matched) {
         this.addMatchError(elem)
       } else if (model.$error.required) {
@@ -69,6 +73,18 @@ angular.module('ssoApp')
             this.addAvailabilityError(elem)
           }   
   },  
+
+    determineError : function(elem, model) {
+      if (model.$error.matched) {
+        this.addMatchError(elem)
+      } else if (model.$error.required) {
+        this.addRequiredError(elem)
+      } else if (model.$error.pattern) {
+            this.patternError(elem, model)
+        } else {
+            this.addAvailabilityError(elem)
+          }   
+  }, 
 
   checkError : function (elem, model) {
       // console.log('inputErrorService.determineError', model)

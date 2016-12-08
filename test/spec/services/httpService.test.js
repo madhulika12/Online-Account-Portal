@@ -50,15 +50,15 @@ describe('Service: httpService', function () {
     })
   })
   describe('validate', function () {
-    it('should fire a GET to the getMemberByToken endpoint with the data', function () {
-      expectRequest('GET', Constants.endpoints.getMemberByToken, testData)
+    it('should fire a POST to the getMemberByToken endpoint with the data', function () {
+      expectRequest('POST', Constants.endpoints.getMemberByToken, testData)
       httpService.validate(testData)
       $httpBackend.flush()
     })
   })
   describe('validateJWT', function () {
-    it('should fire a GET to the validateJWT endpoint with the data', function () {
-      expectRequest('GET', Constants.endpoints.validateJWT, testData)
+    it('should fire a POST to the validateJWT endpoint with the data', function () {
+      expectRequest('POST', Constants.endpoints.validateJWT, testData)
       httpService.validateJWT(testData)
       $httpBackend.flush()
     })

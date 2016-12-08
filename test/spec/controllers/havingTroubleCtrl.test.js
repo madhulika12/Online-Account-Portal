@@ -2,14 +2,15 @@
 
 describe('Controller: havingTroubleCtrl', function () {
 
-  var havingTroubleCtrl, Constants, httpService, $rootScope, displayResponseBox, $state;
+  var havingTroubleCtrl, Constants, httpService, $rootScope, displayResponseBox, $state, antiForgeryToken;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _httpService_, _$state_, _displayResponseBox_) {
+  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _httpService_, _$state_, _displayResponseBox_, _antiForgeryToken_) {
     $rootScope = _$rootScope_;
     httpService = _httpService_;
     displayResponseBox = _displayResponseBox_;
     $state = _$state_;
+    antiForgeryToken = _antiForgeryToken_;
     havingTroubleCtrl = $controller('havingTroubleCtrl', {$scope: $rootScope.$new()})
 
     // spyOn(httpService, 'forgotPassword').and.callFake(function () {
@@ -22,6 +23,8 @@ describe('Controller: havingTroubleCtrl', function () {
     });
 
     spyOn($state, 'go')
+    spyOn(antiForgeryToken, 'setAntiForgeryToken');
+    spyOn(antiForgeryToken, 'setAntiForgeryTokenFromError');
 
   }));
 
@@ -50,6 +53,10 @@ describe('Controller: havingTroubleCtrl', function () {
     it('should redirect to the login page', function () {
       havingTroubleCtrl.forgotPassSuccess("Anything");
       expect($state.go).toHaveBeenCalledWith('login')
+    })
+    it('should setAntiForgeryToken', function () {
+      havingTroubleCtrl.forgotPassSuccess("Anything");
+      expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalledWith('Anything')
     })
   })
 
@@ -89,13 +96,17 @@ describe('Controller: havingTroubleCtrl', function () {
       ctlr.error(responseError.deleteData())
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
     })
+    it('should call setAntiForgeryTokenFromError', function () {
+      ctlr.error("Anything");
+      expect(antiForgeryToken.setAntiForgeryTokenFromError).toHaveBeenCalledWith('Anything')
+    })
   })
 
   describe('populateAntiForgeryToken', function () {
     it('should popluate the AntiForgeryToken into self.forgotPassData ', function() {
       var mockToken = { data: "MOCK_ANTI_FORGERY__TOKEN" };
       havingTroubleCtrl.populateAntiForgeryToken(mockToken);
-      expect(havingTroubleCtrl.forgotPassData.AntiForgeryTokenId).toBe(mockToken.data);
+      expect(havingTroubleCtrl.forgotPassData.AntiForgeryTokenId).toBe(antiForgeryToken.getAntiForgeryToken());
     })
   })
 

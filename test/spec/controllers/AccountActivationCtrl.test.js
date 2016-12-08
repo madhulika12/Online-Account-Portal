@@ -12,10 +12,10 @@ beforeEach(module('ssoApp', function($provide) {
 
 describe('Controller: AccountActivationCtrl', function () {
 
-  var AccountActivation, Constants, httpService, $rootScope, Constants, loadBrandingService, tokenValidationService, tokenStorageService;
+  var AccountActivation, Constants, httpService, $rootScope, Constants, loadBrandingService, tokenValidationService, tokenStorageService, antiForgeryToken;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, _Constants_, _httpService_, _$window_, _loadBrandingService_, _tokenValidationService_, _tokenStorageService_) {
+  beforeEach(inject(function ($controller, _$rootScope_, _Constants_, _httpService_, _$window_, _loadBrandingService_, _tokenValidationService_, _tokenStorageService_, _antiForgeryToken_) {
 
     //set shared variables
     $rootScope = _$rootScope_;
@@ -25,11 +25,14 @@ describe('Controller: AccountActivationCtrl', function () {
     loadBrandingService = _loadBrandingService_;
     tokenValidationService = _tokenValidationService_;
     tokenStorageService = _tokenStorageService_;
+    antiForgeryToken = _antiForgeryToken_;
 
     //create mocks
     spyOn(httpService, 'firstTimeActivate').and.callFake(function () {
       return promiseMock.ret
     })
+    spyOn(antiForgeryToken, 'setAntiForgeryToken');
+    spyOn(antiForgeryToken, 'setAntiForgeryTokenFromError');
 
     //instantiate controller
     AccountActivation = $controller('AccountActivationCtrl', {$scope: $rootScope.$new()});
@@ -105,30 +108,23 @@ describe('Controller: AccountActivationCtrl', function () {
   })
 
   describe('invalidTokenError', function () {
-    var controller, testResponseError, displayResponseBox;
+    var controller, testResponseError, displayResponseBox, message;
     beforeEach(inject(function (_displayResponseBox_) {
       controller = AccountActivation
       displayResponseBox = _displayResponseBox_
 
       spyOn(displayResponseBox, 'setMessage')
 
-      testResponseError = {
-        data : { responseObject : { isValid: false, message: "TEST_ERROR_MESSAGE" } },
-
-        nowValid : function () {
-          this.data.responseObject.isValid = true;
-          return this;
-        }
-      }
+      message = "Your session has expired, please enter your username and password to continue the activation process.";
+      testResponseError = { data : { responseObject : { message: "I am error" } } };
     }))
-    it('should execute displayResponseBox.setMessage with the error message if it exists', function () {
-      controller.invalidTokenError(testResponseError)
-      expect(displayResponseBox.setMessage).toHaveBeenCalledWith(testResponseError.data.responseObject.message, true)
+    it('should execute displayResponseBox.setMessage with the default message', function () {
+      controller.invalidTokenError(testResponseError);
+      expect(displayResponseBox.setMessage).toHaveBeenCalledWith(message, true)
     })
-
-    it('should execute displayResponseBox.setMessage with the default message if there is no message in the error', function () {
-      controller.invalidTokenError(testResponseError.nowValid())
-      expect(displayResponseBox.setMessage).toHaveBeenCalledWith("There was an unexpected error.", true)
+    it('should set the antiForgeryToken', function () {
+      controller.invalidTokenError(testResponseError);
+      expect(antiForgeryToken.setAntiForgeryTokenFromError).toHaveBeenCalledWith(testResponseError)
     })
   })
 
@@ -141,10 +137,15 @@ describe('Controller: AccountActivationCtrl', function () {
   })
   
   describe('populateAntiForgeryToken', function () {
+    it('should set the antiForgeryToken', function () {
+      var mockToken = { data: "MOCK_ANTI_FORGERY__TOKEN" };
+      AccountActivation.populateAntiForgeryToken(mockToken);
+      expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalledWith(mockToken)
+    })
     it('should populate the AntiForgeryToken into self.data ', function() {
       var mockToken = { data: "MOCK_ANTI_FORGERY__TOKEN" };
       AccountActivation.populateAntiForgeryToken(mockToken);
-      expect(AccountActivation.data.AntiForgeryTokenId).toBe(mockToken.data);
+      expect(AccountActivation.data.AntiForgeryTokenId).toBe(antiForgeryToken.getAntiForgeryToken());
     })
   })
   

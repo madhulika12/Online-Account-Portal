@@ -1,5 +1,4 @@
 <main id="update-email-view">
-
   <div class="centered-response-box">
     <h2>UPDATE EMAIL ADDRESS</h2>
     <div class="global-form">
@@ -20,6 +19,7 @@
             <input
               type="email"
               class="form-control input container"
+              autocomplete="off"
               id="emailAddress"
               name="email"
               ng-model="upEmail.updateEmailData.NewEmail"
@@ -37,14 +37,14 @@
               data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
             >RESET MY PASSWORD</kendo-button>
           </div>
-<!--
+<!-- 
           <div class="global-form-button-holder">
             <kendo-button
               ng-disabled="upEmail.form.$invalid || upEmail.form.$pending" ng-click="upEmail.updateEmailRequest($event)"
               class="submitButton processingBtn"
               data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
             >BACK TO LOGIN</kendo-button>
-          </div>-->
+          </div> -->
 
       </form>
     </div>

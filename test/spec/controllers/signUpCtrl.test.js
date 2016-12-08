@@ -2,10 +2,10 @@
 
 describe('Controller: SignUpCtrl', function () {
 
-  var SignUpCtrl, httpService, $rootScope, $window, tokenValidationService, loadBrandingService, displayResponseBox, $state, tokenStorageService;
+  var SignUpCtrl, httpService, $rootScope, $window, tokenValidationService, loadBrandingService, displayResponseBox, $state, tokenStorageService, antiForgeryToken;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, $document, $q, _httpService_, _$window_, _tokenValidationService_, _loadBrandingService_, _displayResponseBox_, _$state_, _tokenStorageService_) {
+  beforeEach(inject(function ($controller, _$rootScope_, $document, $q, _httpService_, _$window_, _tokenValidationService_, _loadBrandingService_, _displayResponseBox_, _$state_, _tokenStorageService_, _antiForgeryToken_) {
 
     //create shared variables
     $rootScope = _$rootScope_;
@@ -16,6 +16,7 @@ describe('Controller: SignUpCtrl', function () {
     displayResponseBox = _displayResponseBox_;
     $state = _$state_;
     tokenStorageService = _tokenStorageService_;
+    antiForgeryToken = _antiForgeryToken_;
 
     //create mocks
     // spyOn(httpService, 'signUp').and.callFake(function () {
@@ -32,6 +33,8 @@ describe('Controller: SignUpCtrl', function () {
     spyOn(httpService, 'getMember').and.callFake(function () {
       return $q.resolve({data : {}})
     })
+    spyOn(antiForgeryToken, 'setAntiForgeryToken');
+    spyOn(antiForgeryToken, 'setAntiForgeryTokenFromError');
 
     //instantiate controller
     SignUpCtrl = $controller('signUpCtrl', { $scope: $rootScope.$new() });
@@ -55,6 +58,11 @@ describe('Controller: SignUpCtrl', function () {
         SignUpCtrl.positiveSignUpRedirect(mockResponse);
 
         expect($window.location.assign).toHaveBeenCalledWith(loadBrandingService._styles.pingURL + mockResponse.data.responseObject)
+      })
+      it('should set the antiForgeryToken', function () {
+        var mockResponse = { data : { responseObject : "URL_TEST" } };
+        SignUpCtrl.positiveSignUpRedirect(mockResponse);
+        expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalledWith(mockResponse);
       })
     })
 
@@ -84,6 +92,10 @@ describe('Controller: SignUpCtrl', function () {
         SignUpCtrl.invalidTokenError(testResponseError)
         expect($state.go).toHaveBeenCalledWith("login");
       })
+      it('should set the antiForgeryToken', function () {
+        SignUpCtrl.error(testResponseError);
+        expect(antiForgeryToken.setAntiForgeryTokenFromError).toHaveBeenCalledWith(testResponseError);
+      })
     })
 
   });
@@ -101,6 +113,11 @@ describe('Controller: SignUpCtrl', function () {
       spyOn(displayResponseBox, 'populateResponseBox')
       SignUpCtrl.error(mockError)
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(SignUpCtrl.responseBoxConfig, "There was an unexpected error.", true)
+    })
+    it('should set the antiForgeryToken', function () {
+      var mockError = { data : {} };
+      SignUpCtrl.error(mockError);
+      expect(antiForgeryToken.setAntiForgeryTokenFromError).toHaveBeenCalledWith(mockError);
     })
   })
 
@@ -148,20 +165,21 @@ describe('Controller: SignUpCtrl', function () {
   })
 
   describe('populateAntiForgeryToken', function () {
-    var mockToken, storedToken;
+    var mockToken, storedToken, antiForged;
     beforeEach(function(){
       mockToken = { data: "MOCK_ANTI_FORGERY_TOKEN" };
       storedToken = tokenStorageService.getToken();
+      antiForged = antiForgeryToken.getAntiForgeryToken();
       spyOn(SignUpCtrl, 'sendRequestToPopulate')
     })
 
     it('should populate the AntiForgeryToken into self.data ', function() {
       SignUpCtrl.populateAntiForgeryToken(mockToken);
-      expect(SignUpCtrl.data.AntiForgeryTokenId).toBe(mockToken.data);
+      expect(SignUpCtrl.data.AntiForgeryTokenId).toBe(antiForged);
     })
     it('should populate the AntiForgeryToken into self.dataToPopulateForm ', function() {
       SignUpCtrl.populateAntiForgeryToken(mockToken);
-      expect(SignUpCtrl.dataToPopulateForm.AntiForgeryTokenId).toBe(mockToken.data);
+      expect(SignUpCtrl.dataToPopulateForm.AntiForgeryTokenId).toBe(antiForged);
     })
     it('should populate the storedToken into self.data.SessionId ', function() {
       SignUpCtrl.populateAntiForgeryToken(mockToken);

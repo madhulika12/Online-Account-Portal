@@ -38,7 +38,8 @@ describe('Controller: forgotPasswordCtrl', function () {
       var dummyData = {
         username : null,
         LoginSourceID: null,
-        AntiForgeryTokenId: null
+        AntiForgeryTokenId: null,
+        ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
       };
       expect(ForgotPasswordCtrl.forgotPasswordData).toEqual(dummyData);
     });

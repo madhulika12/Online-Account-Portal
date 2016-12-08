@@ -42,6 +42,14 @@ angular.module('ssoApp')
       return this.request(con)
     },
 
+
+    extendTimeout : function (data) {
+      // console.log('httpService.login')
+      var con = this._buildConfigure('POST', Constants.endpoints.extendTimeout, data)
+      return this.request(con)
+    },
+
+
     recoverAccount : function (data) {
       var con = this._buildConfigure('POST', Constants.endpoints.recoverAccount, data)
       return this.request(con)
@@ -51,15 +59,15 @@ angular.module('ssoApp')
       var con = this._buildConfigure('POST', Constants.endpoints.delCookie, data)
       return this.request(con)
     },
-    
+
 
     validate : function (data) {
-      var con = this._buildConfigure('GET', Constants.endpoints.getMemberByToken, data)
+      var con = this._buildConfigure('POST', Constants.endpoints.getMemberByToken, data)
       return this.request(con)
     },
 
     validateJWT : function (data) {
-      var con = this._buildConfigure('GET', Constants.endpoints.validateJWT, data)
+      var con = this._buildConfigure('POST', Constants.endpoints.validateJWT, data)
       return this.request(con)
     },
 
@@ -85,7 +93,7 @@ angular.module('ssoApp')
       var con = this._buildConfigure('POST', Constants.endpoints.validateAccountActivation, data)
       return this.request(con)
     },
-    
+
     antiForgeryToken : function (data) {
       //THIS ONE ACTUALLY SENDS A A NEW PASSWORD TO BE SET
       console.log(data);

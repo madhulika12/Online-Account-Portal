@@ -1,4 +1,32 @@
-<main>
+<main data-ng-controller="sessionTimout as session">
+	<div data-ng-show="session.showTimer">
+		<div class='modal fade' id='session-modal'>
+		<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+			<button type='button' class='close' data-dismiss='modal'>
+				<span>&times;</span>
+			</button>
+			<h2 class='modal-title centered bold'>Attention Member</h2>
+			</div>
+			<div class='modal-body'>
+			<div>
+				Your session will end in two (2) minutes due to inactivity. If you wish to continue with your session please click 'Continue' below.
+			</div>
+
+			</div>
+
+			<div class='modal-footer'>
+			<div>
+				<button type='button' class="submitButton" data-dismiss='modal' ng-click='session.extendCookieExpiry()'>Continue</button>
+			</div>
+
+			</div>
+		</div>
+		</div>
+	</div>
+	</div>
+
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-6">
       <div class="help-box">
@@ -20,7 +48,7 @@
     </div>
   </div>
 
-  <form validation-highlights name="accActivate.form">
+  <form validation-highlights name="accActivate.form" id="activateForm">
     <div class="global-form">
         <div class="row" input-linker="match" bad-link-text="The two inputs need to match.">
           <div class="col-xs-12 col-sm-6 form-group">
@@ -29,6 +57,7 @@
                 type="text"
                 class = "form-control input"
                 id="ssn"
+                autocomplete="off"
                 name="ssn"
                 ng-model="accActivate.data.SSN"
                 ng-pattern="accActivate.regex.ssn"
@@ -36,10 +65,11 @@
           </div>
 
           <div class="col-xs-12 col-sm-6 form-group">
-              <label for="confirmSsn"> CONFIRM SSN <span class="required">*</span></label>
+              <label for="confirmSsn"> CONFIRM SSN<span class="required">*</span></label>
               <input
                 type="text"
                 class = "form-control input"
+                autocomplete="off"
                 id="confirmSsn"
                 name="confirmSsn"
                 ng-model="accActivate.confirmData.SSN"
@@ -49,19 +79,40 @@
           </div>
         </div>
     </div>
+
+    <div class="row" id="terms-accept-view">
+    <div class="col-xs-12 col-md-6">
+      <div class="global-form-instructions">
+        <!--<h2>TERMS &amp; CONDITIONS</h2>-->
+        <section>
+          <p>We have updated some of our policies. Please accept the terms and conditions below before continuing.</p>
+        </section>
+      </div>
+    </div>
+  </div>
+  <div id="terms-window" style = "max-height: 500px; overflow-x: scroll" class="global-form" ng-include="'appFiles/termsAndConditions/termsAndConditions.html'">
+  </div>
+
     <div class="checkbox">
       <label for="acceptTerms">
-        <input type="checkbox" class="input" id="acceptTerms" name="acceptTerms" ng-model="accActivate.data.Accept" required/>
-        <span style="float: left;">I agree to the following <a href="/#/terms-and-conditions" target="_blank">Terms and Conditions</a> and <a href="/#/privacy-policy" target="_blank">Privacy Policy</a></span>
+        <input type="checkbox" class="input" id="acceptTerms" autocomplete="off" name="acceptTerms" ng-model="accActivate.data.Accept" required/>
+        <span style="float: left;">I agree to the <a href="/#/terms-and-conditions" target="_blank">Terms and Conditions</a> and <a href="/#/privacy-policy" target="_blank">Privacy Policy</a></span>
       </label>
     </div>
 
-    <div class="global-form-button-holder">
+    <!-- <div class="global-form-button-holder">
       <kendo-button
         class="submitButton processingBtn"
-        ng-disabled="accActivate.form.$invalid" ng-click="accActivate.activationRequest($event)"
-        data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Creating Account"
+        ng-disabled="accActivate.form.$invalid" ng-click="accActivate.activationRequest($event)" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Creating Account"
       >Create Account</kendo-button>
-    </div>
+    </div> -->
+
+		<div class="global-form-button-holder">
+			<kendo-button
+				class="submitButton processingBtn"
+				ng-disabled="accActivate.form.$invalid" ng-click="accActivate.activationRequest($event)" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
+			>Create Account</kendo-button>
+		</div>
+
   </form>
 </main>

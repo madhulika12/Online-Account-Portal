@@ -26,10 +26,6 @@ div.collapse a.headerLinks:first-of-type {
   //margin-right: 1%;
 }
 
-#header:hover {
-  background-color: #fff;
-}
-
 //Shrinks the navbar image on smaller screens:
 
 @media screen and (max-width: 767px) {
@@ -46,13 +42,13 @@ div.collapse a.headerLinks:first-of-type {
       //margin-top: 3px;
       color: #fff;
     }
-    li:nth-child(n+2) {
-      border: 1px solid #fff;
-    }
     li{
        background-color: $footerBackgroundColor;
     }
     li > a:hover {
+      background-color: $footerBackgroundColor;
+    }
+    li > a:focus {
       background-color: $footerBackgroundColor;
     }
   }
@@ -60,6 +56,6 @@ div.collapse a.headerLinks:first-of-type {
 
 .navbar-toggle.hamburger , .navbar-toggle.hamburger:hover {
   .icon-bar {
-    background-color: $headerLinksMediaQueryColor;
+    background-color: $footerBackgroundColor;
   }
 }

@@ -2,14 +2,15 @@
 
 describe('Controller: termsAccept', function () {
 
-  var TermsAcceptCtrl, Constants, httpService, $rootScope, tokenStorageService;
+  var TermsAcceptCtrl, Constants, httpService, $rootScope, tokenStorageService, antiForgeryToken;
 
-  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, $state, _tokenStorageService_, _Constants_) {
+  beforeEach(inject(function ($controller, _$rootScope_, _httpService_, $state, _tokenStorageService_, _Constants_, _antiForgeryToken_) {
     //create shared variables
     $rootScope = _$rootScope_
     httpService = _httpService_
     tokenStorageService = _tokenStorageService_
     Constants = _Constants_;
+    antiForgeryToken = _antiForgeryToken_;
 
     //creat mocks
     spyOn(httpService, 'acceptTerms').and.callFake(function () {
@@ -22,7 +23,9 @@ describe('Controller: termsAccept', function () {
     //   return promiseMock.ret
     // })
     spyOn($state, 'go')
-
+    spyOn(antiForgeryToken, 'setAntiForgeryToken');
+    spyOn(antiForgeryToken, 'setAntiForgeryTokenFromError');
+    
     //instantiate controller
     TermsAcceptCtrl = $controller('termsAcceptanceCtrl', {$scope: $rootScope.$new()})
 
@@ -58,6 +61,7 @@ describe('Controller: termsAccept', function () {
 
       TermsAcceptCtrl.success(testResponse);
       expect($window.location.assign).toHaveBeenCalledWith(testUrl);
+      expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalled();
     })
   })
 
@@ -97,6 +101,10 @@ describe('Controller: termsAccept', function () {
       ctlr.error(responseError.deleteData())
       expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
     })
+    it('should set the antiForgeryToken', function () {
+      ctlr.error(responseError);
+      expect(antiForgeryToken.setAntiForgeryTokenFromError).toHaveBeenCalledWith(responseError);
+    })
   })
 
   describe('populateId', function () {
@@ -108,10 +116,15 @@ describe('Controller: termsAccept', function () {
   })
 
   describe('populateAntiForgeryToken', function () {
-    it('should place the AntiForgeryTokenId on the controllers data object', function () {
-      var mockData = { data: "Just some antiforgery tokens" };
-      TermsAcceptCtrl.populateAntiForgeryToken(mockData);
-      expect(TermsAcceptCtrl.data.AntiForgeryTokenId).toEqual(mockData.data)
+    it('should popluate the AntiForgeryToken into self.data ', function() {
+      spyOn(TermsAcceptCtrl, 'checkCookie');
+      TermsAcceptCtrl.populateAntiForgeryToken("Anything");
+      expect(TermsAcceptCtrl.data.AntiForgeryTokenId).toBe(antiForgeryToken.getAntiForgeryToken());
+    })
+    it('check the cookies ', function() {
+      spyOn(TermsAcceptCtrl, 'checkCookie');
+      TermsAcceptCtrl.populateAntiForgeryToken("Anything");
+      expect(TermsAcceptCtrl.checkCookie).toHaveBeenCalled();
     })
   })
 

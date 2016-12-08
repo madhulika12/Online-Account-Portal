@@ -6,6 +6,6 @@
     }
 }
 
-// .submitButton:focus:active {
-//     @extend .submitButton:active;
-// }
+.submitButton:focus:active {
+    @extend .submitButton:active;
+}

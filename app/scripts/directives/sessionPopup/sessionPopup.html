@@ -1,0 +1,31 @@
+<div data-ng-controller="sessionTimout as session" data-ng-show="session.showTimer">
+    <div class='modal fade' id='username-modal'>
+    <div class='modal-dialog'>
+      <div class='modal-content'>
+        <div class='modal-header'>
+          <button type='button' class='close' data-dismiss='modal'>
+            <span>&times;</span>
+          </button>
+          <h2 class='modal-title'>Attention Member</h2>
+        </div>
+        <div class='modal-body'>
+          <div>
+            <p></p>
+
+            <p class="centered bold">{{recover.usernameData.Username}}</p>
+
+            <p>Your session will end in two (2) minutes due to inactivity. If you wish to continue with your session please click 'Continue' below.</p>
+          </div>
+
+        </div>
+
+        <div class='modal-footer'>
+          <div>
+            <button type='button' class="submitButton" data-dismiss='modal' ng-click='recover.resetPass()'>Continue</button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
