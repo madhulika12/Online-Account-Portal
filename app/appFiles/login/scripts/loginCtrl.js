@@ -16,7 +16,7 @@ angular.module('ssoApp')
         ZipCode: null,
         LastName: null,
         AntiForgeryTokenId: null,
-        ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
+        ClientUrl : 'https://idtheftdefensestage.mysecuredashboard.com/login'
       }
 
       self.loginData = {
@@ -24,7 +24,7 @@ angular.module('ssoApp')
         Password: null,
         LoginSourceId: Constants.loginSourceId,
         AntiForgeryTokenId: null,
-        ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
+        ClientUrl : 'https://idtheftdefensestage.mysecuredashboard.com/login'
       }
 
       self.regex = {
@@ -143,8 +143,8 @@ angular.module('ssoApp')
          //
          $('div.fade').removeClass('modal-backdrop');
 
-         loadBrandingService.getStyleSheetPath()
-          .then(self.populateAntiForgeryToken, self.error);
+        //  loadBrandingService.getStyleSheetPath()
+        //   .then(self.populateAntiForgeryToken, self.error);
  }]);
 
  // $scope.$on('$locationChangeStart', function (event, next, current) {

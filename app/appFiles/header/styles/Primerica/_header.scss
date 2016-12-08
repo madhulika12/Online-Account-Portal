@@ -3,7 +3,7 @@
     color: white;
     &:hover, &:focus {
       color: black;
-      background-color: #999;
+      // background-color: #999;
     }
     // &:visited {
     //   color: #fff; 
@@ -22,15 +22,15 @@
 }
 
 header div.collapse {
-  background-color: rgb(153, 153, 153);
+  // background-color: rgb(153, 153, 153);
 }
 
 div.navbar-header, div.navbar-collapse, header.navbar, div.headerContainer {
-  background-color: #999;
+  // background-color: #999;
 }
 
 div.collapse > ul.nav, div.collapse > ul.nav > li > a.headerLinks:hover {
-  background-color: #999 !important;
+  // background-color: #999 !important;
   outline: none !important;
 }
 
@@ -53,7 +53,7 @@ div.collapse > ul.nav, div.collapse > ul.nav > li > a.headerLinks:hover {
 
   header {
     padding: 0px 15px;
-    background-color: rgb(153, 153, 153);
+    // background-color: rgb(153, 153, 153);
   }
   #header {
     .headerLinks {
