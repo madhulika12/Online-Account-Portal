@@ -49,7 +49,7 @@ angular.module('ssoApp')
         var currentUrl = lbs.getBaseUrl()
 
         $http
-          .get('https://mws.charlie.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
+          .get('https://mws.stage.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
           .then(function (res) {
             lbs._setStyles(res)
             lbs.deferred.resolve(res)
@@ -80,7 +80,7 @@ angular.module('ssoApp')
       timerIncrement : function() {
           idleTime = idleTime + 1;
           if (idleTime > 2) { // 20 minutes
-              window.location.assign('https://idshieldstage.krollportal.com/login');
+              window.location.assign('https://idshieldcharlie.mysecuredashboard.com/login');
           }
       }
     }

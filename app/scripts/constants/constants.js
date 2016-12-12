@@ -5,7 +5,7 @@ angular.module('ssoApp')
   //endpoints
 
   loginSourceId : 2,
-  portalBaseUrl : 'https://logincharlie.krollportal.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
+  portalBaseUrl : 'https://loginstage.krollportal.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
   tokenCookieKey : 'ssoSessionId',
   fifteenMinutes : 900000,
   refreshTime : 900,
@@ -24,28 +24,28 @@ angular.module('ssoApp')
   //   logo : "images/IDShield/IDShieldLogo.png"
   // },
   endpoints : {
-    validateJWT : 'https://mws.charlie.kroll.com/api/v1/member/token/validate',
-    activate : 'https://mws.charlie.kroll.com/api/v1/member/activate',
-    firstTimeActivate : 'https://mws.charlie.kroll.com/api/v1/member/account-activation',
-    updateEmail : 'https://mws.charlie.kroll.com/api/v1/member/email-update',
-    signUp : 'https://mws.charlie.kroll.com/api/v1/member/sign-up',
-    setPassword : 'https://mws.charlie.kroll.com/api/v1/member/set-password',
-    changePassword : 'https://mws.charlie.kroll.com/api/v1/member/change-password',
-    recoverAccount : 'https://mws.charlie.kroll.com/api/v1/member/recover-account',
-    login : 'https://mws.charlie.kroll.com/api/v1/member/login',
-    acceptTerms : 'https://mws.charlie.kroll.com/api/v1/member/account/terms-and-conditions',
-    forgotPassword : 'https://mws.charlie.kroll.com/api/v1/member/forgot-password',
-    forgotUsername : 'https://mws.charlie.kroll.com/api/v1/member/forgot-userid',
-    multiClient: 'https://mws.charlie.kroll.com/api/v1/vendor/webpage-attributes',
+    validateJWT : 'https://mws.stage.kroll.com/api/v1/member/token/validate',
+    activate : 'https://mws.stage.kroll.com/api/v1/member/activate',
+    firstTimeActivate : 'https://mws.stage.kroll.com/api/v1/member/account-activation',
+    updateEmail : 'https://mws.stage.kroll.com/api/v1/member/email-update',
+    signUp : 'https://mws.stage.kroll.com/api/v1/member/sign-up',
+    setPassword : 'https://mws.stage.kroll.com/api/v1/member/set-password',
+    changePassword : 'https://mws.stage.kroll.com/api/v1/member/change-password',
+    recoverAccount : 'https://mws.stage.kroll.com/api/v1/member/recover-account',
+    login : 'https://mws.stage.kroll.com/api/v1/member/login',
+    acceptTerms : 'https://mws.stage.kroll.com/api/v1/member/account/terms-and-conditions',
+    forgotPassword : 'https://mws.stage.kroll.com/api/v1/member/forgot-password',
+    forgotUsername : 'https://mws.stage.kroll.com/api/v1/member/forgot-userid',
+    multiClient: 'https://mws.stage.kroll.com/api/v1/vendor/webpage-attributes',
     // getMemberByToken: 'https://localhost:44300/api/v1/member/sign-up/load',
-    getMemberByToken: 'https://mws.charlie.kroll.com/api/v1/member/sign-up/load',
-    validateAccountActivation: 'https://mws.charlie.kroll.com/api/v1/member/session/validate',
-    emailExist : 'https://mws.charlie.kroll.com/api/v1/member/email-userid/exist',
-    usernameExist : 'https://mws.charlie.kroll.com/api/v1/member/email-userid/exist',
-    updateProfile : 'https://mws.charlie.kroll.com/api/v1/member/personal/update',
-    antiForgeryToken : 'https://mws.charlie.kroll.com/api/v1/security/tokens',
-    delCookie: 'https://mws.charlie.kroll.com/api/v1/member/token/redeem',
-    extendTimeout: 'https://mws.charlie.kroll.com/api/v1/member/extend-session'
+    getMemberByToken: 'https://mws.stage.kroll.com/api/v1/member/sign-up/load',
+    validateAccountActivation: 'https://mws.stage.kroll.com/api/v1/member/session/validate',
+    emailExist : 'https://mws.stage.kroll.com/api/v1/member/email-userid/exist',
+    usernameExist : 'https://mws.stage.kroll.com/api/v1/member/email-userid/exist',
+    updateProfile : 'https://mws.stage.kroll.com/api/v1/member/personal/update',
+    antiForgeryToken : 'https://mws.stage.kroll.com/api/v1/security/tokens',
+    delCookie: 'https://mws.stage.kroll.com/api/v1/member/token/redeem',
+    extendTimeout: 'https://mws.stage.kroll.com/api/v1/member/extend-session'
   },
   regexs : {
     email : /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/i,
@@ -56,7 +56,8 @@ angular.module('ssoApp')
     city: /^[a-zA-Z'-,.\s]{2,70}$/,//TODO allowing stars???
     phone: /^\d{10}$/,
     zip : /^\d{5}([ \-]\d{4})?$/, //matches 5 digits followed by an optional dash and 4 digits
-    date: /^(0[1-9]|1[0-2])\/(0[1-9]|[1-2]\d|3[0,1])\/(19|20)\d{2}$/,//rough date regex, MM-dd-YYYY, does NOT account for leap years, does NOT limit days according to what month it is. Limits months 01 - 12, limits dates 01 - 31, limits years 1900 - 2099.
+    date: /^(0[1-9]|1[0-2])\/(0[1-9]|[1-2]\d|3[0,1])\/(19|20)\d{2}$/,
+    //rough date regex, MM-dd-YYYY, does NOT account for leap years, does NOT limit days according to what month it is. Limits months 01 - 12, limits dates 01 - 31, limits years 1900 - 2099.
     anything: /^[\s\S]+$/,
     address: /^[a-zA-z0-9\s-'.]+$/, //matches any alphanumeric, periods, spaces, dashes, apostrophes
     ssn: /^\d{9}$/,
