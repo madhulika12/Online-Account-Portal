@@ -1,5 +1,5 @@
 angular.module('ssoApp')
-.controller('forgotUsernameCtrl', ['antiForgeryToken', '$http', 'Constants', '$state', 'httpService', 'displayResponseBox', function (antiForgeryToken, $http, Constants, $state, httpService, displayResponseBox) {
+.controller('forgotUsernameCtrl', ['antiForgeryToken', '$http', 'Constants', '$state', 'httpService', 'displayResponseBox', 'getUrl', function (antiForgeryToken, $http, Constants, $state, httpService, displayResponseBox, getUrl) {
   var self = this;
 
   self.recoveryData = {
@@ -8,7 +8,7 @@ angular.module('ssoApp')
     LastName: null,
     ZipCode: null,
     DateOfBirth: null,
-    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
+    ClientUrl : getUrl()
   }
 
   self.regex = {

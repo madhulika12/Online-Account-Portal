@@ -1,12 +1,12 @@
 #header
   .headerLinks {
-    color: white;
+    color: gray;
     &:hover, &:focus {
       color: black;
       // background-color: #999;
     }
     // &:visited {
-    //   color: #fff; 
+    //   color: #fff;
     //   background: #999;
     // }
   }
@@ -35,7 +35,7 @@ div.collapse > ul.nav, div.collapse > ul.nav > li > a.headerLinks:hover {
 }
 
 .nav>li>a:focus, .nav>li>a:hover {
-      // background-color: #999 !important;
+      background-color: none !important;
 }
 
 .navbar-collapse.collapse {
@@ -55,6 +55,7 @@ div.collapse > ul.nav, div.collapse > ul.nav > li > a.headerLinks:hover {
     padding: 0px 15px;
     // background-color: rgb(153, 153, 153);
   }
+
   #header {
     .headerLinks {
       //margin-top: 3px;
@@ -70,4 +71,18 @@ div.collapse > ul.nav, div.collapse > ul.nav > li > a.headerLinks:hover {
       background-color: rgb(153, 153, 153);
     }
   }
+}
+
+header {
+  .navbar-toggle.hamburger , .navbar-toggle.hamburger:hover {
+    .icon-bar {
+      background-color: none;
+    }
+  }
+}
+
+#header {
+  li > a:focus {
+    background-color: none;
+}
 }

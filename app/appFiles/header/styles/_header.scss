@@ -11,9 +11,6 @@ header {
 
   .navbar-toggle.hamburger , .navbar-toggle.hamburger:hover {
     margin-top : 15px;
-    .icon-bar {
-      background-color: $headerLinksMediaQueryColor;
-    }
   }
 }
 
@@ -46,9 +43,6 @@ div.collapse a.headerLinks:first-of-type {
        background-color: $footerBackgroundColor;
     }
     li > a:hover {
-      background-color: $footerBackgroundColor;
-    }
-    li > a:focus {
       background-color: $footerBackgroundColor;
     }
   }

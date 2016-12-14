@@ -36,7 +36,7 @@ angular.module('ssoApp')
     if(elem3 != ctrl.$viewValue) {
 
     $http
-          .get('https://mws.charlie.kroll.com/api/v1/member/email-userid/exist?emailUserId=' + ctrl.$viewValue)
+          .get('https://mws.stage.kroll.com/api/v1/member/email-userid/exist?emailUserId=' + ctrl.$viewValue)
           .then(resolve, reject)
     }
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ssoApp')
-    .controller('signUpCtrl', ['antiForgeryToken', '$http', '$location', 'Constants', '$rootScope', '$stateParams', 'httpService', 'tokenValidationService', 'displayResponseBox', '$window', 'tokenStorageService', '$state', 'loadBrandingService',function(antiForgeryToken, $http, $location, Constants, $rootScope, $stateParams, httpService, tokenValidationService, displayResponseBox, $window, tokenStorageService, $state, loadBrandingService) {
+    .controller('signUpCtrl', ['antiForgeryToken', '$http', '$location', 'Constants', '$rootScope', '$stateParams', 'httpService', 'tokenValidationService', 'displayResponseBox', '$window', 'tokenStorageService', '$state', 'loadBrandingService', 'getUrl', function(antiForgeryToken, $http, $location, Constants, $rootScope, $stateParams, httpService, tokenValidationService, displayResponseBox, $window, tokenStorageService, $state, loadBrandingService, getUrl) {
         var self = this;
 
         self.states = Constants.states
@@ -26,7 +26,8 @@ angular.module('ssoApp')
           TermsAccept: null,
           Email: null,
           AntiForgeryTokenId: null,
-          SessionId : null
+          SessionId : null,
+          ClientUrl: getUrl()
        }
 
         self.confirmationData = {
@@ -57,7 +58,8 @@ angular.module('ssoApp')
 
         self.dataToPopulateForm = {
           AntiForgeryTokenId: null,
-          SessionId : null
+          SessionId : null,
+          ClientUrl: getUrl()
         }
 
         //runs if the request has an http error

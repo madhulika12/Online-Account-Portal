@@ -21,7 +21,7 @@ angular.module('ssoApp')
     membershipNum : null,
     lastName : null,
     zip : null,
-    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
+    ClientUrl : 'https://idtheftdefensestage.mysecuredashboard.com/login'
   }
 
   self.regex = {
