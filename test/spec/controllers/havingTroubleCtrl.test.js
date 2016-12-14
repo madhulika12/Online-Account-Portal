@@ -2,16 +2,21 @@
 
 describe('Controller: havingTroubleCtrl', function () {
 
-  var havingTroubleCtrl, Constants, httpService, $rootScope, displayResponseBox, $state, antiForgeryToken;
+  var havingTroubleCtrl, Constants, httpService, $rootScope, displayResponseBox, $state, antiForgeryToken, tokenStorageService, $httpBackend;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _httpService_, _$state_, _displayResponseBox_, _antiForgeryToken_) {
+  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _httpService_, _$state_, _displayResponseBox_, _antiForgeryToken_, _tokenStorageService_, _$httpBackend_) {
     $rootScope = _$rootScope_;
     httpService = _httpService_;
     displayResponseBox = _displayResponseBox_;
     $state = _$state_;
     antiForgeryToken = _antiForgeryToken_;
+    tokenStorageService = _tokenStorageService_;
+    $httpBackend = _$httpBackend_;
     havingTroubleCtrl = $controller('havingTroubleCtrl', {$scope: $rootScope.$new()})
+
+    $httpBackend.when('GET', 'https://mws.stage.kroll.com/api/v1/security/tokens')
+    .respond(200, { responseObject: {access_token: "test", refresh_token: "test"}, errorMessage: 'What now?!?' });
 
     // spyOn(httpService, 'forgotPassword').and.callFake(function () {
     //   return promiseMock.ret
@@ -45,18 +50,28 @@ describe('Controller: havingTroubleCtrl', function () {
   })
 
   describe('forgotPassSuccess', function () {
+    var mockResponse, defaultMessage;
+    beforeEach(function(){
+      mockResponse = { data: { responseObject: { message: "TESTING"} } };
+      defaultMessage = "A password recovery email was sent to your account.";
+    })
     it('should set the responseBox with the password recover message', function () {
       spyOn(displayResponseBox, 'setMessage')
-      havingTroubleCtrl.forgotPassSuccess("Anything");
-      expect(displayResponseBox.setMessage).toHaveBeenCalled()
+      havingTroubleCtrl.forgotPassSuccess(mockResponse);
+      expect(displayResponseBox.setMessage).toHaveBeenCalledWith(mockResponse.data.responseObject, false)
     })
     it('should redirect to the login page', function () {
-      havingTroubleCtrl.forgotPassSuccess("Anything");
+      havingTroubleCtrl.forgotPassSuccess(mockResponse);
       expect($state.go).toHaveBeenCalledWith('login')
     })
+    it('should use the default message if there is no responseObject', function () {
+      spyOn(displayResponseBox, 'setMessage')
+      havingTroubleCtrl.forgotPassSuccess("Nothing");
+      expect(displayResponseBox.setMessage).toHaveBeenCalledWith(defaultMessage, false)
+    })
     it('should setAntiForgeryToken', function () {
-      havingTroubleCtrl.forgotPassSuccess("Anything");
-      expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalledWith('Anything')
+      havingTroubleCtrl.forgotPassSuccess(mockResponse);
+      expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalledWith(mockResponse)
     })
   })
 
@@ -129,6 +144,22 @@ describe('Controller: havingTroubleCtrl', function () {
       havingTroubleCtrl.dismissToRecoverAccount()
       expect( spyModalOn ).toHaveBeenCalled();
     })  
+  })
+
+  describe('callSecurityTokens', function () {
+    it('calls refresh Cookie', function () {
+      spyOn(havingTroubleCtrl, 'checkCookie');
+      havingTroubleCtrl.callSecurityTokens();
+      expect(havingTroubleCtrl.checkCookie).toHaveBeenCalled()
+    })
+  })
+
+  describe('checkCookie', function () {
+    it('calls refresh Cookie', function () {
+      spyOn(tokenStorageService, 'refreshCookie');
+      havingTroubleCtrl.checkCookie();
+      expect(tokenStorageService.refreshCookie).toHaveBeenCalled()
+    })
   })
 
 })

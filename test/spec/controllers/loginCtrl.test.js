@@ -145,12 +145,14 @@ describe('Controller: LoginCtrl', function () {
       expect($location.url).toHaveBeenCalledWith(checkThis);
     })
 
-    // ? Is this how this is supposed to perform? This would never be reach since it triggers the above location change first!
-    xit('should redirect the page if the pingToken contains terms-accept and account-activation ??', function () {
-      var checkThis = "terms-accept&account-activation";
+    it('should redirect the page if the pingToken contains terms-accept and account-activation', function () {
+      var checkThis = "account-activation";
       mockData.data.responseObject.pingToken = checkThis;
+      var answer = mockData.data.responseObject.pingToken + "?token=" + mockData.data.responseObject.sessionToken;
+      
       LoginCtrl.loginSuccess(mockData);
-      expect($location.url).toHaveBeenCalledWith(checkThis);
+
+      expect($location.url).toHaveBeenCalledWith(answer);
     })
 
     it('should do nothing if the errortype is not 200', function () {
@@ -266,6 +268,14 @@ describe('Controller: LoginCtrl', function () {
     it('should set the antiForgeryToken', function () {
       LoginCtrl.populateAntiForgeryToken(mockToken);
       expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalledWith(mockToken)
+    })
+  })
+
+  describe('clearCookie', function () {
+    it('calls refresh Cookie', function () {
+      spyOn(tokenStorageService, 'deleteToken');
+      LoginCtrl.clearCookie();
+      expect(tokenStorageService.deleteToken).toHaveBeenCalled()
     })
   })
 

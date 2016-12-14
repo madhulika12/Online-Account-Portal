@@ -115,15 +115,41 @@ describe('Controller: updateProfileCtrl', function () {
       })
     })
 
-    // describe('#setUpdateDataAsOld', function () {
-    //   it('should put a copy of old data as updatedData', function () {
-    //     UpdateProfileCtrl.setData(dummyResponse)
-    //     expect(UpdateProfileCtrl.setUpdatedDataAsOld).toHaveBeenCalled()
-    //     expect(UpdateProfileCtrl.updatedData).toEqual(current)
-    //   })
-    // })
+    describe('#setUpdateDataAsOld', function () {
+      it('should put a copy of old data as updatedData', function () {
+        spyOn(UpdateProfileCtrl, 'setReadOnly');
+        UpdateProfileCtrl.setData(dummyResponse);
+        expect(UpdateProfileCtrl.setUpdatedDataAsOld).toHaveBeenCalled();
+        expect(UpdateProfileCtrl.setReadOnly).toHaveBeenCalled();
+      })
+    })
 
+    describe('setReadOnly', function () {
+      it('should set the readOnlyProperty to true if the DateOfBirth is on setreturneddata', function () {
+        spyOn(UpdateProfileCtrl, 'setReadOnly').and.callThrough();
+        UpdateProfileCtrl.setData(dummyResponse);
+        expect(UpdateProfileCtrl.setReadOnly).toHaveBeenCalled();
+        expect(UpdateProfileCtrl.readOnlyProp).toBe(true)
+      })
+    })
   })
+
+  describe('setReadOnly', function () {
+    it('should do nothing if the DateOfBirth is not defined', function () {
+      UpdateProfileCtrl.setReturnedData = {}
+      UpdateProfileCtrl.setReadOnly();
+      expect(UpdateProfileCtrl.readOnlyProp).toBe(false)
+    })
+  })
+
+  describe('checkCookie', function () {
+    it('calls refresh Cookie', function () {
+      spyOn(tokenStorageService, 'refreshCookie');
+      UpdateProfileCtrl.checkCookie();
+      expect(tokenStorageService.refreshCookie).toHaveBeenCalled()
+    })
+  })
+
 
   describe('#editOn', function () {
     it('should set the mode to edit', function () {
