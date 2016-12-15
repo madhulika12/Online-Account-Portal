@@ -66,7 +66,6 @@ describe('Controller: updateProfileCtrl', function () {
 
     //instantiate controller
     UpdateProfileCtrl = $controller('updateProfile', {$scope: $rootScope.$new()})
-    spyOn(UpdateProfileCtrl, 'setUpdatedDataAsOld').and.callThrough()
 
     current = {
       FirstName : "TESTER",
@@ -94,6 +93,9 @@ describe('Controller: updateProfileCtrl', function () {
   // })
 
   describe('setting Data', function () {
+    beforeEach(function(){
+      spyOn(UpdateProfileCtrl, 'setUpdatedDataAsOld').and.callThrough()
+    })
     describe('#setData', function () {
       // The current version needs the response to be properly formed, since a variable and a function call are made based off of the response prior to checking if that part of the response exists
       xit('should do nothing if no data is passed to it', function () {
@@ -115,7 +117,7 @@ describe('Controller: updateProfileCtrl', function () {
       })
     })
 
-    describe('#setUpdateDataAsOld', function () {
+    describe('#setUpdatedDataAsOld', function () {
       it('should put a copy of old data as updatedData', function () {
         spyOn(UpdateProfileCtrl, 'setReadOnly');
         UpdateProfileCtrl.setData(dummyResponse);
@@ -165,24 +167,33 @@ describe('Controller: updateProfileCtrl', function () {
     })
   })
 
-  // describe('#cancel', function () {
-  //   it('should set the updated data to the old data', function () {
-  //     UpdateProfileCtrl.setData(dummyResponse)
+  describe('#cancel', function () {
+    it('should call setUpdatedDataAsOld', function () {
+      spyOn(UpdateProfileCtrl, 'setUpdatedDataAsOld');
+      UpdateProfileCtrl.cancel();
+      expect(UpdateProfileCtrl.setUpdatedDataAsOld).toHaveBeenCalled();
+    })
 
-  //     UpdateProfileCtrl.cancel()
-  //     expect(UpdateProfileCtrl.updatedData).toEqual(current)
-  //   })
-
-  //   it('should set the mode to view', function () {
-  //     UpdateProfileCtrl.cancel()
-  //     expect(UpdateProfileCtrl.mode).toEqual('view')
-  //   })
-  // })
+    it('should set the mode to view', function () {
+      spyOn(UpdateProfileCtrl, 'setUpdatedDataAsOld');
+      UpdateProfileCtrl.cancel();
+      expect(UpdateProfileCtrl.mode).toEqual('view');
+    });
+  })
 
   describe('#cancelPassword', function () {
     it('should set the editPasswordMode to show', function () {
       UpdateProfileCtrl.cancelPassword()
       expect(UpdateProfileCtrl.editPasswordMode).toEqual('show')
+    })
+  })
+
+  describe('goToDashboard', function () {
+    it('should assign the window location to the dashboard', function () {
+      var dashboardUrl = "http://imc2-staging2.csid.com/dashboard";
+      spyOn($window.location, 'assign')
+      UpdateProfileCtrl.goToDashboard()
+      expect($window.location.assign).toHaveBeenCalledWith(dashboardUrl);
     })
   })
 
