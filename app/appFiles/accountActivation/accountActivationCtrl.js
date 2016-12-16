@@ -9,7 +9,8 @@ angular.module('ssoApp')
     SessionId : null,
     Accept: false,
     AntiForgeryToken: null,
-    ClientUrl : getUrl()
+    ClientUrl : getUrl(),
+    SessionId : tokenValidationService.getToken()
   }
 
   self.confirmData = {
@@ -88,7 +89,18 @@ angular.module('ssoApp')
   loadBrandingService.getStyleSheetPath()
     .then(self.populateAntiForgeryToken, self.error);
 
+  //   $('button[data-loading-text]').click(function () {
+  //     $(this).button('loading');
+  // });
 
+  $('button[data-loading-text]')
+    .on('click', function () {
+        var btn = $(this)
+        btn.button('loading')
+        setTimeout(function () {
+            btn.button('reset')
+        }, 1000)
+});
 
 
 }]);

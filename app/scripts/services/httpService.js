@@ -1,5 +1,5 @@
 angular.module('ssoApp')
-.service('httpService', ['$http', 'Constants', '$q', '$httpParamSerializerJQLike', function ( $http, Constants, $q, $httpParamSerializerJQLike) {
+.service('httpService', ['$http', 'Constants', '$q', '$httpParamSerializerJQLike', 'getUrl', function ( $http, Constants, $q, $httpParamSerializerJQLike, getUrl) {
 
   return {
 
@@ -59,15 +59,15 @@ angular.module('ssoApp')
       var con = this._buildConfigure('POST', Constants.endpoints.delCookie, data)
       return this.request(con)
     },
-    
+
 
     validate : function (data) {
-      var con = this._buildConfigure('GET', Constants.endpoints.getMemberByToken, data)
+      var con = this._buildConfigure('POST', Constants.endpoints.getMemberByToken, data)
       return this.request(con)
     },
 
     validateJWT : function (data) {
-      var con = this._buildConfigure('GET', Constants.endpoints.validateJWT, data)
+      var con = this._buildConfigure('POST', Constants.endpoints.validateJWT, data)
       return this.request(con)
     },
 
@@ -93,7 +93,7 @@ angular.module('ssoApp')
       var con = this._buildConfigure('POST', Constants.endpoints.validateAccountActivation, data)
       return this.request(con)
     },
-    
+
     antiForgeryToken : function (data) {
       //THIS ONE ACTUALLY SENDS A A NEW PASSWORD TO BE SET
       console.log(data);
@@ -154,9 +154,9 @@ angular.module('ssoApp')
       return this.request(con)
     },
 
-    usernameExist : function (usernameString) {
+    usernameExist : function (data) {
       // console.log('checking username')
-      var con = this._buildConfigure('GET', Constants.endpoints.usernameExist, { emailUserId : usernameString})
+      var con = this._buildConfigure('POST', Constants.endpoints.usernameExist, data)
       return this.request(con)
     }
   }

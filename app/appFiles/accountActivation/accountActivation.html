@@ -24,9 +24,9 @@
 			</div>
 		</div>
 		</div>
-	</div>	
 	</div>
-  
+	</div>
+
   <div class="row">
     <div class="col-xs-12 col-sm-6 col-sm-offset-6">
       <div class="help-box">
@@ -100,12 +100,19 @@
       </label>
     </div>
 
-    <div class="global-form-button-holder">
+    <!-- <div class="global-form-button-holder">
       <kendo-button
         class="submitButton processingBtn"
-        ng-disabled="accActivate.form.$invalid" ng-click="accActivate.activationRequest($event)"
-        data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Creating Account"
+        ng-disabled="accActivate.form.$invalid" ng-click="accActivate.activationRequest($event)" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Creating Account"
       >Create Account</kendo-button>
-    </div>
+    </div> -->
+
+		<div class="global-form-button-holder">
+			<kendo-button
+				class="submitButton processingBtn"
+				ng-disabled="accActivate.form.$invalid" ng-click="accActivate.activationRequest($event)" data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
+			>Create Account</kendo-button>
+		</div>
+
   </form>
 </main>

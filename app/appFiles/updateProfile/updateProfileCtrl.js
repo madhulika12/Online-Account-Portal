@@ -2,7 +2,7 @@ angular.module('ssoApp')
 
 // SPECIAL
 
-.controller('updateProfile', ['antiForgeryToken', 'sessionService','inputErrorService', '$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', function (antiForgeryToken, sessionService, inputErrorService, $window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox) {
+.controller('updateProfile', ['antiForgeryToken', 'sessionService','inputErrorService', '$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', 'getUrl', function (antiForgeryToken, sessionService, inputErrorService, $window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox, getUrl) {
 
   var self = this
 
@@ -38,7 +38,8 @@ angular.module('ssoApp')
     CurrentPassword : null,
     NewPassword : null,
     AntiForgeryTokenId: null,
-    SessionId : null
+    SessionId : null,
+    ClientUrl: getUrl()
   }
 
   self.confirmData = {
@@ -63,7 +64,8 @@ angular.module('ssoApp')
 
         self.dataToPopulateForm = {
           AntiForgeryTokenId: null,
-          SessionId : null
+          SessionId : null,
+          ClientUrl: getUrl()
         }
 
 

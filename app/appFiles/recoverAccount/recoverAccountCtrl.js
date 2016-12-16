@@ -2,7 +2,7 @@
 
 angular.module('ssoApp')
 
-.controller('recoverAccountCtrl', ['antiForgeryToken', '$http','httpService', 'Constants', 'displayResponseBox', '$state', 'usernameService','tokenStorageService', function (antiForgeryToken, $http, httpService, Constants, displayResponseBox, $state, usernameService, tokenStorageService) {
+.controller('recoverAccountCtrl', ['antiForgeryToken', '$http','httpService', 'Constants', 'displayResponseBox', '$state', 'usernameService','tokenStorageService', 'getUrl', function (antiForgeryToken, $http, httpService, Constants, displayResponseBox, $state, usernameService, tokenStorageService, getUrl) {
   // console.log("Inside Recover Account Controller")
 
   var self = this;
@@ -14,7 +14,7 @@ angular.module('ssoApp')
     ZipCode: null,
     DateOfBirth: null,
     AntiForgeryTokenId: null,
-    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
+    ClientUrl : getUrl()
   }
 
   self.usernameData = {
@@ -22,7 +22,7 @@ angular.module('ssoApp')
     AntiForgeryTokenId: null,
     LoginSourceId : Constants.loginSourceId,
     SessionId : null,
-    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
+    ClientUrl : getUrl()
   }
 
   self.regex = {

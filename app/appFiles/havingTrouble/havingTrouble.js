@@ -6,7 +6,7 @@ angular.module('ssoApp')
     Username : null,
     LoginSourceId : Constants.loginSourceId,
     AntiForgeryTokenId: null,
-    ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
+    ClientUrl : 'https://idtheftdefensestage.mysecuredashboard.com/login'
   }
 
   self.forgotPassConfirmData = {

@@ -25,9 +25,9 @@ angular.module('ssoApp')
               } else {
                 console.log("Error");
                 deferred.reject(res)
-        
+
       }
-      }   
+      }
 
       var reject = function (err) {
         deferred.reject(err)

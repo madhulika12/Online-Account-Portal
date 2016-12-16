@@ -1,6 +1,6 @@
 'use strict';
 angular.module('ssoApp')
-    .controller('updateEmailCtrl', ['antiForgeryToken', '$timeout','tokenStorageService','$http', 'httpService', '$scope', 'Constants', 'tokenValidationService', 'displayResponseBox', '$state', 'usernameService', function(antiForgeryToken, $timeout, tokenStorageService, $http, httpService, $scope, Constants, tokenValidationService, displayResponseBox, $state, usernameService) {
+    .controller('updateEmailCtrl', ['antiForgeryToken', '$timeout','tokenStorageService','$http', 'httpService', '$scope', 'Constants', 'tokenValidationService', 'displayResponseBox', '$state', 'usernameService', 'getUrl', function(antiForgeryToken, $timeout, tokenStorageService, $http, httpService, $scope, Constants, tokenValidationService, displayResponseBox, $state, usernameService, getUrl) {
 
         var self = this;
 
@@ -16,13 +16,15 @@ angular.module('ssoApp')
         self.updateEmailData = {
           NewEmail : null,
           AntiForgeryTokenId: null,
-          SessionId : null
+          SessionId : null,
+          ClientUrl: getUrl()
         }
 
     self.forgotPasswordData = {
       LoginSourceId: 2,
       AntiForgeryTokenId: null,
-      SessionId : null
+      SessionId : null,
+      ClientUrl: getUrl()
     }
 
         self.responseBoxConfig = {

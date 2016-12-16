@@ -93,8 +93,8 @@ angular.module('ssoApp')
           self.checkRequirements()
         })
 
-        // tokenValidationService.checkJWT()
-        //   .catch(self.showResetModal)
+        tokenValidationService.checkJWT()
+          .catch(self.showResetModal)
 
       self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);

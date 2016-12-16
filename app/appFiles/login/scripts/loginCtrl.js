@@ -2,7 +2,7 @@
 
 //SPECIAL
 angular.module('ssoApp')
-  .controller('loginCtrl', ['antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService',function(antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService) {
+  .controller('loginCtrl', ['antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService', 'getUrl', function(antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService, getUrl) {
       // console.log("Entering Login Ctrl");
 
       var self = this;
@@ -16,7 +16,7 @@ angular.module('ssoApp')
         ZipCode: null,
         LastName: null,
         AntiForgeryTokenId: null,
-        ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
+        ClientUrl : getUrl()
       }
 
       self.loginData = {
@@ -24,7 +24,7 @@ angular.module('ssoApp')
         Password: null,
         LoginSourceId: Constants.loginSourceId,
         AntiForgeryTokenId: null,
-        ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
+        ClientUrl : getUrl()
       }
 
       self.regex = {
@@ -102,6 +102,7 @@ angular.module('ssoApp')
       self.loginRequest = function (event) {
         // console.log('loginCtrl.loginRequest')
         event.preventDefault()
+
         $('.loginProcessingBtn').button('loading');
         httpService.login(self.loginData)
           .then(self.loginSuccess, self.error)
