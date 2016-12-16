@@ -38,7 +38,8 @@ angular.module('ssoApp')
     CurrentPassword : null,
     NewPassword : null,
     AntiForgeryTokenId: null,
-    SessionId : null
+    SessionId : null,
+    ClientUrl: getUrl()
   }
 
   self.confirmData = {
@@ -63,7 +64,8 @@ angular.module('ssoApp')
 
         self.dataToPopulateForm = {
           AntiForgeryTokenId: null,
-          SessionId : null
+          SessionId : null,
+          ClientUrl: getUrl()
         }
 
 
