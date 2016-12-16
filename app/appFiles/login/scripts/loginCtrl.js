@@ -39,7 +39,7 @@ angular.module('ssoApp')
 
       //runs if the request has an http error
       self.error = function (err) {
-                if (err.data.responseObject != null) {
+        if (err.data && err.data.responseObject != null) {
           $location.url( err.data.responseObject.pingToken )
         } else {
             var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
