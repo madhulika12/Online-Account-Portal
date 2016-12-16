@@ -1,6 +1,6 @@
 'use strict';
 
-describe('Service: tokenValidationService', function () {
+describe('Service: tokenStorageService', function () {
 
   var tokenStorageService, $rootScope, $cookies, $stateParams, now, Constants, fifteenMinutes;
 
@@ -40,10 +40,10 @@ describe('Service: tokenValidationService', function () {
   })
   describe('refreshCookie', function () {
     it('should retrieve the cookie and set it again', function () {
-      spyOn(tokenStorageService, 'setToken')
+      spyOn(tokenStorageService, 'refreshToken')
       spyOn(tokenStorageService, 'getToken')
       tokenStorageService.refreshCookie()
-      expect(tokenStorageService.setToken).toHaveBeenCalled()
+      expect(tokenStorageService.refreshToken).toHaveBeenCalled()
       expect(tokenStorageService.getToken).toHaveBeenCalled()
     })
   })
