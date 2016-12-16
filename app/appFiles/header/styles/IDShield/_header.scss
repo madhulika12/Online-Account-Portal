@@ -21,10 +21,20 @@ header.navbar {
       border: 1px solid #fff;
     }
   }
+
+  div.headerContainer header.navbar img.navbar-brand {
+    margin-left: 3%;
+  }
 }
 
 #header {
   li > a:focus {
     background-color: $footerBackgroundColor;
+  }
+}
+
+.navbar-toggle.hamburger , .navbar-toggle.hamburger:hover {
+  .icon-bar {
+    background-color: #fff;
   }
 }
