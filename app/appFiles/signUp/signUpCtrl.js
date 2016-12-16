@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ssoApp')
-    .controller('signUpCtrl', ['$http', '$location', 'Constants', '$rootScope', '$stateParams', 'httpService', 'tokenValidationService', 'displayResponseBox', '$window', 'tokenStorageService', '$state', 'loadBrandingService',function($http, $location, Constants, $rootScope, $stateParams, httpService, tokenValidationService, displayResponseBox, $window, tokenStorageService, $state, loadBrandingService) {
+    .controller('signUpCtrl', ['antiForgeryToken', '$http', '$location', 'Constants', '$rootScope', '$stateParams', 'httpService', 'tokenValidationService', 'displayResponseBox', '$window', 'tokenStorageService', '$state', 'loadBrandingService', 'getUrl', function(antiForgeryToken, $http, $location, Constants, $rootScope, $stateParams, httpService, tokenValidationService, displayResponseBox, $window, tokenStorageService, $state, loadBrandingService, getUrl) {
         var self = this;
 
         self.states = Constants.states
@@ -26,7 +26,8 @@ angular.module('ssoApp')
           TermsAccept: null,
           Email: null,
           AntiForgeryTokenId: null,
-          SessionId : null
+          SessionId : null,
+          ClientUrl: getUrl()
        }
 
         self.confirmationData = {
@@ -57,13 +58,15 @@ angular.module('ssoApp')
 
         self.dataToPopulateForm = {
           AntiForgeryTokenId: null,
-          SessionId : null
+          SessionId : null,
+          ClientUrl: getUrl()
         }
 
         //runs if the request has an http error
         self.error = function (err) {
           var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
-          displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
+          displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true);
+          antiForgeryToken.setAntiForgeryTokenFromError(err);
           // $('.processingBtn').button('reset');
         }
 
@@ -71,6 +74,7 @@ angular.module('ssoApp')
           var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
           displayResponseBox.setMessage(message, true)
           $state.go('login')
+          antiForgeryToken.setAntiForgeryTokenFromError(err);
           // $('.processingBtn').button('reset');
         }
 
@@ -79,6 +83,7 @@ angular.module('ssoApp')
           // $window.location.assign(res.data.responseObject.pingToken);
           // $window.location.assign(Constants.portalBaseUrl + res.data.responseObject);
           // $('.processingBtn').button('reset');
+          antiForgeryToken.setAntiForgeryToken(res);
           $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject)
         }
 
@@ -115,28 +120,36 @@ angular.module('ssoApp')
             self.setViewAndRender(self.form.State, db.stateProvince)
             self.setViewAndRender(self.form.ZipCode, db.postalCode)
             self.setViewAndRender(self.form.Email, db.email);
+
           }
+          self.checkCookie();
+          antiForgeryToken.setAntiForgeryToken(res);
         }
 
+      self.checkCookie = function () {
+        tokenStorageService.refreshCookie();
+      };
         // tokenValidationService.checkTokenAndRedirect()
         //   .then(self.populateForm)
-
-          self.populateAntiForgeryToken = function(res) {
-            console.log("Antiforgery" + res);
-            self.data.AntiForgeryTokenId =  res.data;
-            self.dataToPopulateForm.AntiForgeryTokenId =  res.data;
-            self.data.SessionId = tokenStorageService.getToken();
-            self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
-            self.sendRequestToPopulate();
-          }
-
-      // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-      //   .then(self.populateAntiForgeryToken, self.error);
 
         self.sendRequestToPopulate = function() {
           httpService.getMember(self.dataToPopulateForm)
             .then(self.populateForm, self.error)
         }
+
+          self.populateAntiForgeryToken = function(res) {
+            console.log("Antiforgery" + res);
+            self.data.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();
+            self.dataToPopulateForm.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();
+            self.data.SessionId = tokenStorageService.getToken();
+            self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
+            self.sendRequestToPopulate();
+          }
+
+        self.populateAntiForgeryToken();
+
+
+
 
     //   console.log(document.getElementById("Email"))
 

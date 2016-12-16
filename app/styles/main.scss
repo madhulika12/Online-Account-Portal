@@ -24,6 +24,7 @@
 @import "../appFiles/havingTrouble/styles/havingTrouble.scss";
 @import "../appFiles/termsAccept/styles/termsAccept.scss";
 @import "../appFiles/forgotUsername/forgotUsername.scss";
+@import "../appFiles/accountActivation/_acceptTermsAndConditions.scss";
 
 //static pages
 @import "../appFiles/termsAndConditions/styles/termsAndConditions";
@@ -289,3 +290,5 @@ div.error-message {
 .k-picker-wrap .k-select, .k-picker-wrap .k-input {
     height: 2.10em !important;
 }
+
+

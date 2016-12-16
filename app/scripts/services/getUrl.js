@@ -1,7 +1,12 @@
 angular.module('ssoApp')
 .service('getUrl', ['$location', function ($location) {
   return function () {
-     var host = $location.host();
-     return (host === 'localhost') ? $location.port() : host;
+    //  var host = $location.host();
+     var host = $location.absUrl();
+    //  return (host === 'localhost') ? $location.port() : host;
+    // return (host === 'localhost') ? 'https://idtheftdefensestage.mysecuredashboard.com' : host;
+
+    return host;
+
   }
 }])

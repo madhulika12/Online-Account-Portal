@@ -1,5 +1,5 @@
 angular.module('ssoApp')
-.controller('forgotUsernameCtrl', ['$http', 'Constants', '$state', 'httpService', 'displayResponseBox', function ($http, Constants, $state, httpService, displayResponseBox) {
+.controller('forgotUsernameCtrl', ['antiForgeryToken', '$http', 'Constants', '$state', 'httpService', 'displayResponseBox', 'getUrl', function (antiForgeryToken, $http, Constants, $state, httpService, displayResponseBox, getUrl) {
   var self = this;
 
   self.recoveryData = {
@@ -7,7 +7,8 @@ angular.module('ssoApp')
     AntiForgeryTokenId: null,
     LastName: null,
     ZipCode: null,
-    DateOfBirth: null
+    DateOfBirth: null,
+    ClientUrl : getUrl()
   }
 
   self.regex = {
@@ -78,29 +79,39 @@ angular.module('ssoApp')
 
   self.error = function (err) {
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
-    displayResponseBox.setMessage(message, true)
-    $state.go('login')
+    // displayResponseBox.setMessage(message, true)
+    displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
+    antiForgeryToken.setAntiForgeryTokenFromError(err);
+    // $state.go('login')
   }
 
   self.forgotUserSuccess = function (res) {
-    self.data.Username = res.data.responseObject;
-    self.showUsernameModal()
+    self.data.Username = res.data.responseObject.username;
+    antiForgeryToken.setAntiForgeryToken(res);
+    self.showUsernameForceResetModal()
+  }
+
+  self.showUsernameForceResetModal = function () {
+    $('#username-force-reset-modal').modal('show')
   }
 
   self.sendForgotUsernameRequest = function (event) {
     event.preventDefault()
     $('.processingBtn').button('loading');
-    httpService.forgotUsername(self.recoveryData)
+    httpService.recoverAccount(self.recoveryData)
       .then(self.forgotUserSuccess, self.error)
       .finally(function () { $('.processingBtn').button('reset'); })
   }
 
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
-    self.recoveryData.AntiForgeryTokenId =  res.data
-    self.data.AntiForgeryTokenId =  res.data
+    self.recoveryData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+    self.data.AntiForgeryTokenId =   antiForgeryToken.getAntiForgeryToken();
   }
+
+  self.populateAntiForgeryToken();
 
 //   $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
 //     .then(self.populateAntiForgeryToken, self.error);
+
 }])

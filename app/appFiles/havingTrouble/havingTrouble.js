@@ -1,11 +1,12 @@
 angular.module('ssoApp')
-.controller('havingTroubleCtrl', ['$http', 'httpService', 'Constants', 'displayResponseBox', '$state', 'getUrl', function ($http, httpService, Constants, displayResponseBox, $state, getUrl) {
+.controller('havingTroubleCtrl', ['antiForgeryToken' ,'tokenStorageService', '$http', 'httpService', 'Constants', 'displayResponseBox', '$state', 'getUrl', function (antiForgeryToken, tokenStorageService, $http, httpService, Constants, displayResponseBox, $state, getUrl) {
   var self = this;
 
   self.forgotPassData = {
     Username : null,
     LoginSourceId : Constants.loginSourceId,
-    AntiForgeryTokenId: null
+    AntiForgeryTokenId: null,
+    ClientUrl : 'https://idtheftdefensestage.mysecuredashboard.com/login'
   }
 
   self.forgotPassConfirmData = {
@@ -20,44 +21,57 @@ angular.module('ssoApp')
     message : null,
     error : false,
     display : false
-  }
+  };
 
   self.forgotPassSuccess = function (res) {
     // console.log('havingTrouble.forgotPassSuccess res param', res)
-    displayResponseBox.setMessage("A password recovery email was sent your account.", false)
-    $state.go('login')
-  }
+    var message = (res.data && res.data.responseObject) ? res.data.responseObject : "A password recovery email was sent to your account.";
+    displayResponseBox.setMessage(message, false);
+    $state.go('login');
+    antiForgeryToken.setAntiForgeryToken(res);
+  };
 
   self.error = function (err) {
     // console.log('havingTrouble.error err param', err)
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
-    displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
-  }
+    displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true);
+    antiForgeryToken.setAntiForgeryTokenFromError(err);
+  };
 
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
-    self.forgotPassData.AntiForgeryTokenId =  res.data
-  }
+    self.forgotPassData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+  };
 
   self.forgotPasswordRequest = function (event) {
-    event.preventDefault()
+    event.preventDefault();
     $('.processingBtn').button('loading');
 
     httpService.forgotPassword(self.forgotPassData)
       .then(self.forgotPassSuccess, self.error)
-      .finally(function () { $('.processingBtn').button('reset'); })
-  }
+      .finally(function () { $('.processingBtn').button('reset'); });
+  };
 
   self.showModal = function () {
     $('#havingTroubleModal').modal('show');
-  }
+  };
 
   self.dismissToRecoverAccount = function () {
 
     $('#havingTroubleModal').one('hidden.bs.modal', function () {
-      $state.go('recover-account')
-    })
-    $('#havingTroubleModal').modal('hide')
+      $state.go('recover-account');
+    });
+    $('#havingTroubleModal').modal('hide');
+  };
+
+  self.callSecurityTokens = function() {
+          $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+    .then(self.populateAntiForgeryToken, self.error);
+    self.checkCookie();
+  }
+
+  self.checkCookie = function () {
+    tokenStorageService.refreshCookie();
   }
 
   // self.callSecurityTokens = function() {
@@ -65,9 +79,10 @@ angular.module('ssoApp')
   //   .then(self.populateAntiForgeryToken, self.error);
   // }
 
+
   self.showModal()
 
-  self.callSecurityTokens()
+  self.populateAntiForgeryToken()
 
 
 

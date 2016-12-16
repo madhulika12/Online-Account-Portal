@@ -15,6 +15,7 @@ angular
   .module('ssoApp', ['ui.router', 'kendo.directives', 'ngSanitize', 'ngAnimate', 'ui.bootstrap', 'ngCookies'])
 
 .config(function($stateProvider, $urlRouterProvider, $locationProvider) {
+    //   $modalProvider.options.animation = false;
   $urlRouterProvider.otherwise('/invalid');
   $stateProvider
   .state('user', {
@@ -23,23 +24,29 @@ angular
       loadBrandingService: 'loadBrandingService',
       styleSheetPromise : function (loadBrandingService) {
         return loadBrandingService.getStyleSheetPath()
-      }
+      },
     },
     views: {
       'header': {
         templateUrl: 'appFiles/header/header.html',
         controller: function ($scope, loadBrandingService) {
           $scope.styles = loadBrandingService.getStyles()
+          $scope.sessionTimeout = loadBrandingService.sessionTimeout()
+          console.log($scope.sessionTimeout)
         }
       },
-    //   'view': {
-    //     template: '',
-    //     controller: function ($state) {
-    //       $state.go('update-profile')
-    //     },
-    //   },
+      'view': {
+        template: '',
+        controller: function ($state) {
+          $state.go('login')
+
+        },
+      },
       'footer': {
         templateUrl: 'appFiles/footer/footer.html',
+        controller: function ($scope, loadBrandingService) {
+          console.log("View controller")
+        }
       },
     },
   })
@@ -48,7 +55,9 @@ angular
       parent: 'user',
       views: {
           'view@': {
-            templateUrl: 'appFiles/error/403.html'
+            templateUrl: 'appFiles/error/403.html',
+            controller: 'sessionTimout',
+            controllerAs: 'session'
           }
       },
   })
@@ -61,6 +70,17 @@ angular
               controllerAs: 'login',
               templateUrl: 'appFiles/login/login.html'
 
+          }
+      }
+  })
+
+  .state('test', {
+      url: 'test',
+      parent: 'user',
+      views: {
+          'view@': {
+              templateUrl: 'appFiles/login/login.html',
+              controller: 'test'
           }
       }
   })
@@ -82,7 +102,9 @@ angular
       parent: 'user',
       views: {
           'view@': {
-              templateUrl: 'appFiles/termsAndConditions/termsAndConditions.html'
+              templateUrl: 'appFiles/termsAndConditions/termsAndConditions.html',
+              controller: 'sessionTimout',
+              controllerAs: 'session'
           }
       }
   })
@@ -93,7 +115,7 @@ angular
           'view@': {
               templateUrl: 'appFiles/termsAccept/termsAccept.html',
               controller: 'termsAcceptanceCtrl',
-              controllerAs: 'termsAccept'
+              controllerAs: 'termsAccept',
           }
       }
   })
@@ -104,7 +126,9 @@ angular
       parent: 'user',
       views: {
           'view@': {
-              templateUrl: 'appFiles/browser/browser.html'
+              templateUrl: 'appFiles/browser/browser.html',
+              controller: 'sessionTimout',
+              controllerAs: 'session'
 
           }
       }
@@ -114,7 +138,9 @@ angular
       parent: 'user',
       views: {
           'view@': {
-              templateUrl: 'appFiles/contactIDShield/contactIDShield.html'
+              templateUrl: 'appFiles/contactIDShield/contactIDShield.html',
+              controller: 'sessionTimout',
+              controllerAs: 'session'
 
           }
       }
@@ -124,7 +150,9 @@ angular
       parent: 'user',
       views: {
           'view@': {
-              templateUrl: 'appFiles/privacyPolicy/privacyPolicy.html'
+              templateUrl: 'appFiles/privacyPolicy/privacyPolicy.html',
+              controller: 'sessionTimout',
+              controllerAs: 'session'
 
           }
       }
@@ -137,6 +165,7 @@ angular
               controller: 'recoverAccountCtrl',
               controllerAs: 'recover',
               templateUrl: 'appFiles/recoverAccount/recoverAccount.html'
+
           }
       }
   })
@@ -156,8 +185,8 @@ angular
     parent: 'user',
     views: {
       'view@' : {
-        controller: 'forgotUsernameCtrl',
-        controllerAs: 'forgotUsername',
+        controller: 'recoverAccountCtrl',
+        controllerAs: 'recover',
         templateUrl: 'appFiles/forgotUsername/forgotUsername.html'
       }
     }
@@ -227,12 +256,15 @@ angular
           }
       }
   })
-//  // this block below removes the hash tag from angular urls
+ // this block below removes the hash tag from angular urls
+
   // $locationProvider.html5Mode({
   //   enabled: true,
   //   requireBase: false
   // });
 })
+
+
 
 .run(function ($rootScope) {
   $rootScope.$on('$stateChangeSuccess', function () {

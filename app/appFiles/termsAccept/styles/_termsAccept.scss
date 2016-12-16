@@ -1,17 +1,19 @@
 #terms-accept-view {
   .service-title {
-    display: none;
+    display: none !important;
   }
   #terms-window {
     box-shadow: inset 0px 0px 1px 1px lightgray;
     background-color: lighten(lightgray, 16);
     max-height: 500px;
-    overflow-y: scroll;
+    overflow-y: scroll !important;
     .text-body > ol {
-      padding-left: 20px;
+      padding-left: 20px !important;
     }
     ol, ul {
-      padding-left: 3%;
+      padding-left: 3% !important;
     }
   }
 }
+
+

@@ -1,9 +1,17 @@
 angular.module('ssoApp')
-  .service('tokenValidationService', ['displayResponseBox', '$http', '$location', '$q', 'Constants', '$state', '$stateParams', 'httpService', function (displayResponseBox, $http, $location, $q, Constants, $state, $stateParams, httpService) {
+  .service('tokenValidationService', ['displayResponseBox', '$http', '$location', '$q', 'Constants', '$state', '$stateParams', 'httpService', 'antiForgeryToken', 'getUrl', function (displayResponseBox, $http, $location, $q, Constants, $state, $stateParams, httpService, antiForgeryToken, getUrl) {
 
     return {
       deferred : null,
       token : null,
+      data : {
+        SessionId: null ,
+        ClientUrl: getUrl()
+      },
+      validateJWTData : {
+        Token: null,
+        ClientUrl: getUrl()
+      },
 
       _tokenInvalid : function (err) {
         this.deferred.reject(err)
@@ -14,12 +22,12 @@ angular.module('ssoApp')
       },
 
       _requestTokenValidation : function () {
-        httpService.validateAccountActivation({ token : this.token })
+        httpService.validateAccountActivation(this.data)
           .then(this._checkResponse.bind(this), this._tokenInvalid.bind(this))
       },
 
       _requestJWTValidation : function () {
-        httpService.validateJWT({ sptoken : this.token })
+        httpService.validateJWT(this.validateJWTData)
           .then(this._checkResponse.bind(this), this._tokenInvalid.bind(this))
       },
 
@@ -32,10 +40,11 @@ angular.module('ssoApp')
       },
 
       checkJWT : function () {
-        this.token = this.getJWT()
+        this.validateJWTData.Token = this.getJWT()
+
         this.deferred = $q.defer()
 
-        if (this.token) {
+        if (this.validateJWTData.Token) {
           this._requestJWTValidation()
         } else {
           this._tokenInvalid({ data : { errorMessage : "Missing token" } })
@@ -46,10 +55,11 @@ angular.module('ssoApp')
       },
 
       checkToken : function () {
-        this.token = this.getToken();
+        this.data.SessionId = this.getToken();
+
         this.deferred = $q.defer()
 
-        if (this.token) {
+        if (this.data.SessionId) {
           this._requestTokenValidation()
         } else {
           this._tokenInvalid({ data : { errorMessage : "Missing token" } })
@@ -57,14 +67,14 @@ angular.module('ssoApp')
 
         return this.deferred.promise
       },
-      
-      
+
+
 
       checkTokenAndRedirect : function () {
         this.checkToken()
           .catch(function (err) {
             // console.log('validation of token error', err)
-            // $state.go('login') //changed this for account activation 
+            // $state.go('login') //changed this for account activation
            })
         return this.deferred.promise
       }

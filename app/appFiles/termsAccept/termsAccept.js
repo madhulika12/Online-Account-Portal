@@ -1,5 +1,5 @@
 angular.module('ssoApp')
-.controller('termsAcceptanceCtrl', ['Constants', 'tokenValidationService', 'httpService', 'displayResponseBox', '$window', 'tokenStorageService', '$http', function(Constants, tokenValidationService, httpService, displayResponseBox, $window, tokenStorageService, $http){
+.controller('termsAcceptanceCtrl', ['antiForgeryToken', 'Constants', 'tokenValidationService', 'httpService', 'displayResponseBox', '$window', 'tokenStorageService', '$http', function(antiForgeryToken, Constants, tokenValidationService, httpService, displayResponseBox, $window, tokenStorageService, $http){
 
   var self = this;
 
@@ -18,12 +18,14 @@ angular.module('ssoApp')
   }
 
   self.success = function (res) {
+    antiForgeryToken.setAntiForgeryToken(res);
     $window.location.assign(Constants.portalBaseUrl + res.data.responseObject.pingToken);
   }
 
   self.error = function (err) {
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
-    displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
+    displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true);
+    antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 
   self.acceptTerms = function (event) {
@@ -45,10 +47,16 @@ angular.module('ssoApp')
   
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
-    self.data.AntiForgeryTokenId =  res.data
+    self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+      
+    self.checkCookie();
   }
   
-  $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-    .then(self.populateAntiForgeryToken, self.error);
+      self.checkCookie = function () {
+        tokenStorageService.refreshCookie();
+      };
+  
+
+    self.populateAntiForgeryToken();
   
 }])

@@ -1,6 +1,6 @@
 angular.module('ssoApp')
 
-.controller('AccountActivationCtrl', ['loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', function (loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService){
+.controller('AccountActivationCtrl', ['antiForgeryToken','loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', 'getUrl', function (antiForgeryToken, loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService, getUrl){
 
   var self = this;
 
@@ -8,7 +8,9 @@ angular.module('ssoApp')
     SSN : null,
     SessionId : null,
     Accept: false,
-    AntiForgeryToken: null
+    AntiForgeryToken: null,
+    ClientUrl : getUrl(),
+    SessionId : tokenValidationService.getToken()
   }
 
   self.confirmData = {
@@ -32,21 +34,24 @@ angular.module('ssoApp')
   self.error = function (err) {
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
     displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
+    antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 
   self.activationSuccess = function (res) {
     //TODO write redirect code ?
     // $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
     // $window.location.assign(Constants.portalBaseUrl + res.data.responseObject.pingToken);
+    antiForgeryToken.setAntiForgeryToken(res);
     $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject);
   }
 
   self.invalidTokenError = function(err) {
     console.log("Invalid TOken Error");
-    var message = (!err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error.";
-
+    // var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error.";var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error."
+    var message = "Your session has expired, please enter your username and password to continue the activation process."
     displayResponseBox.setMessage(message, true)
-        $state.go('login')
+    // $state.go('login');
+    antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 
   self.activationRequest = function (event) {
@@ -69,9 +74,10 @@ angular.module('ssoApp')
 
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
+    antiForgeryToken.setAntiForgeryToken(res);
+    self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
 
-    self.data.AntiForgeryTokenId =  res.data
-    //
+    // self.data.AntiForgeryTokenId =  res.data
   }
 
   tokenValidationService.checkTokenAndRedirect()
@@ -80,9 +86,21 @@ angular.module('ssoApp')
   // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
   //   .then(self.populateAntiForgeryToken, self.error);
 
+  loadBrandingService.getStyleSheetPath()
+    .then(self.populateAntiForgeryToken, self.error);
+
+  //   $('button[data-loading-text]').click(function () {
+  //     $(this).button('loading');
+  // });
+
+  $('button[data-loading-text]')
+    .on('click', function () {
+        var btn = $(this)
+        btn.button('loading')
+        setTimeout(function () {
+            btn.button('reset')
+        }, 1000)
+});
 
 
-
-
-
-}])
+}]);

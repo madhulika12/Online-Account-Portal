@@ -2,13 +2,14 @@ angular.module('ssoApp')
 
 // SPECIAL
 
-.controller('updateProfile', ['httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', function (httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox) {
+.controller('updateProfile', ['antiForgeryToken', 'sessionService','inputErrorService', '$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', 'getUrl', function (antiForgeryToken, sessionService, inputErrorService, $window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox, getUrl) {
 
   var self = this
 
   self.mode = 'view';
-
   self.editPasswordMode = 'show';
+  self.elemVal = null;
+  self.readOnlyProp = false;
 
   self.states = Constants.states
   self.generations = Constants.generations
@@ -27,18 +28,7 @@ angular.module('ssoApp')
   }
 
   self.currentData = {
-    FirstName : null,
-    LastName : null,
-    Generation : null,
-    MailingAddress : null,
-    City : null,
-    State : null,
-    ZipCode : null,
-    DateOfBirth : null,
-    Email : null,
-    AntiForgeryTokenId: null,
-    SessionId : null,
-    PhoneNumber: null
+
   }
 
   self.updatedData = {}
@@ -48,7 +38,8 @@ angular.module('ssoApp')
     CurrentPassword : null,
     NewPassword : null,
     AntiForgeryTokenId: null,
-    SessionId : null
+    SessionId : null,
+    ClientUrl: getUrl()
   }
 
   self.confirmData = {
@@ -73,14 +64,18 @@ angular.module('ssoApp')
 
         self.dataToPopulateForm = {
           AntiForgeryTokenId: null,
-          SessionId : null
+          SessionId : null,
+          ClientUrl: getUrl()
         }
 
 
   self.setData = function (res) {
+    antiForgeryToken.setAntiForgeryToken(res);
     var db = res.data.responseObject
+    var headers =  res.headers('XSRF-TOKEN');
+
     if (res.data.responseObject) {
-      self.currentData = {
+      self.setReturnedData = {
         FirstName : db.firstName,
         LastName : db.lastName,
         Generation : db.suffix,
@@ -95,15 +90,33 @@ angular.module('ssoApp')
         AntiForgeryTokenId :  self.updatedData.AntiForgeryTokenId
       }
       self.setUpdatedDataAsOld()
+      self.elemVal = db.email;
+
+      self.checkCookie();
     }
   }
 
   self.setUpdatedDataAsOld = function () {
-    angular.copy(self.currentData, self.updatedData)
+    angular.copy(self.setReturnedData, self.currentData)
+    self.setReadOnly();
+  }
+
+       self.checkCookie = function () {
+        tokenStorageService.refreshCookie();
+      };
+
+  self.setReadOnly = function() {
+    if (self.setReturnedData.DateOfBirth) {
+      self.readOnlyProp = true;
+    }
   }
 
   self.editOn = function () {
     self.mode = 'edit'
+  }
+
+  self.goToDashboard = function() {
+    $window.location.assign("http://imc2-staging2.csid.com/dashboard");
   }
 
   self.passwordMode = function () {
@@ -124,17 +137,53 @@ angular.module('ssoApp')
   // Request/Response Functions
   //xxxxxx
 
+  self.appendDirectiveDom = function() {
+  //     elem3 = $scope.update.elemVal;
+
+  //     if(elem3 != document.getElementsByClassName('appendToDom')[0].value) {
+
+  //       $http
+  //         .get('https://mws.stage.kroll.com/api/v1/member/email-userid/exist?emailUserId=' + document.getElementsByClassName('appendToDom')[0].value)
+  //           .then(function(res) {
+  //             if(res.data.errorType == 200) {
+  //               console.log("Success")
+  //             } else {
+  //               console.log("Error");
+  //               inputErrorService.addAvailabilityError(document.getElementsByClassName('appendToDom'));
+  //               // document.getElementsByClassName('appendToDom')[0].addClass("BorderColor")
+  //             }
+  //           }
+
+  //           )
+  // };
+  }
+
+  self.appendSuccess = function() {
+
+  }
+
+  self.appendError = function() {
+    inputErrorService.addAvailabilityError();
+  }
+
   self.saveError = function (err) {
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error - Update Profile.";
-    displayResponseBox.populateResponseBox(self.saveResponseBox, message, true)
+    displayResponseBox.populateResponseBox(self.saveResponseBox, message, true);
+    antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 
   self.saveSuccess = function (res) {
     displayResponseBox.populateResponseBox(self.saveResponseBox, "Your information was successfully updated!", false)
+    antiForgeryToken.setAntiForgeryToken(res);
   }
 
   self.save = function () {
     $('.updateProcessingBtn').button('loading');
+    self.sendRequest()
+    // $timeout(self.sendRequest(), 3000);
+  }
+
+  self.sendRequest = function() {
     httpService.updateProfile(self.currentData)
       .then(self.saveSuccess, self.saveError)
       .finally(function () { $('.updateProcessingBtn').button('reset'); })
@@ -146,12 +195,15 @@ angular.module('ssoApp')
 
   self.setPassError = function (err) {
     var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
-    displayResponseBox.populateResponseBox(self.resetPassResponseBox, message, true)
+    displayResponseBox.populateResponseBox(self.resetPassResponseBox, message, true);
+    antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 
 
   self.setPassSuccess = function (res) {
+
     displayResponseBox.populateResponseBox(self.resetPassResponseBox, "Your information was successfully updated!", false)
+    antiForgeryToken.setAntiForgeryToken(res);
   }
 
   self.setNewPassword = function () {
@@ -187,6 +239,8 @@ angular.module('ssoApp')
             self.setViewAndRender(self.form.ZipCode, db.postalCode)
             self.setViewAndRender(self.form.Email, db.email);
 
+
+
             self.updatedData.DateOfBirth = db.dob;
             self.updatedData.PhoneNumber = db.homePhone
             self.updatedData.FirstName=db.firstName
@@ -198,18 +252,25 @@ angular.module('ssoApp')
             self.updatedData.ZipCode=db.postalCode
             self.updatedData.Email=db.email;
           }
+          antiForgeryToken.setAntiForgeryToken(res);
         }
 
 
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
+
     // self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
     self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
-    self.dataToPopulateForm.AntiForgeryTokenId =  res.data
+    self.dataToPopulateForm.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();
     self.updatedData.SessionId = tokenStorageService.getToken()
-    self.updatedData.AntiForgeryTokenId =  res.data
+    self.updatedData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
     self.resetPassData.SessionId = tokenStorageService.getToken()
-    self.resetPassData.AntiForgeryTokenId =  res.data
+    self.resetPassData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+    //
+    // var a = sessionService.setTokenData()
+    // sessionService.data.AntiForgeryTokenId =  res.data
+    // sessionService.setTokenData.SessionId =  tokenStorageService.getToken()
+
     self.sendRequestToPopulate();
   }
 
@@ -225,16 +286,5 @@ angular.module('ssoApp')
         //     .then(self.success, self.error)
         // };
 
-  // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-  //   .then(self.populateAntiForgeryToken, self.error);
-
-      //  window.onbeforeunload = self.delCookie();
-
-      //  $(window).on('mouseover', (function () {
-      //     window.onbeforeunload = null;
-      // }));
-      // $(window).on('mouseout', (function () {
-      //     console.log("leaving");
-
-
+    self.populateAntiForgeryToken();
 }])

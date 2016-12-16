@@ -1,6 +1,32 @@
 
-<main id="update-profile-view">
+<main id="update-profile-view" data-ng-controller="sessionTimout as session">
+	<div data-ng-show="session.showTimer">
+		<div class='modal fade' id='session-modal'>
+		<div class='modal-dialog'>
+		<div class='modal-content'>
+			<div class='modal-header'>
+			<button type='button' class='close' data-dismiss='modal'>
+				<span>&times;</span>
+			</button>
+			<h2 class='modal-title centered bold'>Attention Member</h2>
+			</div>
+			<div class='modal-body'>
+			<div>
+				Your session will end in two (2) minutes due to inactivity. If you wish to continue with your session please click 'Continue' below.
+			</div>
 
+			</div>
+
+			<div class='modal-footer'>
+			<div>
+				<button type='button' class="submitButton" data-dismiss='modal' ng-click='session.extendCookieExpiry()'>Continue</button>
+			</div>
+
+			</div>
+		</div>
+		</div>
+	</div>	
+	</div>
   <div class="row">
     <div class="col-xs-12 col-sm-6">
       <div class="global-form-instructions">
@@ -73,17 +99,17 @@
               <!-- FIRST NAME -->
               <div class="form-group col-xs-12 col-md-4">
                 <label for="firstName" class="form-control-label">FIRST NAME<span class="required">*</span></label>
-                <div class="info-display"> <p> {{update.updatedData.FirstName || update.currentData.FirstName }} </p> </div>
+                <div class="info-display"> <p> {{update.updatedData.FirstName || update.currentData.FirstName || update.setReturnedData.FirstName}} </p> </div>
               </div>
               <!-- LAST NAME -->
               <div class="form-group col-xs-12 col-md-4">
                 <label for="lastName" class="form-control-label">LAST NAME<span class="required">*</span></label>
-                <div class="info-display"> <p> {{update.updatedData.LastName || update.currentData.LastName }} </p> </div>
+                <div class="info-display"> <p> {{update.updatedData.LastName || update.currentData.LastName|| update.setReturnedData.LastName}} </p> </div>
               </div>
               <!-- GENERATION -->
               <div class="form-group col-xs-12 col-md-4">
                 <label for="generation" class="form-control-label">GENERATION</label>
-                <div class="info-display"> <p> {{update.updatedData.Generation || update.currentData.Generation }} </p> </div>
+                <div class="info-display"> <p> {{update.updatedData.Generation || update.currentData.Generation || update.setReturnedData.Generation }} </p> </div>
               </div>
             </div>
 
@@ -91,13 +117,13 @@
               <!-- MAILING ADDRESS -->
               <div class="form-group col-xs-6">
                 <label for="mailingAddress" class="form-control-label">MAILING ADDRESS<span class="required">*</span></label>
-                <div class="info-display"> <p> {{update.updatedData.MailingAddress || update.currentData.MailingAddress }} </p> </div>
+                <div class="info-display"> <p> {{update.updatedData.MailingAddress || update.currentData.MailingAddress || update.setReturnedData.MailingAddress }} </p> </div>
               </div>
 
               <!-- PHONE -->
               <div class="form-group col-xs-6">
                 <label class="form-control-label">PHONE NUMBER<span class="required">*</span></label>
-                <div class="info-display"> <p> {{update.currentData.Phone || update.currentData.PhoneNumber }} </p> </div>
+                <div class="info-display"> <p> {{update.currentData.Phone || update.currentData.PhoneNumber || update.setReturnedData.PhoneNumber}} </p> </div>
               </div>
 
             </div>
@@ -106,18 +132,18 @@
               <!-- CITY -->
               <div class="form-group col-xs-12 col-md-6">
                 <label for="city" class="form-control-label">CITY<span class="required">*</span></label>
-                <div class="info-display"> <p> {{update.updatedData.City || update.currentData.City }} </p> </div>
+                <div class="info-display"> <p> {{update.updatedData.City || update.currentData.City || update.setReturnedData.City}} </p> </div>
               </div>
               <!-- STATE -->
               <div class="form-group col-xs-12 col-md-4">
                 <label for="state" class="form-control-label">STATE<span class="required">*</span></label>
-                <div class="info-display"> <p> {{update.updatedData.State || update.currentData.State }} </p> </div>
+                <div class="info-display"> <p> {{update.updatedData.State || update.currentData.State || update.setReturnedData.State}} </p> </div>
               </div>
 
               <!-- ZIP -->
               <div class="form-group col-xs-12 col-md-2">
                 <label for="zip" class="form-control-label">ZIP CODE<span class="required">*</span></label>
-                <div class="info-display"> <p> {{update.updatedData.ZipCode || update.currentData.ZipCode }} </p> </div>
+                <div class="info-display"> <p> {{update.updatedData.ZipCode || update.currentData.ZipCode || update.setReturnedData.ZipCode }} </p> </div>
               </div>
 
             </div>
@@ -126,13 +152,13 @@
               <!-- DOB -->
               <div class="form-group col-xs-6">
                 <label for="dob" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
-                <div class="info-display"> <p> {{update.updatedData.DateOfBirth || update.currentData.DateOfBirth }} </p> </div>
+                <div class="info-display"> <p> {{update.updatedData.DateOfBirth || update.currentData.DateOfBirth || update.setReturnedData.DateOfBirth }} </p> </div>
               </div>
 
               <!-- EMAIL -->
               <div class="form-group col-xs-12 col-md-6">
                 <label for="email" class="form-control-label">EMAIL<span class="required">*</span></label>
-                <div class="info-display" > <p> {{update.updatedData.Email || update.currentData.Email }} </p> </div>
+                <div class="info-display" > <p> {{update.updatedData.Email || update.currentData.Email || update.setReturnedData.Email}} </p> </div>
               </div>
 
             </div>
@@ -162,21 +188,21 @@
               <div class="form-group col-xs-12 col-md-4">
                 <label for="firstName" class="form-control-label">FIRST NAME<span class="required">*</span></label>
                 <div>
-                  <input type="text" name="firstName" ng-pattern="update.regex.FirstName" class="form-control input"  ng-model="update.currentData.FirstName" id="firstName" required>
+                  <input type="text" name="firstName" autocomplete="off" ng-pattern="update.regex.FirstName" class="form-control input"  ng-model="update.currentData.FirstName" id="firstName" required>
                 </div>
               </div>
               <!-- LAST NAME -->
               <div class="form-group col-xs-12 col-md-4">
                 <label for="lastName" class="form-control-label">LAST NAME<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="lastName" name="lastName" ng-pattern="update.regex.LastName" ng-model="update.currentData.LastName" required>
+                  <input type="text" class="form-control input" autocomplete="off" id="lastName" name="lastName" ng-pattern="update.regex.LastName" ng-model="update.currentData.LastName" required>
                 </div>
               </div>
               <!-- GENERATION -->
               <div class="form-group col-xs-12 col-md-4">
                 <label for="generation" class="form-control-label">GENERATION</label>
                 <div>
-                  <select type="text" class="form-control input" id="generation"
+                  <select type="text" class="form-control input" autocomplete="off" id="generation"
                     name="generation"
                     ng-model="update.currentData.Generation"
                     ng-options="gen.val as gen.tag for gen in update.generations"
@@ -191,15 +217,15 @@
               <div class="form-group col-xs-6">
                 <label for="mailingAddress" class="form-control-label">MAILING ADDRESS<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="mailingAddress" name="mailingAddress" ng-pattern="update.regex.MailingAddress" ng-model="update.currentData.MailingAddress" required>
+                  <input type="text" class="form-control input" autocomplete="off" id="mailingAddress" name="mailingAddress" ng-pattern="update.regex.MailingAddress" ng-model="update.currentData.MailingAddress" required>
                 </div>
               </div>
 
               <!-- PHONE -->
               <div class="form-group col-xs-6">
-                <label for="phone" class="form-control-label">PHONE NUMBER<span class="required">*</span></label>
+                <label for="Phone" class="form-control-label">PHONE NUMBER<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="phone" name="phone" ng-pattern="update.regex.Phone" ng-model="update.currentData.PhoneNumber" required>
+                  <input type="text" class="form-control input" autocomplete="off" id="Phone" name="phone" ng-pattern="update.regex.PhoneNumber" ng-model="update.currentData.PhoneNumber" required>
                 </div>
               </div>
 
@@ -210,7 +236,7 @@
               <div class="form-group col-xs-12 col-md-6">
                 <label for="city" class="form-control-label">CITY<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="city" name="city" ng-pattern="update.regex.City" ng-model="update.currentData.City" required>
+                  <input type="text" class="form-control input" autocomplete="off" id="city" name="city" ng-pattern="update.regex.City" ng-model="update.currentData.City" required>
                 </div>
               </div>
               <!-- STATE -->
@@ -229,10 +255,10 @@
 
               <!-- ZIP -->
               <div class="form-group col-xs-12 col-md-2">
-                <label for="zip" class="form-control-label">ZIP CODE<span class="required">*</span></label>
+                <label for="ZipCode" class="form-control-label">ZIP CODE<span class="required">*</span></label>
 
                 <div>
-                  <input type="text" class="form-control input" id="zip" name="zip" ng-pattern="update.regex.ZipCode" ng-model="update.currentData.ZipCode" required>
+                  <input type="text" class="form-control input" autocomplete="off" id="ZipCode" name="zip" ng-pattern="update.regex.ZipCode" ng-model="update.currentData.ZipCode" required>
                 </div>
 
               </div>
@@ -248,7 +274,9 @@
                     k-options="update.kendoDateOptions"
                     k-format="'MM/dd/yyyy'"
                     placeholder="MM/DD/YYYY"
-                   class="form-control input kendo-date" name="dob" ng-pattern="update.regex.DOB" ng-model="update.currentData.DateOfBirth" required/>
+                    autocomplete="off"
+                    data-ng-readonly="update.readOnlyProp"
+                   class="form-control input kendo-date" name="dob" ng-pattern="update.regex.DateOfBirth" ng-model="update.currentData.DateOfBirth" required/>
                 </div>
               </div>
 
@@ -256,7 +284,8 @@
               <div class="form-group col-xs-12 col-md-6">
                 <label for="email" class="form-control-label">EMAIL<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name="email" required>
+                  <input type="text" class="form-control input appendToDom" autocomplete="off" email-exist-directive="emailExist" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name="email" ng-change="update.appendDirectiveDom()" required>
+                  <!--<input type="text" class="form-control input appendToDom" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" ng-change="update.appendDirectiveDom()" name="email" required>-->
                 </div>
               </div>
             </div>
@@ -287,7 +316,7 @@
   <div ng-switch="update.editPasswordMode" >
   <div ng-switch-when="show" class="global-form updateAccount">
     <h4 class="form-section-headings"> Security </h4>
-    <form name="update.resetPassForm" validation-highlights>
+    <form name="update.resetPassNotEditable" validation-highlights>
       <div class="row">
         <div class="form-group col-xs-12 col-md-6">
           <label for="password" class="form-control-label">CURRENT PASSWORD<span class="required">*</span></label>
@@ -347,6 +376,8 @@
             class="form-control input"
             id="password"
             name="currentPassword"
+            ng-pattern="update.regex.Password"
+            autocomplete="off"
             ng-model="update.resetPassData.CurrentPassword"
             required>
         </div>
@@ -357,6 +388,7 @@
           <label for="password" class="form-control-label">NEW PASSWORD<span class="required">*</span></label>
           <input
             type="password"
+            autocomplete="off"
             class="form-control input"
             id="password"
             name="newPassword"
@@ -371,6 +403,7 @@
           <input
             type="password"
             class="form-control input"
+            autocomplete="off"
             id="confirmPassword"
             name="confirmPassword"
             ng-model="update.confirmData.Password"
@@ -388,7 +421,7 @@
             </kendo-button>
             <kendo-button
               class="submitButton updateProcessingBtn"
-              ng-disabled="update.form.$invalid"
+              ng-disabled="update.resetPassForm.$invalid"
               ng-click="update.setNewPassword()"
               data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
             >Save</kendo-button>
@@ -397,6 +430,13 @@
 
       </form>
     </div>
+    </div>
+
+    <div class="global-form-button-holder">
+      <kendo-button
+        class="submitButton processingBtn dashboardBtn"
+        ng-click="update.goToDashboard()"
+      > Go To Dashboard </kendo-button>
     </div>
 </main>
 

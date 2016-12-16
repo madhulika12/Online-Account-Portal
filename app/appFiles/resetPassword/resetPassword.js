@@ -1,6 +1,6 @@
 'use strict';
 angular.module('ssoApp')
-    .controller('resetPasswordCtrl', ['$http','$scope', 'Constants', 'httpService', '$state', 'loadBrandingService', 'tokenValidationService', 'displayResponseBox', function($http, $scope, Constants, httpService, $state, loadBrandingService, tokenValidationService, displayResponseBox) {
+    .controller('resetPasswordCtrl', ['antiForgeryToken','tokenStorageService', '$http','$scope', 'Constants', 'httpService', '$state', 'loadBrandingService', 'tokenValidationService', 'displayResponseBox', 'getUrl',  function(antiForgeryToken, tokenStorageService, $http, $scope, Constants, httpService, $state, loadBrandingService, tokenValidationService, displayResponseBox, getUrl) {
 
         var self = this;
 
@@ -36,7 +36,8 @@ angular.module('ssoApp')
         self.data = {
           Password : null,
           Jwt : tokenValidationService.getJWT(),
-          AntiForgeryTokenId: null
+          AntiForgeryTokenId: null,
+          ClientUrl: getUrl()
         }
 
         self.responseBoxConfig = {
@@ -60,12 +61,14 @@ angular.module('ssoApp')
           // console.log('resetPassword.successMessage res params', res)
           displayResponseBox.setMessage("The password for your account was successfully reset. Please use the new password to log into the mobile app as well as the web portal.", false)
           $state.go('login');
+          antiForgeryToken.setAntiForgeryToken(res);
         }
 
         self.error = function (err) {
           // console.log('resetPassword.error err param', err)
           var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
-          displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true)
+          displayResponseBox.populateResponseBox(self.responseBoxConfig, message, true);
+          antiForgeryToken.setAntiForgeryTokenFromError(err);
         }
 
         // MODAL FUNCTIONS
@@ -90,14 +93,20 @@ angular.module('ssoApp')
           self.checkRequirements()
         })
 
-
-        // tokenValidationService.checkJWT()
-        //   .catch(self.showResetModal)
+        tokenValidationService.checkJWT()
+          .catch(self.showResetModal)
 
       self.populateAntiForgeryToken = function(res) {
             console.log("Antiforgery" + res);
-            self.data.AntiForgeryTokenId =  res.data
+            self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+            self.checkCookie();
           }
+
+      self.checkCookie = function () {
+        tokenStorageService.refreshCookie();
+      };
+
+      self.populateAntiForgeryToken();
 
       // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
       //   .then(self.populateAntiForgeryToken, self.error);
