@@ -25,7 +25,7 @@
 			</div>
 		</div>
 		</div>
-	</div>	
+	</div>
 	</div>
   <div class="row">
     <div class="col-xs-12 col-sm-6">
@@ -284,7 +284,7 @@
               <div class="form-group col-xs-12 col-md-6">
                 <label for="email" class="form-control-label">EMAIL<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input appendToDom" autocomplete="off" email-exist-directive="emailExist" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name="email" ng-change="update.appendDirectiveDom()" required>
+                  <input type="text" class="form-control input appendToDom" autocomplete="off" async-validate="usernameExist" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name="email" ng-change="update.appendDirectiveDom()" required>
                   <!--<input type="text" class="form-control input appendToDom" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" ng-change="update.appendDirectiveDom()" name="email" required>-->
                 </div>
               </div>
@@ -327,14 +327,14 @@
         <!-- PASSWORD -->
         <div class="form-group col-xs-12 col-md-6">
           <label for="password" class="form-control-label">NEW PASSWORD<span class="required">*</span></label>
-                
+
                 <div class="info-display"> <p> </p> </div>
         </div>
 
         <!-- PASSWORD CONFIRMATION -->
         <div class="form-group col-xs-12 col-md-6">
           <label for="confirmPassword" class="form-control-label">CONFIRM NEW PASSWORD<span class="required">*</span></label>
-                
+
                 <div class="info-display"> <p>  </p> </div>
         </div>
               </div>
