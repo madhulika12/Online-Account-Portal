@@ -22,3 +22,9 @@ header.navbar {
     }
   }
 }
+
+#header {
+  li > a:focus {
+    background-color: $footerBackgroundColor;
+  }
+}
