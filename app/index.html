@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html ng-app="ssoApp" data-ng-controller="mainCtrl as main" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur' : 0} }">
+<html ng-app="ssoApp" data-ng-controller="mainCtrl" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur' : 0} }">
   <head data-ng-controller="linkElement as link">
     <meta charset="utf-8">
     <base href="/">
@@ -25,7 +25,8 @@
 
     <!-- endbuild -->
     <!--<title data-ng-bind="link.styles.title"> </title>-->
-    <title data-ng-bind = "main.title"> </title>
+    <!--<title data-ng-bind = "main.title"> </title>-->
+    <title> {{titleFactory.title()}} </title>
     <link rel="shortcut icon" type="image/ico" data-ng-href={{link.styles.favicon}}>
     <link rel="stylesheet" data-ng-href={{link.styles.stylesheet}}>
     <!-- <div ui-view="head"></div> -->

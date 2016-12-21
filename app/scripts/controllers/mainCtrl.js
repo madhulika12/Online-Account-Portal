@@ -1,7 +1,9 @@
 angular.module('ssoApp')
-    .controller('mainCtrl', ['titleFactory', function(titleFactory) {
+    .controller('mainCtrl', ['titleFactory', '$scope', function(titleFactory, $scope) {
         
         var self = this;
 
         self.title = titleFactory.title(); 
+
+        $scope.titleFactory = titleFactory;
     }])

@@ -103,8 +103,8 @@ angular
       views: {
           'view@': {
               templateUrl: 'appFiles/termsAndConditions/termsAndConditions.html',
-              controller: 'sessionTimout',
-              controllerAs: 'session'
+              controller: 'termsAndConditions',
+            //   controllerAs: 'terms'
           }
       }
   })
