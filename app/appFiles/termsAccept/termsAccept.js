@@ -1,12 +1,13 @@
 angular.module('ssoApp')
-.controller('termsAcceptanceCtrl', ['antiForgeryToken', 'Constants', 'tokenValidationService', 'httpService', 'displayResponseBox', '$window', 'tokenStorageService', '$http', function(antiForgeryToken, Constants, tokenValidationService, httpService, displayResponseBox, $window, tokenStorageService, $http){
+.controller('termsAcceptanceCtrl', ['antiForgeryToken', 'Constants', 'tokenValidationService', 'httpService', 'displayResponseBox', '$window', 'tokenStorageService', '$http', 'getUrl', function(antiForgeryToken, Constants, tokenValidationService, httpService, displayResponseBox, $window, tokenStorageService, $http, getUrl){
 
   var self = this;
 
   self.data = {
     LoginSourceId: 2,
     AntiForgeryTokenId: null,
-    sessionId: tokenStorageService.getToken()
+    sessionId: tokenStorageService.getToken(),
+    ClientUrl: getUrl()
   }
 
   self.TermsAccept = null;

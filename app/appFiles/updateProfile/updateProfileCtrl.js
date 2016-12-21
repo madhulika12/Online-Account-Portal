@@ -87,7 +87,8 @@ angular.module('ssoApp')
         Email : db.email,
         PhoneNumber : db.homePhone,
         SessionId : tokenStorageService.getToken(),
-        AntiForgeryTokenId :  self.updatedData.AntiForgeryTokenId
+        AntiForgeryTokenId :  self.updatedData.AntiForgeryTokenId,
+        ClientUrl : getUrl()
       }
       self.setUpdatedDataAsOld()
       self.elemVal = db.email;
@@ -188,6 +189,7 @@ angular.module('ssoApp')
       .then(self.saveSuccess, self.saveError)
       .finally(function () { $('.updateProcessingBtn').button('reset'); })
   }
+
 
   //xxxxxx
   // RESET PASSWORD FORM
