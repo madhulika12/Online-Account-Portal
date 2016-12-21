@@ -1,5 +1,5 @@
 ﻿<!doctype html>
-<html ng-app="ssoApp" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur' : 0} }">
+<html ng-app="ssoApp" data-ng-controller="mainCtrl as main" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur' : 0} }">
   <head data-ng-controller="linkElement as link">
     <meta charset="utf-8">
     <base href="/">
@@ -24,7 +24,8 @@
 
 
     <!-- endbuild -->
-    <title data-ng-bind="link.styles.title"> </title>
+    <!--<title data-ng-bind="link.styles.title"> </title>-->
+    <title data-ng-bind = "main.title"> </title>
     <link rel="shortcut icon" type="image/ico" data-ng-href={{link.styles.favicon}}>
     <link rel="stylesheet" data-ng-href={{link.styles.stylesheet}}>
     <!-- <div ui-view="head"></div> -->
@@ -95,6 +96,7 @@
     <script src="scripts/services/usernameService.js"></script>
     <script src="scripts/services/sessionService.js"></script>
     <script src="scripts/services/antiForgeryToken.js"></script>
+    <script src="scripts/factories/title.js"></script>
 
 
     <script src="scripts/directives/validationHighlights.js"></script>
@@ -106,51 +108,21 @@
 
     <!--<script src="appFiles/login/scripts/loginDirective.js"></script>-->
 
+    
+    <script src="scripts/controllers/mainCtrl.js"></script>
     <script src="scripts/controllers/linkElement.js"></script>
-    <script src="scripts/controllers/test.js"></script>
-    <script src="scripts/controllers/secondTest.js"></script>
     <script src="scripts/controllers/sessionTimeout/sessionTimout.js"></script>
+    <script src="appFiles/termsAndConditions/termsAndConditions.js"></script>
+
 
     <script src="appFiles/header/headerCtrl.js"></script>
     <script src="appFiles/login/scripts/loginCtrl.js"></script>
     <script src="appFiles/resetPassword/resetPassword.js"></script>
-    <script src="appFiles/signUp/signUpCtrl.js"></script>
-    <script src="appFiles/forgotPassword/forgotPasswordCtrl.js"></script>
-    <script src="appFiles/updateEmail/updateEmailCtrl.js"></script>
-    <script src="appFiles/termsAccept/termsAccept.js"></script>
-    <script src="appFiles/recoverAccount/recoverAccountCtrl.js"></script>
-    <script src="appFiles/activation/activationCtrl.js"></script>
-    <script src="appFiles/accountActivation/accountActivationCtrl.js"></script>
-    <script src="appFiles/havingTrouble/havingTrouble.js"></script>
-    <script src="appFiles/forgotUsername/forgotUsername.js"></script>
-    <script src="appFiles/updateProfile/updateProfileCtrl.js"></script>
+
     <script src="appFiles/browser/browserCtrl.js"></script>
     <script src="appFiles/contactIDShield/contactIDShieldCtrl.js"></script>
 
     <script src="scripts/controllers/validation.js"></script>
     <!-- endbuild -->
-
-    <script type="text/javascript">
-      // var idleTime = 0;
-      // $(document).ready(function () {
-      //     //Increment the idle time counter every minute.
-      //     var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
-
-      //     //Zero the idle timer on mouse movement.
-      //     $(this).mousemove(function (e) {
-      //         idleTime = 0;
-      //     });
-      //     $(this).keypress(function (e) {
-      //         idleTime = 0;
-      //     });
-      // });
-
-      // function timerIncrement() {
-      //     idleTime = idleTime + 1;
-      //     if (idleTime > 18) { // 20 minutes
-      //         window.location.assign('https://idshieldstage.krollportal.com/login');
-      //     }
-      // }
-</script>
 </body>
 </html>
