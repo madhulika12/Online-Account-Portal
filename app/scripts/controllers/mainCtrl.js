@@ -3,7 +3,7 @@ angular.module('ssoApp')
         
         var self = this;
 
-        self.title = titleFactory.title(); 
+        self.title = titleFactory; 
 
         $scope.titleFactory = titleFactory;
     }])
