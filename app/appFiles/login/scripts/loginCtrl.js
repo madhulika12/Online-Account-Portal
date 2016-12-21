@@ -2,7 +2,7 @@
 
 //SPECIAL
 angular.module('ssoApp')
-  .controller('loginCtrl', ['antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService', 'getUrl', function(antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService, getUrl) {
+  .controller('loginCtrl', ['titleFactory', 'antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService', 'getUrl', function(titleFactory, antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService, getUrl) {
       // console.log("Entering Login Ctrl");
 
       var self = this;
@@ -129,6 +129,8 @@ angular.module('ssoApp')
           self.clearCookie = function() {
             tokenStorageService.deleteToken();
           };
+
+          titleFactory.setTitle("PRIMERICA's Portal - Sign In")
 
           // self.clearCookie();
 
