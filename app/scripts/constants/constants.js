@@ -10,6 +10,7 @@ angular.module('ssoApp')
   fifteenMinutes : 900000,
   refreshTime : 900,
   // twoMinutes: 60000,
+  client: null,
 
   defaultStyles : {
     stylesheet : "styles/Kroll/main.css",
@@ -61,8 +62,14 @@ angular.module('ssoApp')
     anything: /^[\s\S]+$/,
     address: /^[a-zA-z0-9\s-'.]+$/, //matches any alphanumeric, periods, spaces, dashes, apostrophes
     ssn: /^\d{9}$/,
-    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$/
+    password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$/,
   },
+
+  titleRegexs : {
+      IDShield: /(IDShield)+g/,
+      Primerica: /(Primerica)+g/
+  },
+
   reasons : {
     email : "This is not a valid email.",
     username: "Username must be between 6 and 64 characters. Spaces are not allowed.",

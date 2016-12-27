@@ -61,7 +61,7 @@ angular
           }
       },
   })
-  .state('login', {
+  .state('Sign In', {
       url: 'login',
       parent: 'user',
       views: {
@@ -85,7 +85,7 @@ angular
       }
   })
 
-  .state('accountActivation', {
+  .state('Account Activation', {
     url: 'account-activation?token',
     parent: 'user',
     views: {
@@ -97,7 +97,7 @@ angular
         }
     }
   })
-  .state('termsAndConditions', {
+  .state('Terms and Conditions', {
       url: 'terms-and-conditions',
       parent: 'user',
       views: {
@@ -108,7 +108,7 @@ angular
           }
       }
   })
-  .state('terms-accept', {
+  .state('Accept Terms and Conditions', {
       url: 'terms-accept?token',
       parent: 'user',
       views: {
@@ -121,7 +121,7 @@ angular
   })
 
 
-  .state('browser', {
+  .state('Browser Compatibility', {
       url: 'browser',
       parent: 'user',
       views: {
@@ -133,7 +133,7 @@ angular
           }
       }
   })
-  .state('contactIDShield', {
+  .state('Contact Us', {
       url: 'contact-us',
       parent: 'user',
       views: {
@@ -145,7 +145,7 @@ angular
           }
       }
   })
- .state('privacyPolicy', {
+ .state('Privacy Policy', {
       url: 'privacy-policy',
       parent: 'user',
       views: {
@@ -157,7 +157,7 @@ angular
           }
       }
   })
-  .state('recover-account', {
+  .state('Recoverv Account', {
       url: 'account/recover-account',
       parent: 'user',
       views: {
@@ -169,7 +169,7 @@ angular
           }
       }
   })
-  .state('having-trouble', {
+  .state('Having Trouble Logging In', {
     url: 'having-trouble',
     parent: 'user',
     views: {
@@ -180,7 +180,7 @@ angular
       }
     }
   })
-  .state('forgot-username', {
+  .state('Forgot Username', {
     url: 'forgot-username',
     parent: 'user',
     views: {
@@ -201,7 +201,7 @@ angular
         }
     }
   })
-  .state('update-profile', {
+  .state('Update Profile', {
       url: 'member/profile',
       parent: 'user',
       views: {
@@ -212,7 +212,7 @@ angular
           }
       }
   })
-  .state('forgot-password', {
+  .state('Forgot Password', {
       url: 'forgot-password',
       parent: 'user',
       views: {
@@ -223,7 +223,7 @@ angular
           }
       }
   })
-  .state('reset-password', {
+  .state('Reset Password', {
       url: 'account/reset-password?sptoken',
       parent: 'user',
       views: {
@@ -234,7 +234,7 @@ angular
           }
       }
   })
-  .state('sign-up', {
+  .state('Sign Up', {
       url: 'account/sign-up',
       parent: 'user',
       views: {
@@ -245,7 +245,7 @@ angular
           }
       }
   })
-  .state('update-email', {
+  .state('Update Email Address', {
       url: 'account/update-email',
       parent: 'user',
       views: {

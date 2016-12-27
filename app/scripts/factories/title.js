@@ -1,10 +1,10 @@
 angular.module('ssoApp')
-    .factory('titleFactory', ['$http', function ($http) {
-        
-        var title = "PRIMERICA's Portal - Sign In";
+    .factory('titleFactory', ['Constants', '$state', '$http', function (Constants, $state, $http) {
 
         return {
-            title: function() { return title; },
+            client: function() { return Constants.client; },
+            stateName: function() {return $state.current.name;},
+            title: function() {return this.client() + " " + this.stateName();},
             setTitle: function(newTitle) { title = newTitle; }
         };
 }])
