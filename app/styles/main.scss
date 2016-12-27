@@ -238,6 +238,10 @@ span.required {
   margin-bottom: 15px;
 }
 
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
+}
+
 .global-form-instructions {
   padding: 0 25px;
 }
