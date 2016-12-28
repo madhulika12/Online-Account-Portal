@@ -61,7 +61,7 @@ angular.module('ssoApp')
               $('body').removeClass('modal-open');
               $('.modal-backdrop').remove();
                 displayResponseBox.setMessage("Your session has ended. To continue you must log back into the system with your current credentials.", true);
-                $state.go('login')
+                $state.go('Sign In')
             }
 
 
