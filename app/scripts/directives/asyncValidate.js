@@ -5,7 +5,7 @@ angular.module('ssoApp')
 
   var link = function (scope, elem, attrs, ctrl) {
 
-      // elem3 = scope.$parent.update.elemVal;
+      elem3 = scope.$parent.update.elemVal;
 
       console.log('asyncvalidators.link ctrl:', ctrl)
 
@@ -13,36 +13,35 @@ angular.module('ssoApp')
 
       ctrl.$asyncValidators.availability = function (modelValue, viewValue) {
       // if(elem3 != ctrl.$viewValue) {
-      var data = {
-        ClientUrl : getUrl(),
-        EmailUserId: viewValue,
-        AntiForgeryTokenId: antiForgeryToken.getAntiForgeryToken()
+        var data = {
+          ClientUrl : getUrl(),
+          EmailUserId: viewValue,
+          AntiForgeryTokenId: antiForgeryToken.getAntiForgeryToken()
+        }
+
+        var inputCtrlVal = ctrl.$modelValue;
+        var inputCtrlVal1 = inputCtrlVal;
+        console.log('async validating')
+        var deferred = $q.defer()
+
+        var resolve = function (res) {
+          console.log('existance based sucesss', res)
+          console.log(ctrl);
+          deferred.resolve(res)
+        }
+
+        var reject = function (err) {
+          console.log('existance based rejection', err)
+          deferred.reject(err)
+        }
+
+      if(ctrl.$dirty == true) {
+        if(elem3 != ctrl.$viewValue) {
+          console.log("InputCtrlVal " + inputCtrlVal);
+          httpService[ attrs['asyncValidate'] ](data)
+            .then(resolve, reject)
+         }
       }
-
-      var inputCtrlVal = ctrl.$modelValue;
-      var inputCtrlVal1 = inputCtrlVal;
-      console.log('async validating')
-      var deferred = $q.defer()
-
-      var resolve = function (res) {
-        console.log('existance based sucesss', res)
-        console.log(ctrl);
-        deferred.resolve(res)
-      }
-
-      var reject = function (err) {
-        console.log('existance based rejection', err)
-        deferred.reject(err)
-      }
-
-      // if(ctrl.$dirty == true) {
-      // if(elem3 != ctrl.$viewValue) {
-        // console.log("InputVal " + inputVal);
-        console.log("InputCtrlVal " + inputCtrlVal);
-        httpService[ attrs['asyncValidate'] ](data)
-          .then(resolve, reject)
-      //  }
-//
 
       deferred.promise
         .finally(function () {

@@ -59,7 +59,7 @@ angular.module('ssoApp')
   self.dismissToRecoverAccount = function () {
 
     $('#havingTroubleModal').one('hidden.bs.modal', function () {
-      $state.go('recover-account');
+      $state.go('Recover Account');
     });
     $('#havingTroubleModal').modal('hide');
   };

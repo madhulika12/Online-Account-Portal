@@ -38,7 +38,7 @@ angular
       'view': {
         template: '',
         controller: function ($state) {
-          $state.go('login')
+          $state.go('Sign In')
 
         },
       },
@@ -157,7 +157,7 @@ angular
           }
       }
   })
-  .state('Recoverv Account', {
+  .state('Recover Account', {
       url: 'account/recover-account',
       parent: 'user',
       views: {

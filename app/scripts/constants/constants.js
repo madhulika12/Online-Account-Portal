@@ -33,6 +33,7 @@ angular.module('ssoApp')
     setPassword : 'https://mws.stage.kroll.com/api/v1/member/set-password',
     changePassword : 'https://mws.stage.kroll.com/api/v1/member/change-password',
     recoverAccount : 'https://mws.stage.kroll.com/api/v1/member/recover-account',
+    // login : 'https://localhost:44300/api/v1/member/login',
     login : 'https://mws.stage.kroll.com/api/v1/member/login',
     acceptTerms : 'https://mws.stage.kroll.com/api/v1/member/account/terms-and-conditions',
     forgotPassword : 'https://mws.stage.kroll.com/api/v1/member/forgot-password',
