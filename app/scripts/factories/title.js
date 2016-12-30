@@ -4,7 +4,6 @@ angular.module('ssoApp')
         return {
             client: function() { return Constants.client; },
             stateName: function() {return $state.current.name;},
-            title: function() {return this.client() + " " + this.stateName();},
-            setTitle: function(newTitle) { title = newTitle; }
+            title: function() {return this.client() + " " + this.stateName();}
         };
 }])

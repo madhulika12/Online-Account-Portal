@@ -130,8 +130,6 @@ angular.module('ssoApp')
             tokenStorageService.deleteToken();
           };
 
-          titleFactory.setTitle("PRIMERICA's Portal - Sign In")
-
           // self.clearCookie();
 
           // self.partnerName = loadBrandingService.getBaseUrl();
