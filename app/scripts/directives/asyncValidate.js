@@ -5,21 +5,21 @@ angular.module('ssoApp')
 
   var link = function (scope, elem, attrs, ctrl) {
 
-      console.log("scope");
-      console.dir(scope);
-      console.log("scope parent");
-      console.log(scope.$parent);
-      console.log("parent inside parent ");
-      console.log(scope.$parent.$parent);
-      console.log("update ");
-      console.log(scope.$parent.$parent.update );
-      console.log("elemVal ")
-      console.log(scope.$parent.$parent.update.elemVal);
+      // console.log("scope");
+      // console.dir(scope);
+      // console.log("scope parent");
+      // console.log(scope.$parent);
+      // console.log("parent inside parent ");
+      // console.log(scope.$parent.$parent);
+      // console.log("update ");
+      // console.log(scope.$parent.$parent.update );
+      // console.log("elemVal ")
+      // console.log(scope.$parent.$parent.update.elemVal);
 
-      var elem3;
-      elem3 = scope.$parent.$parent.update.elemVal;
+      // var elem3;
+      // elem3 = scope.$parent.$parent.update.elemVal;
 
-      console.log('asyncvalidators.link ctrl:', ctrl)
+      // console.log('asyncvalidators.link ctrl:', ctrl)
 
 
 
@@ -47,13 +47,13 @@ angular.module('ssoApp')
           deferred.reject(err)
         }
 
-      if(ctrl.$dirty == true) {
-        if(elem3 != ctrl.$viewValue) {
+      // if(ctrl.$dirty == true) {
+      //   if(elem3 != ctrl.$viewValue) {
           console.log("InputCtrlVal " + inputCtrlVal);
           httpService[ attrs['asyncValidate'] ](data)
             .then(resolve, reject)
-         }
-      }
+        //  }
+      // }
 
       deferred.promise
         .finally(function () {

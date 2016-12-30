@@ -57,6 +57,12 @@ angular.module('ssoApp')
     display : false
   }
 
+  self.isEmailAvailableModel = {
+          ClientUrl : getUrl(),
+          EmailUserId: null,
+          AntiForgeryTokenId: antiForgeryToken.getAntiForgeryToken()
+        }
+
   //xxxxxx
   // PRESERVING OLD DATA
   //xxxxxx
@@ -274,6 +280,23 @@ angular.module('ssoApp')
     // sessionService.setTokenData.SessionId =  tokenStorageService.getToken()
 
     self.sendRequestToPopulate();
+  }
+
+  self.isEmailAvailable = function(userEmail) {
+    self.isEmailAvailableModel.EmailUserId = userEmail;
+
+    if(userEmail != self.elemVal) {
+      httpService.usernameExist(self.isEmailAvailableModel)
+        .then(self.emailAvailable, self.emailExists);
+    }
+  }
+
+  self.emailExists = function() {
+    console.log("Exists");
+  }
+
+  self.emailAvailable = function() {
+    console.log("Doesn't Exists");
   }
 
   self.sendRequestToPopulate = function() {
