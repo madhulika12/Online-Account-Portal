@@ -293,10 +293,28 @@ angular.module('ssoApp')
 
   self.emailExists = function() {
     console.log("Exists");
+
+    // if (!document.getElementById("updateProfileSave").hasAttribute("disabled")) {
+      document.getElementById("updateProfileSave").setAttribute("disabled", "disabled");
+      document.getElementById("updateProfileSave").className += " EmailExists"
+    // } 
+    
   }
 
   self.emailAvailable = function() {
     console.log("Doesn't Exists");
+    console.log(document.getElementById("updateProfileSave").classList.contains("EmailExists"));
+    console.log(document.getElementById("updateProfileSave").hasAttribute("disabled"));
+
+     document.getElementById("updateProfileSave").classList.remove("EmailExists");
+
+    if ((document.getElementById("updateProfileSave").classList.contains("EmailExists")) && !document.getElementById("updateProfileSave").hasAttribute("disabled")) {
+      document.getElementById("updateProfileSave").removeAttribute("disabled", "disabled");
+     
+      //submitButton updateProcessingBtn k-button
+
+    } 
+    
   }
 
   self.sendRequestToPopulate = function() {

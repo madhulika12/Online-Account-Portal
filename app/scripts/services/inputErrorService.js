@@ -12,7 +12,13 @@ angular.module('ssoApp')
     },
 
     removeError : function (elem) {
-      $(elem).parent().find(".error-message.input-specific-error-message").remove()
+      if(document.getElementById("updateProfileSave")) {
+        if (!document.getElementById("updateProfileSave").classList.contains("EmailExists")) {
+           $(elem).parent().find(".error-message.input-specific-error-message").remove()
+      }   
+      } else {
+        $(elem).parent().find(".error-message.input-specific-error-message").remove()
+      }
     },
 
     addMessage : function (element, message) {
