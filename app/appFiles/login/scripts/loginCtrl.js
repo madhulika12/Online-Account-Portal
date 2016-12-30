@@ -71,7 +71,7 @@ angular.module('ssoApp')
       self.activationSuccess = function (res) {
         // $state.go('sign-up', { token : res.data.responseObject })
         tokenStorageService.setToken(res.data.responseObject);
-        $state.go('sign-up')
+        $state.go('Sign Up')
         antiForgeryToken.setAntiForgeryToken(res);
       }
 
