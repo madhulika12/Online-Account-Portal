@@ -12,10 +12,9 @@ angular.module('ssoApp')
     },
 
     removeError : function (elem) {
-      if(document.getElementById("updateProfileSave")) {
-        if (!document.getElementById("updateProfileSave").classList.contains("EmailExists")) {
-           $(elem).parent().find(".error-message.input-specific-error-message").remove()
-      }   
+      // if(document.getElementById("updateProfileSave")) {
+        if ((document.getElementById("updateProfileSave")) && !document.getElementById("updateProfileSave").classList.contains("EmailExists")) {
+           $(elem).parent().find(".error-message.input-specific-error-message").remove()  
       } else {
         $(elem).parent().find(".error-message.input-specific-error-message").remove()
       }
@@ -23,7 +22,10 @@ angular.module('ssoApp')
 
     addMessage : function (element, message) {
       // console.log('inputErrorService.addMessage')
+
       this.removeError(element)
+
+
       var node = '<div class="error-message input-specific-error-message"><span>' + message + '</span><div style="clear: both;"></div></div>'
 
       if ($(element).parent().find(".error-message").length === 0) {
@@ -54,7 +56,11 @@ angular.module('ssoApp')
       this.addMessage(elem, message)
     },
 
-    addAvailabilityError : function (elem, model) {
+    addAvailabilityError : function (elem) {
+
+      // if(elem == undefined) {
+      //   elem = angular.element(document.getElementById("email"));
+      // }
         this.addMessage(elem, 'That ' + elem[0].attributes.getNamedItem('name').value + ' is already taken')
     },
 

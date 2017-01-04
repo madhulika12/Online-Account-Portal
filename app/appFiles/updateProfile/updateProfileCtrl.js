@@ -10,6 +10,7 @@ angular.module('ssoApp')
   self.editPasswordMode = 'show';
   self.elemVal = null;
   self.readOnlyProp = false;
+  self.emailElem = null;
 
   self.states = Constants.states
   self.generations = Constants.generations
@@ -284,10 +285,11 @@ angular.module('ssoApp')
 
   self.isEmailAvailable = function(userEmail) {
     self.isEmailAvailableModel.EmailUserId = userEmail;
+    self.emailElem = this;
 
-    if(userEmail != self.elemVal) {
+    if(userEmail !== undefined && userEmail != self.elemVal && !document.getElementById("email").classList.contains("ng-invalid-pattern")) {
       httpService.usernameExist(self.isEmailAvailableModel)
-        .then(self.emailAvailable, self.emailExists);
+        // .then(self.emailAvailable, self.emailExists);
     }
   }
 
@@ -296,7 +298,9 @@ angular.module('ssoApp')
 
     // if (!document.getElementById("updateProfileSave").hasAttribute("disabled")) {
       document.getElementById("updateProfileSave").setAttribute("disabled", "disabled");
-      document.getElementById("updateProfileSave").className += " EmailExists"
+      document.getElementById("updateProfileSave").className += " EmailExists";
+      document.getElementById("email").className += " ExistsError";
+      inputErrorService.addAvailabilityError();
     // } 
     
   }
@@ -308,8 +312,11 @@ angular.module('ssoApp')
 
      document.getElementById("updateProfileSave").classList.remove("EmailExists");
 
-    if ((document.getElementById("updateProfileSave").classList.contains("EmailExists")) && !document.getElementById("updateProfileSave").hasAttribute("disabled")) {
-      document.getElementById("updateProfileSave").removeAttribute("disabled", "disabled");
+    // if ((document.getElementById("updateProfileSave").classList.contains("EmailExists")) && (!document.getElementById("updateProfileSave").hasAttribute("disabled"))) {
+
+      // if (document.getElementById("updateProfileSave").hasAttribute("disabled")) {
+        if (document.getElementById("updateProfileSave").classList.contains("EmailExists")) {
+          document.getElementById("updateProfileSave").removeAttribute("disabled", "disabled");
      
       //submitButton updateProcessingBtn k-button
 
