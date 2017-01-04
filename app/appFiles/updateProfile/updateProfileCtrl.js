@@ -260,7 +260,9 @@ angular.module('ssoApp')
 
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
-
+    console.info("populateAntiForgeryToken");
+    // console.dir(loadbrandingservice)
+    
     // self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
     self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
     self.dataToPopulateForm.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();

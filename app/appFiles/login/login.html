@@ -4,13 +4,18 @@
 <session-popup></session-popup>
 <div id="login-view" class="row">
   <div class="col-md-4 col-xs-12">
-    <div class="promotional-image">
+    <div>
+      <img data-ng-src="{{login.interchangableComponents.promotionalImage}}" alt="Family" class="promotional-image"/>
     </div>
-    <div class="welcome-text">
+    <!--<div class="welcome-text">
       <h2> WELCOME TO {{login.partnerName}} </h2>
       <p> Returning members, simply log in. </p>
       <p> New here? You're in the right place, too. </p>
       <p> Forgot your password, click <a href="/#/having-trouble">here</a> </p>
+    </div>-->
+
+    <div class="welcome-text">
+      {{login.interchangableComponents.welcomeSection}}
     </div>
   </div>
 
@@ -22,8 +27,10 @@
             <div class="col-xs-12 col-md-6 grey-right-border">
               <div class="sign-up-form-box ">
                 <div class="form-info">
-                  <h2>SIGN UP</h2>
-                  <p> First time here? Just enter the membership number we sent to you (the number that begins with 700, followed by “m” for the primary member or “s” for the listed spouse/significant other), your last name and zip code.</p>
+                  <!--<h2>SIGN UP</h2>
+                  <p> First time here? Just enter the membership number we sent to you (the number that begins with 700, followed by “m” for the primary member or “s” for the listed spouse/significant other), your last name and zip code.</p>-->
+
+                  {{login.interchangable.signup}}
                 </div>
                 <form class="sign-up-form" name="login.signUpForm" validation-highlights>
                     <div class="match-height">
@@ -128,6 +135,7 @@
           </div>
           <div class="row forgot-password-box">
             <a href="/#/having-trouble">Having trouble logging in?</a>
+            <!--<div>{{login.interchangableComponents.clientId}}</div>-->
           </div>
         </div>
       </div>
