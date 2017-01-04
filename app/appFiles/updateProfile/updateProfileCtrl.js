@@ -10,6 +10,7 @@ angular.module('ssoApp')
   self.editPasswordMode = 'show';
   self.elemVal = null;
   self.readOnlyProp = false;
+  self.emailElem = null;
 
   self.states = Constants.states
   self.generations = Constants.generations
@@ -56,6 +57,12 @@ angular.module('ssoApp')
     error : false,
     display : false
   }
+
+  self.isEmailAvailableModel = {
+          ClientUrl : getUrl(),
+          EmailUserId: null,
+          AntiForgeryTokenId: antiForgeryToken.getAntiForgeryToken()
+        }
 
   //xxxxxx
   // PRESERVING OLD DATA
@@ -274,6 +281,47 @@ angular.module('ssoApp')
     // sessionService.setTokenData.SessionId =  tokenStorageService.getToken()
 
     self.sendRequestToPopulate();
+  }
+
+  self.isEmailAvailable = function(userEmail) {
+    self.isEmailAvailableModel.EmailUserId = userEmail;
+    self.emailElem = this;
+
+    if(userEmail !== undefined && userEmail != self.elemVal && !document.getElementById("email").classList.contains("ng-invalid-pattern")) {
+      httpService.usernameExist(self.isEmailAvailableModel)
+        // .then(self.emailAvailable, self.emailExists);
+    }
+  }
+
+  self.emailExists = function() {
+    console.log("Exists");
+
+    // if (!document.getElementById("updateProfileSave").hasAttribute("disabled")) {
+      document.getElementById("updateProfileSave").setAttribute("disabled", "disabled");
+      document.getElementById("updateProfileSave").className += " EmailExists";
+      document.getElementById("email").className += " ExistsError";
+      inputErrorService.addAvailabilityError();
+    // } 
+    
+  }
+
+  self.emailAvailable = function() {
+    console.log("Doesn't Exists");
+    console.log(document.getElementById("updateProfileSave").classList.contains("EmailExists"));
+    console.log(document.getElementById("updateProfileSave").hasAttribute("disabled"));
+
+     document.getElementById("updateProfileSave").classList.remove("EmailExists");
+
+    // if ((document.getElementById("updateProfileSave").classList.contains("EmailExists")) && (!document.getElementById("updateProfileSave").hasAttribute("disabled"))) {
+
+      // if (document.getElementById("updateProfileSave").hasAttribute("disabled")) {
+        if (document.getElementById("updateProfileSave").classList.contains("EmailExists")) {
+          document.getElementById("updateProfileSave").removeAttribute("disabled", "disabled");
+     
+      //submitButton updateProcessingBtn k-button
+
+    } 
+    
   }
 
   self.sendRequestToPopulate = function() {
