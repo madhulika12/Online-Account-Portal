@@ -61,7 +61,8 @@ angular.module('ssoApp')
   self.isEmailAvailableModel = {
           ClientUrl : getUrl(),
           EmailUserId: null,
-          AntiForgeryTokenId: antiForgeryToken.getAntiForgeryToken()
+          AntiForgeryTokenId: antiForgeryToken.getAntiForgeryToken(),
+          SessionId: getUrl()
         }
 
   //xxxxxx
