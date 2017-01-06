@@ -139,8 +139,8 @@ angular
       views: {
           'view@': {
               templateUrl: 'appFiles/contactIDShield/contactIDShield.html',
-              controller: 'sessionTimout',
-              controllerAs: 'session'
+              controller: 'contactCtrl',
+              controllerAs: 'contact'
 
           }
       }

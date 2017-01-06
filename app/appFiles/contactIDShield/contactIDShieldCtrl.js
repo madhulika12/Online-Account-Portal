@@ -11,4 +11,6 @@ angular.module('ssoApp')
       };
       
       self.checkCookie();
+
+      self.interchangableComponents = loadBrandingService.getStyles();
     }]);

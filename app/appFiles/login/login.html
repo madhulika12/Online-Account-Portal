@@ -5,7 +5,7 @@
 <div id="login-view" class="row">
   <div class="col-md-4 col-xs-12">
     <div>
-      <img data-ng-src="{{login.interchangableComponents.promotionalImage}}" alt="Family" class="promotional-image"/>
+      <img data-ng-src="{{login.interchangableComponents.Image}}" alt="Family" class="promotional-image"/>
     </div>
     <!--<div class="welcome-text">
       <h2> WELCOME TO {{login.partnerName}} </h2>
@@ -30,7 +30,7 @@
                   <!--<h2>SIGN UP</h2>
                   <p> First time here? Just enter the membership number we sent to you (the number that begins with 700, followed by “m” for the primary member or “s” for the listed spouse/significant other), your last name and zip code.</p>-->
 
-                  {{login.interchangable.signup}}
+                  {{login.interchangable.signUp}}
                 </div>
                 <form class="sign-up-form" name="login.signUpForm" validation-highlights>
                     <div class="match-height">
@@ -87,10 +87,15 @@
             </div>
             <div class="col-xs-12 col-md-6">
                 <div class="login-form-box">
-                  <div class="form-info">
+                  <!--<div class="form-info">
                     <h2>LOG IN</h2>
                     <p> Welcome back! Log in, and we'll get you on your way. </p>
+                  </div>-->
+
+                   <div class="form-info">
+                    {{login.interchangableComponents.login}}
                   </div>
+
                   <form class="login-form" name="login.loginForm" validation-highlights>
                       <div class="match-height">
                         <div class="form-group">
