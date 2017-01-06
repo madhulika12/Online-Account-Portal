@@ -40,7 +40,7 @@ angular.module('ssoApp')
 
       //runs if the request has an http error
       self.error = function (err) {
-                if (err.data.responseObject != null) {
+        if (err.data && err.data.responseObject != null) {
           $location.url( err.data.responseObject.pingToken )
         } else {
             var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
@@ -72,7 +72,7 @@ angular.module('ssoApp')
       self.activationSuccess = function (res) {
         // $state.go('sign-up', { token : res.data.responseObject })
         tokenStorageService.setToken(res.data.responseObject);
-        $state.go('sign-up')
+        $state.go('Sign Up')
         antiForgeryToken.setAntiForgeryToken(res);
       }
 
@@ -130,8 +130,6 @@ angular.module('ssoApp')
           self.clearCookie = function() {
             tokenStorageService.deleteToken();
           };
-
-          titleFactory.setTitle("PRIMERICA's Portal - Sign In")
 
           // self.clearCookie();
 

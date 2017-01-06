@@ -2,9 +2,9 @@
 
 describe('Service: loadBrandingService', function () {
 
-  var shared, loadBrandingService;
+  var shared, loadBrandingService, antiForgeryToken;
 
-  beforeEach(inject(function ($rootScope, $http, $location, _loadBrandingService_, $q) {
+  beforeEach(inject(function ($rootScope, $http, $location, _loadBrandingService_, $q, _antiForgeryToken_) {
 
     shared = this;
 
@@ -13,6 +13,7 @@ describe('Service: loadBrandingService', function () {
     shared.root = $rootScope;
 
     loadBrandingService = _loadBrandingService_;
+    antiForgeryToken = _antiForgeryToken_;
 
     shared.requestErrorFlag = "none"
 
@@ -53,6 +54,7 @@ describe('Service: loadBrandingService', function () {
       return (shared.resolve) ? $q.resolve(dummyResponse()) : $q.reject();
     })
 
+    spyOn(antiForgeryToken, 'setAntiForgeryToken');
     spyOn(loadBrandingService, 'getBaseUrl').and.callThrough()
 
   }));
@@ -86,7 +88,9 @@ describe('Service: loadBrandingService', function () {
     })
     it('should make a get request to the webpage attributes endpoint', function () {
       loadBrandingService.getStyleSheetPath()
-      expect(shared.$http.get).toHaveBeenCalledWith('https://mws.stage.kroll.com/api/v1/vendor/webpage-attributes?url=' + shared.$location.host())
+      var charliePath = "https://mws.charlie.kroll.com/api/v1/vendor/webpage-attributes?url=";
+      var stagePath = "https://mws.stage.kroll.com/api/v1/vendor/webpage-attributes?url=";
+      expect(shared.$http.get).toHaveBeenCalledWith(charliePath + 'http://' + shared.$location.host() + '/')
     })
     describe('on a positive response', function () {
       it('if the response has a 404 errorType, it should set the styles with default', function () {

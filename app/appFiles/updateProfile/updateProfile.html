@@ -284,7 +284,8 @@
               <div class="form-group col-xs-12 col-md-6">
                 <label for="email" class="form-control-label">EMAIL<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input appendToDom" autocomplete="off" async-validate="usernameExist" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name="email" ng-change="update.appendDirectiveDom()" required>
+                  <!--<input type="text" class="form-control input appendToDom" async-validate="usernameExist" autocomplete="off" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name = "email" ng-change="update.isEmailAvailable(update.currentData.Email, this)" required>-->
+                  <input type="text" class="form-control input appendToDom" async-validate="usernameExist" autocomplete="off" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name = "email" required>
                   <!--<input type="text" class="form-control input appendToDom" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" ng-change="update.appendDirectiveDom()" name="email" required>-->
                 </div>
               </div>
@@ -300,6 +301,7 @@
             </kendo-button>
             <kendo-button
               class="submitButton updateProcessingBtn"
+              id="updateProfileSave"
               ng-disabled="update.form.$invalid"
               ng-click="update.save()"
               data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"

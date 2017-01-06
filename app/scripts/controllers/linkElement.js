@@ -1,15 +1,21 @@
 'use strict';
 
 angular.module('ssoApp')
-    .controller('linkElement', ['$rootScope', 'loadBrandingService', '$http', '$scope', function($rootScope, loadBrandingService, $http, $scope) {
+    .controller('linkElement', ['Constants', '$rootScope', 'loadBrandingService', '$http', '$scope', function(Constants, $rootScope, loadBrandingService, $http, $scope) {
 
 
     var self = this;
     loadBrandingService.getStyleSheetPromise()
       .finally(function () {
         self.styles = loadBrandingService.getStyles()
+        self.setClient(self.styles.title);
       })
 
+      self.setClient = function(title) {
+        self.title = title;
+
+        Constants.client = self.title.substr(0, self.title.indexOf('-') + 1);
+      }
       //   self.injectDefault = function (data) {
       //       self.styles.stylesheet = "styles/Kroll/main.css";
       //       self.styles.favicon = "images/Kroll/kroll_favicon.ico";

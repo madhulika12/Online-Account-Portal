@@ -2,16 +2,23 @@
 
 describe('Controller: resetPasswordCtrl', function () {
 
-  var resetPasswordCtrl, $timeout, httpService, $rootScope, $state;
+  var resetPasswordCtrl, $timeout, httpService, $rootScope, $state, displayResponseBox, $httpBackend, tokenValidationService, antiForgeryToken;
 
   // Initialize the controller and a mock scope
-  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _$timeout_, _httpService_, _$state_) {
+  beforeEach(inject(function ($controller, _$rootScope_, $document, $http, $q, _$timeout_, _httpService_, _$state_, _displayResponseBox_, _$httpBackend_, _tokenValidationService_, _antiForgeryToken_) {
 
     //create shared variables
     httpService = _httpService_;
     $timeout = _$timeout_;
     $rootScope = _$rootScope_;
     $state = _$state_;
+    displayResponseBox = _displayResponseBox_;
+    $httpBackend = _$httpBackend_;
+    tokenValidationService = _tokenValidationService_;
+    antiForgeryToken = _antiForgeryToken_;
+
+    $httpBackend.when('GET', 'https://mws.stage.kroll.com/api/v1/security/tokens')
+    .respond(200, { responseObject: {access_token: "test", refresh_token: "test"}, errorMessage: 'What now?!?' });
 
     //create mocks
     spyOn($http, 'post').and.callFake(function (item) {
@@ -22,6 +29,9 @@ describe('Controller: resetPasswordCtrl', function () {
     })
 
     spyOn($state, 'go')
+    spyOn(antiForgeryToken, 'setAntiForgeryToken');
+    spyOn(antiForgeryToken, 'setAntiForgeryTokenFromError');
+    spyOn(tokenValidationService, 'checkJWT').and.callThrough();
 
 
     //instantiate controller
@@ -30,31 +40,61 @@ describe('Controller: resetPasswordCtrl', function () {
     //setting spies and attributes on controller
     resetPasswordCtrl.form = {
       password : {
-        $viewValue : "test123"
+        $viewValue : "Test1234"
       }
     }
-    spyOn(resetPasswordCtrl, 'checkRequirements')
 
   }));
 
-  xdescribe('on instantiation', function () {
+  describe('on instantiation', function () {
     it('should run checkToken', function () {
-      //TODO now
+      expect(tokenValidationService.checkJWT).toHaveBeenCalled();
     })
   });
 
-  xdescribe('checkRequirements', function () {
+  describe('checkRequirements', function () {
+    beforeEach(function(){
+    })
     it('should check if the new password is the correct length', function () {
-      //TODO now
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.length).toBeTruthy();
+
+      resetPasswordCtrl.form.password.$viewValue = "2Short";
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.length).toBeFalsy();
     })
     it('should check if the new password has a lowercase letter', function () {
-      //TODO now
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.lowerCase).toBeTruthy();
+
+      resetPasswordCtrl.form.password.$viewValue = "YELLING1!";
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.lowerCase).toBeFalsy();
     })
     it('should check if the new password has an uppercase letter', function () {
-      //TODO now
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.upperCase).toBeTruthy();
+
+      resetPasswordCtrl.form.password.$viewValue = "whisper1!";
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.upperCase).toBeFalsy();
     })
     it('should check if the new password has a number', function () {
-      //TODO now
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.number).toBeTruthy();
+
+      resetPasswordCtrl.form.password.$viewValue = "NoNumber";
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.number).toBeFalsy();
+    })
+
+    it('should fail if form is empty', function () {
+      resetPasswordCtrl.form.password.$viewValue = undefined;
+      resetPasswordCtrl.checkRequirements();
+      expect(resetPasswordCtrl.valid.length).toBe(null);
+      expect(resetPasswordCtrl.valid.lowerCase).toBe(null);
+      expect(resetPasswordCtrl.valid.upperCase).toBe(null);
+      expect(resetPasswordCtrl.valid.number).toBe(null);
     })
   })
 
@@ -63,7 +103,7 @@ describe('Controller: resetPasswordCtrl', function () {
       var event = $.Event('click');
       expect(event.isDefaultPrevented()).toBeFalsy();
       resetPasswordCtrl.setPasswordRequest(event);
-      $rootScope.$digest()
+      // $rootScope.$digest()
       expect(event.isDefaultPrevented()).toBeTruthy();
 
     })
@@ -74,20 +114,27 @@ describe('Controller: resetPasswordCtrl', function () {
     })
   })
 
-  xdescribe('successMessage', function () {
+  describe('successMessage', function () {
     it('should set the responseBox message with the successful password reset message', function () {
-      //TODO now
+      var successfulResetMessage = "The password for your account was successfully reset. Please use the new password to log into the mobile app as well as the web portal.";
+      spyOn(displayResponseBox, 'setMessage')
+      resetPasswordCtrl.successMessage();
+      expect(displayResponseBox.setMessage).toHaveBeenCalledWith(successfulResetMessage, false)
     })
     it('should redirect to the login screen', function () {
-      //TODO now
+      resetPasswordCtrl.successMessage();
+      expect($state.go).toHaveBeenCalledWith('login');
+    })
+    it('should set the antiForgeryToken', function () {
+      var mockToken = { data: { responseObject: "TEST_TOKEN" } };
+      resetPasswordCtrl.successMessage(mockToken);
+      expect(antiForgeryToken.setAntiForgeryToken).toHaveBeenCalledWith(mockToken);
     })
   })
 
   describe('error', function () {
-    var ctlr, responseError, displayResponseBox;
-    beforeEach(inject(function (_displayResponseBox_) {
-      ctlr = resetPasswordCtrl
-      displayResponseBox = _displayResponseBox_
+    var responseError;
+    beforeEach(function () {
 
       spyOn(displayResponseBox, 'populateResponseBox')
 
@@ -104,35 +151,68 @@ describe('Controller: resetPasswordCtrl', function () {
           return this
         }
       }
-    }))
+    })
     it('should execute displayResponseBox.populateResponseBox with the error message if it exists', function () {
-      ctlr.error(responseError)
-      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, responseError.data.errorMessage, true)
+      resetPasswordCtrl.error(responseError)
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(resetPasswordCtrl.responseBoxConfig, responseError.data.errorMessage, true)
     })
 
-    it('should execture displayResponseBox.populateResponseBox with te default message if there is no message in the error', function () {
-      ctlr.error(responseError.deleteMessage())
-      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
+    it('should execute displayResponseBox.populateResponseBox with the default message if there is no message in the error', function () {
+      resetPasswordCtrl.error(responseError.deleteMessage())
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(resetPasswordCtrl.responseBoxConfig, "There was an unexpected error.", true)
     })
 
-    it('should execture displayResponseBox.populateResponseBox with te default message if there is no data in the error', function () {
-      ctlr.error(responseError.deleteData())
-      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(ctlr.responseBoxConfig, "There was an unexpected error.", true)
+    it('should execute displayResponseBox.populateResponseBox with the default message if there is no data in the error', function () {
+      resetPasswordCtrl.error(responseError.deleteData())
+      expect(displayResponseBox.populateResponseBox).toHaveBeenCalledWith(resetPasswordCtrl.responseBoxConfig, "There was an unexpected error.", true)
+    })
+
+    it('should set the antiForgeryToken', function () {
+      resetPasswordCtrl.error(responseError);
+      expect(antiForgeryToken.setAntiForgeryTokenFromError).toHaveBeenCalledWith(responseError);
     })
   })
 
-  xdescribe('showResetModal', function () {
+  describe('showResetModal', function () {
     it('should show the password-reset-expired-modal', function () {
-      //TODO now
+      var spyModal = spyOn( $.fn, 'modal' );
+      resetPasswordCtrl.showResetModal()
+      expect( spyModal ).toHaveBeenCalledWith( 'show' );
     })
     it('should set a listener on the hidden.bs.modal event which redirects to the login', function () {
-      //TODO now
+      var spyModalOn = spyOn( $.fn, 'on' );
+      resetPasswordCtrl.showResetModal()
+      expect( spyModalOn ).toHaveBeenCalled();
     })
   })
 
-  xdescribe('backToLogin', function () {
+  describe('backToLogin', function () {
     it('should hide the password-reset-expired-modal', function () {
-      //TODO now
+      var spyModal = spyOn( $.fn, 'modal' );
+      resetPasswordCtrl.backToLogin()
+      expect( spyModal ).toHaveBeenCalledWith( 'hide' );
+    })
+  })
+
+  describe('populateAntiForgeryToken', function () {
+    it('should popluate the AntiForgeryToken into self.data ', function() {
+      spyOn(resetPasswordCtrl, 'checkCookie');
+      resetPasswordCtrl.populateAntiForgeryToken("Anything");
+      expect(resetPasswordCtrl.data.AntiForgeryTokenId).toBe(antiForgeryToken.getAntiForgeryToken());
+    })
+    it('check the cookies ', function() {
+      spyOn(resetPasswordCtrl, 'checkCookie');
+      resetPasswordCtrl.populateAntiForgeryToken("Anything");
+      expect(resetPasswordCtrl.checkCookie).toHaveBeenCalled();
+    })
+  })
+
+  describe('$watch', function () {
+    it('should should call checkRequirements each digest cycle ', function() {
+      spyOn(resetPasswordCtrl, 'checkRequirements');
+      $rootScope.$digest();
+      // $httpBackend.flush();
+      expect(resetPasswordCtrl.checkRequirements).toHaveBeenCalled();
     })
   })
 });
