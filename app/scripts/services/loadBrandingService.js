@@ -1,5 +1,5 @@
 angular.module('ssoApp')
-.service('loadBrandingService', ['antiForgeryToken', '$http', '$location', '$q', 'Constants', 'getUrl', function (antiForgeryToken, $http, $location, $q, Constants, getUrl) {
+.service('loadBrandingService', ['antiForgeryToken', '$http', '$location', '$q', 'Constants', 'getUrl', 'httpService', function (antiForgeryToken, $http, $location, $q, Constants, getUrl, httpService) {
 
     var deferred = $q.defer()
     var idleTime = 0;
@@ -7,6 +7,11 @@ angular.module('ssoApp')
     var functions =  {
       deferred : deferred,
       promise : deferred.promise,
+
+            data : {
+                ClientUrl: getUrl(),
+                AntiForgeryTokenID: null
+            },      
 
       _styles : {
           url : null,
@@ -16,6 +21,8 @@ angular.module('ssoApp')
           error : null,
           pingURL: null
       },
+
+      content : {},
 
       _defaultStyles : Constants.defaultStyles,
 
@@ -39,6 +46,31 @@ angular.module('ssoApp')
           this._styles = data.data.responseObject;
         }
       },
+
+      _setMultiContent : function (data) {
+        antiForgeryToken.setAntiForgeryToken(data);
+        if (data.data.errorType === 404 || !data.data.responseObject) {
+          this._setDefault()
+        } else {
+          this.content = data.data.responseObject;
+        }
+      },
+      
+
+      setContent : function() {
+        return this.content;
+      },
+
+      getContent : function () {
+                this.data.AntiForgeryTokenID = antiForgeryToken.getAntiForgeryToken();
+
+                httpService.content(this.data)
+                    .then(function (res) {
+                      this._setMultiContent(res);
+                    }, function (err) {
+              
+                    })
+            },
 
       _setDefault : function () {
         this._styles = this._defaultStyles;

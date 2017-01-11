@@ -88,6 +88,12 @@ angular.module('ssoApp')
       return this.request(con)
     },
 
+    content : function (data) {
+      //THIS ONE ACTUALLY SENDS A A NEW PASSWORD TO BE SET
+      var con = this._buildConfigure('POST', Constants.endpoints.content, data)
+      return this.request(con)
+    },
+
     validateAccountActivation : function (data) {
       //THIS ONE ACTUALLY SENDS A A NEW PASSWORD TO BE SET
       var con = this._buildConfigure('POST', Constants.endpoints.validateAccountActivation, data)

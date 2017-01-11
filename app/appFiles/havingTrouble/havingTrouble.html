@@ -36,9 +36,12 @@
 
       <form name="havingTrouble.form" validation-highlights>
         <div class="global-form form-section">
-          <h2>Forgot Password?</h2>
-          <!-- <h4 class="form-section-headings">RESET PASSWORD</h4> -->
-          <p>Use this form to reset your password.</p>
+          <!--<h2>Forgot Password?</h2>
+           <h4 class="form-section-headings">RESET PASSWORD</h4> 
+          <p>Use this form to reset your password.</p>-->
+
+          {{havingTrouble.interchangableComponents.forgotPassword}}
+          
           <div input-linker="match">
             <div class="form-group">
               <label for="username">USERNAME<span class="required">*</span></label>
@@ -81,14 +84,16 @@
 
       <!-- <div class="divider-line"></div> -->
 
-      <h2>Forgot Username?</h2>
+      <!--<h2>Forgot Username?</h2>
       <div class="forgot-password-link">
         <p><a href="/#/forgot-username">Click here</a> to recover your username.</p>
-      </div>
+      </div>-->
 
-      <p class="header-text">
+      <!--<p class="header-text">
         Please note, if this is your first time logging in to the portal after June 1, please <a href="/#/account/recover-account">click here</a>.
-      </p>
+      </p>-->
+      
+      {{havingTrouble.interchangableComponents.forgotUsername}}
 
     </div>
     <div class="col-sm-3 col-md-3">

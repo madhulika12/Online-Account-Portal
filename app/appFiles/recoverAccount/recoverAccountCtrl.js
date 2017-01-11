@@ -17,6 +17,8 @@ angular.module('ssoApp')
     ClientUrl : getUrl()
   }
 
+  self.interchangableComponents = null;
+
   self.usernameData = {
     Username : null,
     AntiForgeryTokenId: null,
@@ -193,8 +195,11 @@ angular.module('ssoApp')
         tokenStorageService.refreshCookie();
       };
 
-
+      self.interchangableComponents = loadBrandingService.getStyles();
+      
       self.populateAntiForgeryToken();
+
+
 
 
 }])

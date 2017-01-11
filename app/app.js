@@ -22,15 +22,20 @@ angular
     url: '/',
     resolve: {
       loadBrandingService: 'loadBrandingService',
+      multiClient: 'multiClient',
       styleSheetPromise : function (loadBrandingService) {
         return loadBrandingService.getStyleSheetPath()
       },
+    //   content : function(multiClient) {
+    //       return multiClient.getContent();
+    //   },
     },
     views: {
       'header': {
         templateUrl: 'appFiles/header/header.html',
-        controller: function ($scope, loadBrandingService) {
-          $scope.styles = loadBrandingService.getStyles()
+        controller: function ($scope, loadBrandingService, multiClient) {
+          $scope.styles = loadBrandingService.getStyles();
+          $scope.content = loadBrandingService.getContent();
           $scope.sessionTimeout = loadBrandingService.sessionTimeout()
           console.log($scope.sessionTimeout)
         }
