@@ -2,7 +2,6 @@ angular.module('ssoApp')
 .service('loadBrandingService', ['antiForgeryToken', '$http', '$location', '$q', 'Constants', 'getUrl', 'httpService', function (antiForgeryToken, $http, $location, $q, Constants, getUrl, httpService) {
 
     var deferred = $q.defer()
-    var contentDeferObj = $q.defer();
     var idleTime = 0;
 
     var functions =  {
@@ -69,14 +68,10 @@ angular.module('ssoApp')
                 httpService.content(this.data)
                     .then(function (res) {
                       lbs._setMultiContent(res);
-                      lbs.contentDeferObj.resolve(res)
                       console.info("In httpService");
                     }, function (err) {
-                      lbs._setDefault()
-                      lbs.contentDeferObj.resolve(err)
               
                     })
-                    return this.promise
             },
 
       _setDefault : function () {
