@@ -100,6 +100,11 @@ angular.module('ssoApp')
       antiForgeryToken.setAntiForgeryToken(res);
        }
 
+       angular.element(document).ready(function () {
+         console.info("Document null");
+         $scope.interchangableComponents = loadBrandingService.getContent();
+       });
+
       self.loginRequest = function (event) {
         // console.log('loginCtrl.loginRequest')
         event.preventDefault()
@@ -147,7 +152,7 @@ angular.module('ssoApp')
          loadBrandingService.getStyleSheetPath()
           .then(self.populateAntiForgeryToken, self.error);
 
-         $scope.interchangableComponents = loadBrandingService.setContent();
+        
 
          console.info("interchangableComponents");
          console.log(self.interchangableComponents);

@@ -26,7 +26,7 @@ angular
       content : function(loadBrandingService) {
         return loadBrandingService.getContent();
       },
-      
+
       styleSheetPromise : function (loadBrandingService) {
         return loadBrandingService.getStyleSheetPath()
       },
@@ -36,7 +36,7 @@ angular
         templateUrl: 'appFiles/header/header.html',
         controller: function ($scope, loadBrandingService, multiClient) {
           $scope.styles = loadBrandingService.getStyles();
-          $scope.content = loadBrandingService.getContent();
+          $scope.content = loadBrandingService.setContent();
           $scope.sessionTimeout = loadBrandingService.sessionTimeout()
           console.log($scope.sessionTimeout)
         }
