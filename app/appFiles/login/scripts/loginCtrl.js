@@ -10,7 +10,7 @@ angular.module('ssoApp')
       self.response = null;
       self.error = null;
       $scope.removeAndRedirect = null;
-      self.interchangableComponents = null;
+      // self.interchangableComponents = null;
 
       self.signUpData = {
         MembershipNumber: null,
@@ -147,7 +147,7 @@ angular.module('ssoApp')
          loadBrandingService.getStyleSheetPath()
           .then(self.populateAntiForgeryToken, self.error);
 
-         self.interchangableComponents = loadBrandingService.getStyles();
+         $scope.interchangableComponents = loadBrandingService.setContent();
 
          console.info("interchangableComponents");
          console.log(self.interchangableComponents);

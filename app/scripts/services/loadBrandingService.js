@@ -62,11 +62,12 @@ angular.module('ssoApp')
       },
 
       getContent : function () {
+        var lbs = this;
                 this.data.AntiForgeryTokenID = antiForgeryToken.getAntiForgeryToken();
 
                 httpService.content(this.data)
                     .then(function (res) {
-                      this._setMultiContent(res);
+                      lbs._setMultiContent(res);
                     }, function (err) {
               
                     })

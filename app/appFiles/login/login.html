@@ -14,8 +14,7 @@
       <p> Forgot your password, click <a href="/#/having-trouble">here</a> </p>
     </div>-->
 
-    <div class="welcome-text">
-      {{login.interchangableComponents.welcomeSection}}
+    <div class="welcome-text" ng-bind-html="interchangableComponents.welcomeSection">
     </div>
   </div>
 
@@ -26,11 +25,11 @@
           <div class="row">
             <div class="col-xs-12 col-md-6 grey-right-border">
               <div class="sign-up-form-box ">
-                <div class="form-info">
+                <div class="form-info" ng-bind-html="interchangableComponents.signUp">
                   <!--<h2>SIGN UP</h2>
                   <p> First time here? Just enter the membership number we sent to you (the number that begins with 700, followed by “m” for the primary member or “s” for the listed spouse/significant other), your last name and zip code.</p>-->
 
-                  {{login.interchangable.signUp}}
+                  
                 </div>
                 <form class="sign-up-form" name="login.signUpForm" validation-highlights>
                     <div class="match-height">
@@ -92,8 +91,7 @@
                     <p> Welcome back! Log in, and we'll get you on your way. </p>
                   </div>-->
 
-                   <div class="form-info">
-                    {{login.interchangableComponents.login}}
+                   <div class="form-info" ng-bind-html="interchangableComponents.login">
                   </div>
 
                   <form class="login-form" name="login.loginForm" validation-highlights>

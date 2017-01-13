@@ -22,13 +22,14 @@ angular
     url: '/',
     resolve: {
       loadBrandingService: 'loadBrandingService',
-      multiClient: 'multiClient',
+
+      content : function(loadBrandingService) {
+        return loadBrandingService.getContent();
+      },
+      
       styleSheetPromise : function (loadBrandingService) {
         return loadBrandingService.getStyleSheetPath()
       },
-    //   content : function(multiClient) {
-    //       return multiClient.getContent();
-    //   },
     },
     views: {
       'header': {
