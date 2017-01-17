@@ -22,9 +22,10 @@ angular
     url: '/',
     resolve: {
       loadBrandingService: 'loadBrandingService',
+      contentService : 'contentService',
 
-      content : function(loadBrandingService) {
-        return loadBrandingService.getContent();
+      content : function(contentService) {
+        return contentService.getContent()
       },
 
       styleSheetPromise : function (loadBrandingService) {
@@ -34,9 +35,9 @@ angular
     views: {
       'header': {
         templateUrl: 'appFiles/header/header.html',
-        controller: function ($scope, loadBrandingService, multiClient) {
+        controller: function ($scope, loadBrandingService, contentService) {
           $scope.styles = loadBrandingService.getStyles();
-          $scope.content = loadBrandingService.setContent();
+          $scope.clientContent = contentService.getMultiClientContent();
           $scope.sessionTimeout = loadBrandingService.sessionTimeout()
           console.log($scope.sessionTimeout)
         }

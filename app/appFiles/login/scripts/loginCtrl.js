@@ -2,7 +2,7 @@
 
 //SPECIAL
 angular.module('ssoApp')
-  .controller('loginCtrl', ['titleFactory', 'antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService', 'getUrl', function(titleFactory, antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService, getUrl) {
+  .controller('loginCtrl', ['titleFactory', 'contentService','antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService', 'getUrl', function(titleFactory, contentService, antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService, getUrl) {
       // console.log("Entering Login Ctrl");
 
       var self = this;
@@ -100,10 +100,10 @@ angular.module('ssoApp')
       antiForgeryToken.setAntiForgeryToken(res);
        }
 
-       angular.element(document).ready(function () {
-         console.info("Document null");
-         $scope.interchangableComponents = loadBrandingService.getContent();
-       });
+      //  angular.element(document).ready(function () {
+      //    console.info("Document null");
+      $scope.interchangableComponents = contentService._content;
+      //  });
 
       self.loginRequest = function (event) {
         // console.log('loginCtrl.loginRequest')
@@ -124,6 +124,7 @@ angular.module('ssoApp')
       };
 
           self.populateAntiForgeryToken = function(res) {
+            // $scope.interchangableComponents = loadBrandingService.getContent();
             console.log("Antiforgery" + res);
             self.clearCookie();
             antiForgeryToken.setAntiForgeryToken(res);
