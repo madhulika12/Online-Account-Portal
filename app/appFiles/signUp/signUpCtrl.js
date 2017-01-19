@@ -73,7 +73,7 @@ angular.module('ssoApp')
         self.invalidTokenError = function (err) {
           var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
           displayResponseBox.setMessage(message, true)
-          $state.go('login')
+          $state.go('Sign In');
           antiForgeryToken.setAntiForgeryTokenFromError(err);
           // $('.processingBtn').button('reset');
         }
