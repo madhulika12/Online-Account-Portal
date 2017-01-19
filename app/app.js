@@ -44,9 +44,11 @@ angular
       },
       'view': {
         template: '',
-        controller: function ($state) {
+        controller: function ($state, $scope) {
           $state.go('Sign In')
-
+          $scope.test = "In the view controller";
+          console.info("View parent");
+          console.log($scope.test);
         },
       },
       'footer': {

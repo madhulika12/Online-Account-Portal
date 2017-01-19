@@ -40,8 +40,9 @@
            <h4 class="form-section-headings">RESET PASSWORD</h4> 
           <p>Use this form to reset your password.</p>-->
 
-          {{interchangableComponents.forgotPassword}}
+          <!--{{interchangableComponents.forgotPassword}}-->
           
+          <div ng-bind-html="interchangableComponents.forgotPassword"> </div>
           <div input-linker="match">
             <div class="form-group">
               <label for="username">USERNAME<span class="required">*</span></label>
@@ -87,10 +88,10 @@
       <!--<h2>Forgot Username?</h2>
       <div class="forgot-password-link">
         <p><a href="/#/forgot-username">Click here</a> to recover your username.</p>
-      </div>-->
+      </div>
 
-      <!--<p class="header-text">
-        Please note, if this is your first time logging in to the portal after June 1, please <a href="/#/account/recover-account">click here</a>.
+      <p class="header-text">
+        Please note, if this is your first time logging in to the portal after January 3, please <a href="/#/account/recover-account">click here</a>.
       </p>-->
       
       <div data-ng-bind-html = "interchangableComponents.forgotUsername"> </div>

@@ -2,7 +2,7 @@
 
 //SPECIAL
 angular.module('ssoApp')
-  .controller('contactCtrl', ['$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService',function($scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService) {
+  .controller('contactCtrl', ['contentService','$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService',function(contentService, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService) {
       
       var self = this;   
   
@@ -12,5 +12,5 @@ angular.module('ssoApp')
       
       self.checkCookie();
 
-      $scope.interchangableComponents = loadBrandingService.setContent();
+      $scope.interchangableComponents = contentService._content;
     }]);

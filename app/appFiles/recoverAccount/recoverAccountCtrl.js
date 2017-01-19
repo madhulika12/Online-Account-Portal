@@ -2,7 +2,7 @@
 
 angular.module('ssoApp')
 
-.controller('recoverAccountCtrl', ['antiForgeryToken', '$http','httpService', 'Constants', 'displayResponseBox', '$state', 'usernameService','tokenStorageService', 'getUrl', function (antiForgeryToken, $http, httpService, Constants, displayResponseBox, $state, usernameService, tokenStorageService, getUrl) {
+.controller('recoverAccountCtrl', ['$scope', 'contentService','antiForgeryToken', '$http','httpService', 'Constants', 'displayResponseBox', '$state', 'usernameService','tokenStorageService', 'getUrl', function ($scope, contentService, antiForgeryToken, $http, httpService, Constants, displayResponseBox, $state, usernameService, tokenStorageService, getUrl) {
   // console.log("Inside Recover Account Controller")
 
   var self = this;
@@ -195,7 +195,7 @@ angular.module('ssoApp')
         tokenStorageService.refreshCookie();
       };
 
-      self.interchangableComponents = loadBrandingService.getStyles();
+      $scope.interchangableComponents = contentService._content;
       
       self.populateAntiForgeryToken();
 

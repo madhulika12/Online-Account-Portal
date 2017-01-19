@@ -1,5 +1,5 @@
 angular.module('ssoApp')
-.controller('havingTroubleCtrl', ['$scope','loadBrandingService', 'antiForgeryToken' ,'tokenStorageService', '$http', 'httpService', 'Constants', 'displayResponseBox', '$state', 'getUrl', function ($scope, loadBrandingService, antiForgeryToken, tokenStorageService, $http, httpService, Constants, displayResponseBox, $state, getUrl) {
+.controller('havingTroubleCtrl', ['contentService','$scope','loadBrandingService', 'antiForgeryToken' ,'tokenStorageService', '$http', 'httpService', 'Constants', 'displayResponseBox', '$state', 'getUrl', function (contentService, $scope, loadBrandingService, antiForgeryToken, tokenStorageService, $http, httpService, Constants, displayResponseBox, $state, getUrl) {
   var self = this;
 
   self.forgotPassData = {
@@ -23,7 +23,7 @@ angular.module('ssoApp')
     display : false
   };
 
-  $scope.interchangableComponents = loadBrandingService.setContent();
+  $scope.interchangableComponents = contentService._content;
 
   self.forgotPassSuccess = function (res) {
     // console.log('havingTrouble.forgotPassSuccess res param', res)
