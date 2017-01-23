@@ -5,7 +5,7 @@ angular.module('ssoApp')
   //endpoints
 
   loginSourceId : 2,
-  portalBaseUrl : 'https://loginstage.krollportal.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
+  portalBaseUrl : 'https://loginstage.mysecuredashboard.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
   tokenCookieKey : 'ssoSessionId',
   fifteenMinutes : 900000,
   refreshTime : 900,

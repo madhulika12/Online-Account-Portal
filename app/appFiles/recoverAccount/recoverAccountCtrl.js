@@ -60,7 +60,7 @@ angular.module('ssoApp')
 
   self.redirectUpdateEmail = function () {
     usernameService.storeUsername(self.usernameData.Username)
-    $state.go('update-email')
+    $state.go('Update Email Address');
   }
 
 
@@ -86,7 +86,7 @@ angular.module('ssoApp')
   self.resetPassSuccess = function (res) {
     var message = res.data.responseObject
     displayResponseBox.setMessage(message, false)
-    $state.go('login')
+    $state.go('Sign In');
   }
 
   //**************************************************
@@ -98,13 +98,13 @@ angular.module('ssoApp')
     if (modal.length > 0) {
       self.backToLoginFromModal()
     } else {
-      $state.go('login')
+      $state.go('Sign In')
     }
   }
 
   self.backToLoginFromModal = function (event) {
     $('.recover-page-modal').one('hidden.bs.modal', function () {
-      $state.go('login')
+      $state.go('Sign In')
     })
     $('.recover-page-modal').modal('hide')
   }

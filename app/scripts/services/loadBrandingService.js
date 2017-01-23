@@ -34,6 +34,10 @@ angular.module('ssoApp')
         return this._styles
       },
 
+      getPingURL : function() {
+        return this._styles.pingURL;
+      },
+
       getBaseUrl : function () {
         return getUrl()
       },
