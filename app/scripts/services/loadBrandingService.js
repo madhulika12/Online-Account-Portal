@@ -88,6 +88,7 @@ angular.module('ssoApp')
 
         $http
           .get('https://mws.stage.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
+          // .get('https://mws.charlie.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
           .then(function (res) {
             lbs._setStyles(res)
             lbs.deferred.resolve(res)

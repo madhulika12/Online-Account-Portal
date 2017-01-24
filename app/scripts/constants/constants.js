@@ -6,6 +6,7 @@ angular.module('ssoApp')
 
   loginSourceId : 2,
   portalBaseUrl : 'https://loginstage.mysecuredashboard.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
+//   portalBaseUrl : 'https://logincharlie.mysecuredashboard.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
   tokenCookieKey : 'ssoSessionId',
   fifteenMinutes : 900000,
   refreshTime : 900,
@@ -50,6 +51,34 @@ angular.module('ssoApp')
     delCookie: 'https://mws.stage.kroll.com/api/v1/member/token/redeem',
     extendTimeout: 'https://mws.stage.kroll.com/api/v1/member/extend-session'
   },
+
+// endpoints : {
+//     validateJWT : 'https://mws.charlie.kroll.com/api/v1/member/token/validate',
+//     activate : 'https://mws.charlie.kroll.com/api/v1/member/activate',
+//     firstTimeActivate : 'https://mws.charlie.kroll.com/api/v1/member/account-activation',
+//     updateEmail : 'https://mws.charlie.kroll.com/api/v1/member/email-update',
+//     signUp : 'https://mws.charlie.kroll.com/api/v1/member/sign-up',
+//     setPassword : 'https://mws.charlie.kroll.com/api/v1/member/set-password',
+//     changePassword : 'https://mws.charlie.kroll.com/api/v1/member/change-password',
+//     recoverAccount : 'https://mws.charlie.kroll.com/api/v1/member/recover-account',
+//     // login : 'https://localhost:44300/api/v1/member/login',
+//     login : 'https://mws.charlie.kroll.com/api/v1/member/login',
+//     acceptTerms : 'https://mws.charlie.kroll.com/api/v1/member/account/terms-and-conditions',
+//     forgotPassword : 'https://mws.charlie.kroll.com/api/v1/member/forgot-password',
+//     content: 'https://mws.charlie.kroll.com/api/v1/client/content',
+//     forgotUsername : 'https://mws.charlie.kroll.com/api/v1/member/forgot-userid',
+//     multiClient: 'https://mws.charlie.kroll.com/api/v1/client/content',
+//     // getMemberByToken: 'https://localhost:44300/api/v1/member/sign-up/load',
+//     getMemberByToken: 'https://mws.charlie.kroll.com/api/v1/member/sign-up/load',
+//     validateAccountActivation: 'https://mws.charlie.kroll.com/api/v1/member/session/validate',
+//     emailExist : 'https://mws.charlie.kroll.com/api/v1/member/email-userid/exist',
+//     usernameExist : 'https://mws.charlie.kroll.com/api/v1/member/email-userid/exist',
+//     updateProfile : 'https://mws.charlie.kroll.com/api/v1/member/personal/update',
+//     antiForgeryToken : 'https://mws.charlie.kroll.com/api/v1/security/tokens',
+//     delCookie: 'https://mws.charlie.kroll.com/api/v1/member/token/redeem',
+//     extendTimeout: 'https://mws.charlie.kroll.com/api/v1/member/extend-session'
+//   },
+
   regexs : {
     email : /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/i,
     username: /^\S{6,64}$/, //matches a string of 6 to 64 characters that is only letters and numbers

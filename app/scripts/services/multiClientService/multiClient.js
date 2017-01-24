@@ -50,6 +50,7 @@ angular.module('ssoApp')
                 // })
 
                 $http.post('https://mws.stage.kroll.com/api/v1/client/content', {'ClientUrl': getUrl()})
+                //  $http.post('https://mws.charlie.kroll.com/api/v1/client/content', {'ClientUrl': getUrl()})
                    .then(function (res) {
                         lbs._setContent(res)
                         lbs.deferred.resolve(res)
