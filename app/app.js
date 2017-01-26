@@ -210,7 +210,7 @@ angular
         }
     }
   })
-  .state('Update Profile', {
+  .state('My Account', {
       url: 'member/profile',
       parent: 'user',
       views: {
@@ -267,10 +267,10 @@ angular
   })
  // this block below removes the hash tag from angular urls
 
-  $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-  });
+//   $locationProvider.html5Mode({
+//     enabled: true,
+//     requireBase: false
+//   });
 })
 
 .run(function ($rootScope) {

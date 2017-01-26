@@ -2,7 +2,7 @@ angular.module('ssoApp')
 
 // SPECIAL
 
-.controller('updateProfile', ['loadBrandingService','antiForgeryToken', 'sessionService','inputErrorService', '$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', 'getUrl', function (loadBrandingService, antiForgeryToken, sessionService, inputErrorService, $window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox, getUrl) {
+.controller('updateProfile', ['contentService' ,'loadBrandingService','antiForgeryToken', 'sessionService','inputErrorService', '$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', 'getUrl', function (contentService, loadBrandingService, antiForgeryToken, sessionService, inputErrorService, $window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox, getUrl) {
 
   var self = this
 
@@ -339,7 +339,7 @@ angular.module('ssoApp')
         //     .then(self.success, self.error)
         // };
 
-        $scope.interchangableComponents = loadBrandingService.setContent();
+        $scope.interchangableComponents = contentService._content;
 
     self.populateAntiForgeryToken();
 }])

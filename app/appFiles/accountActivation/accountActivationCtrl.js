@@ -1,6 +1,6 @@
 angular.module('ssoApp')
 
-.controller('AccountActivationCtrl', ['$scope','antiForgeryToken','loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', 'getUrl', function ($scope, antiForgeryToken, loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService, getUrl){
+.controller('AccountActivationCtrl', ['contentService','$scope','antiForgeryToken','loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', 'getUrl', function (contentService, $scope, antiForgeryToken, loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService, getUrl){
 
   var self = this;
 
@@ -93,7 +93,7 @@ angular.module('ssoApp')
   //     $(this).button('loading');
   // });
 
-  $scope.interchangableComponents = loadBrandingService.setContent();
+  $scope.interchangableComponents = contentService._content;
 
   $('button[data-loading-text]')
     .on('click', function () {
