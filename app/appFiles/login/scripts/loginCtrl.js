@@ -103,6 +103,8 @@ angular.module('ssoApp')
       //  angular.element(document).ready(function () {
       //    console.info("Document null");
       $scope.interchangableComponents = contentService._content;
+      $scope.interchangableComponents.IDShieldImage = false;
+      $scope.interchangableComponents.primericaImage = true;
       //  });
 
       self.loginRequest = function (event) {

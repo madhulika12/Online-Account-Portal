@@ -10,7 +10,6 @@
  */
 
 // var routerApp = angular.module('routerApp', ['ui.router', 'ui.bootstrap', 'ngCookies']);
-
 angular
   .module('ssoApp', ['ui.router', 'kendo.directives', 'ngSanitize', 'ngAnimate', 'ui.bootstrap', 'ngCookies'])
 
