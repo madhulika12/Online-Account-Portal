@@ -1,5 +1,3 @@
-'use strict';
-
 //SPECIAL
 angular.module('ssoApp')
   .controller('loginCtrl', ['titleFactory', 'contentService','antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService', 'getUrl', function(titleFactory, contentService, antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService, getUrl) {
