@@ -5,7 +5,8 @@ angular.module('ssoApp')
   //endpoints
 
   loginSourceId : 2,
-  portalBaseUrl : 'https://loginstage.krollportal.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
+  portalBaseUrl : 'https://loginstage.mysecuredashboard.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
+//   portalBaseUrl : 'https://logincharlie.mysecuredashboard.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
   tokenCookieKey : 'ssoSessionId',
   fifteenMinutes : 900000,
   refreshTime : 900,
@@ -24,31 +25,150 @@ angular.module('ssoApp')
   //   title : "IDShield Identity Theft Protection",
   //   logo : "images/IDShield/IDShieldLogo.png"
   // },
-  endpoints : {
-    validateJWT : 'https://mws.stage.kroll.com/api/v1/member/token/validate',
-    activate : 'https://mws.stage.kroll.com/api/v1/member/activate',
-    firstTimeActivate : 'https://mws.stage.kroll.com/api/v1/member/account-activation',
-    updateEmail : 'https://mws.stage.kroll.com/api/v1/member/email-update',
-    signUp : 'https://mws.stage.kroll.com/api/v1/member/sign-up',
-    setPassword : 'https://mws.stage.kroll.com/api/v1/member/set-password',
-    changePassword : 'https://mws.stage.kroll.com/api/v1/member/change-password',
-    recoverAccount : 'https://mws.stage.kroll.com/api/v1/member/recover-account',
-    // login : 'https://localhost:44300/api/v1/member/login',
-    login : 'https://mws.stage.kroll.com/api/v1/member/login',
-    acceptTerms : 'https://mws.stage.kroll.com/api/v1/member/account/terms-and-conditions',
-    forgotPassword : 'https://mws.stage.kroll.com/api/v1/member/forgot-password',
-    forgotUsername : 'https://mws.stage.kroll.com/api/v1/member/forgot-userid',
-    multiClient: 'https://mws.stage.kroll.com/api/v1/vendor/webpage-attributes',
-    // getMemberByToken: 'https://localhost:44300/api/v1/member/sign-up/load',
-    getMemberByToken: 'https://mws.stage.kroll.com/api/v1/member/sign-up/load',
-    validateAccountActivation: 'https://mws.stage.kroll.com/api/v1/member/session/validate',
-    emailExist : 'https://mws.stage.kroll.com/api/v1/member/email-userid/exist',
-    usernameExist : 'https://mws.stage.kroll.com/api/v1/member/email-userid/exist',
-    updateProfile : 'https://mws.stage.kroll.com/api/v1/member/personal/update',
-    antiForgeryToken : 'https://mws.stage.kroll.com/api/v1/security/tokens',
-    delCookie: 'https://mws.stage.kroll.com/api/v1/member/token/redeem',
-    extendTimeout: 'https://mws.stage.kroll.com/api/v1/member/extend-session'
+//   endpoints : {
+//     validateJWT : 'https://mws.stage.kroll.com/api/v1/member/token/validate',
+//     activate : 'https://mws.stage.kroll.com/api/v1/member/activate',
+//     firstTimeActivate : 'https://mws.stage.kroll.com/api/v1/member/account-activation',
+//     updateEmail : 'https://mws.stage.kroll.com/api/v1/member/email-update',
+//     signUp : 'https://mws.stage.kroll.com/api/v1/member/sign-up',
+//     setPassword : 'https://mws.stage.kroll.com/api/v1/member/set-password',
+//     changePassword : 'https://mws.stage.kroll.com/api/v1/member/change-password',
+//     recoverAccount : 'https://mws.stage.kroll.com/api/v1/member/recover-account',
+//     // login : 'https://localhost:44300/api/v1/member/login',
+//     login : 'https://mws.stage.kroll.com/api/v1/member/login',
+//     acceptTerms : 'https://mws.stage.kroll.com/api/v1/member/account/terms-and-conditions',
+//     forgotPassword : 'https://mws.stage.kroll.com/api/v1/member/forgot-password',
+//     content: 'https://mws.stage.kroll.com/api/v1/client/content',
+//     forgotUsername : 'https://mws.stage.kroll.com/api/v1/member/forgot-userid',
+//     multiClient: 'https://mws.stage.kroll.com/api/v1/client/content',
+//     // getMemberByToken: 'https://localhost:44300/api/v1/member/sign-up/load',
+//     getMemberByToken: 'https://mws.stage.kroll.com/api/v1/member/sign-up/load',
+//     validateAccountActivation: 'https://mws.stage.kroll.com/api/v1/member/session/validate',
+//     emailExist : 'https://mws.stage.kroll.com/api/v1/member/email-userid/exist',
+//     usernameExist : 'https://mws.stage.kroll.com/api/v1/member/email-userid/exist',
+//     updateProfile : 'https://mws.stage.kroll.com/api/v1/member/personal/update',
+//     antiForgeryToken : 'https://mws.stage.kroll.com/api/v1/security/tokens',
+//     delCookie: 'https://mws.stage.kroll.com/api/v1/member/token/redeem',
+//     extendTimeout: 'https://mws.stage.kroll.com/api/v1/member/extend-session'
+//   },
+
+// endpoints : {
+//     validateJWT : 'https://mws.charlie.kroll.com/api/v1/member/token/validate',
+//     activate : 'https://mws.charlie.kroll.com/api/v1/member/activate',
+//     firstTimeActivate : 'https://mws.charlie.kroll.com/api/v1/member/account-activation',
+//     updateEmail : 'https://mws.charlie.kroll.com/api/v1/member/email-update',
+//     signUp : 'https://mws.charlie.kroll.com/api/v1/member/sign-up',
+//     setPassword : 'https://mws.charlie.kroll.com/api/v1/member/set-password',
+//     changePassword : 'https://mws.charlie.kroll.com/api/v1/member/change-password',
+//     recoverAccount : 'https://mws.charlie.kroll.com/api/v1/member/recover-account',
+//     // login : 'https://localhost:44300/api/v1/member/login',
+//     login : 'https://mws.charlie.kroll.com/api/v1/member/login',
+//     acceptTerms : 'https://mws.charlie.kroll.com/api/v1/member/account/terms-and-conditions',
+//     forgotPassword : 'https://mws.charlie.kroll.com/api/v1/member/forgot-password',
+//     content: 'https://mws.charlie.kroll.com/api/v1/client/content',
+//     forgotUsername : 'https://mws.charlie.kroll.com/api/v1/member/forgot-userid',
+//     multiClient: 'https://mws.charlie.kroll.com/api/v1/client/content',
+//     // getMemberByToken: 'https://localhost:44300/api/v1/member/sign-up/load',
+//     getMemberByToken: 'https://mws.charlie.kroll.com/api/v1/member/sign-up/load',
+//     validateAccountActivation: 'https://mws.charlie.kroll.com/api/v1/member/session/validate',
+//     emailExist : 'https://mws.charlie.kroll.com/api/v1/member/email-userid/exist',
+//     usernameExist : 'https://mws.charlie.kroll.com/api/v1/member/email-userid/exist',
+//     updateProfile : 'https://mws.charlie.kroll.com/api/v1/member/personal/update',
+//     antiForgeryToken : 'https://mws.charlie.kroll.com/api/v1/security/tokens',
+//     delCookie: 'https://mws.charlie.kroll.com/api/v1/member/token/redeem',
+//     extendTimeout: 'https://mws.charlie.kroll.com/api/v1/member/extend-session'
+//   },
+
+endpoints : {
+    baseUrl: 'https://auth-api.stage.kroll.com/api/v1/',
+
+    // baseUrl: 'https://mws.stage.kroll.com/api/v1/',
+
+    validateJWT : function() {
+                return this.baseUrl + 'member/token/validate';
+                },
+
+    activate : function() {
+                return this.baseUrl + 'member/activate';
+                },
+
+    firstTimeActivate : function() {
+                return this.baseUrl + 'member/account-activation';
+                },
+
+    updateEmail : function() {
+                return this.baseUrl + 'member/email-update';
+                },
+
+    signUp : function() {
+                return this.baseUrl + 'member/sign-up';
+                },
+
+    setPassword : function() {
+                return this.baseUrl + 'member/set-password';
+                },
+
+    changePassword : function() {
+                return this.baseUrl + 'member/change-password';
+                },
+
+    recoverAccount : function() {
+                return this.baseUrl + 'member/recover-account';
+                },
+
+    login : function() {
+                return this.baseUrl + 'member/login';
+                },
+
+    acceptTerms : function() {
+                return this.baseUrl + 'member/account/terms-and-conditions';
+                },
+
+    forgotPassword : function() {
+                return this.baseUrl + 'member/forgot-password';
+                },
+
+    content : function() {
+                return this.baseUrl + 'client/content';
+                },
+
+    multiClient : function() {
+                return this.baseUrl + 'client/content';
+                },
+
+    getMemberByToken : function() {
+                return this.baseUrl + 'member/sign-up/load';
+                },
+
+    validateAccountActivation : function() {
+                return this.baseUrl + 'member/session/validate';
+                },
+
+    emailExist : function() {
+                return this.baseUrl + 'member/email-userid/exist';
+                },
+
+    usernameExist : function() {
+                return this.baseUrl + 'member/email-userid/exist';
+                },
+
+    updateProfile : function() {
+                return this.baseUrl + 'member/personal/update';
+                },
+
+    antiForgeryToken : function() {
+                return this.baseUrl + 'security/tokens';
+                },
+
+    delCookie : function() {
+                return this.baseUrl + 'member/token/redeem';
+                },
+            
+    extendTimeout : function() {
+                return this.baseUrl + 'member/extend-session';
+                },
   },
+
   regexs : {
     email : /^[a-zA-Z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$/i,
     username: /^\S{6,64}$/, //matches a string of 6 to 64 characters that is only letters and numbers

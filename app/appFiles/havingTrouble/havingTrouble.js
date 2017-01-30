@@ -1,12 +1,13 @@
 angular.module('ssoApp')
-.controller('havingTroubleCtrl', ['antiForgeryToken' ,'tokenStorageService', '$http', 'httpService', 'Constants', 'displayResponseBox', '$state', 'getUrl', function (antiForgeryToken, tokenStorageService, $http, httpService, Constants, displayResponseBox, $state, getUrl) {
+.controller('havingTroubleCtrl', ['contentService','$scope','loadBrandingService', 'antiForgeryToken' ,'tokenStorageService', '$http', 'httpService', 'Constants', 'displayResponseBox', '$state', 'getUrl', function (contentService, $scope, loadBrandingService, antiForgeryToken, tokenStorageService, $http, httpService, Constants, displayResponseBox, $state, getUrl) {
   var self = this;
 
   self.forgotPassData = {
     Username : null,
     LoginSourceId : Constants.loginSourceId,
     AntiForgeryTokenId: null,
-    ClientUrl : 'https://idtheftdefensestage.mysecuredashboard.com/login'
+    ClientUrl : getUrl()
+    // ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
   }
 
   self.forgotPassConfirmData = {
@@ -22,6 +23,8 @@ angular.module('ssoApp')
     error : false,
     display : false
   };
+
+  $scope.interchangableComponents = contentService._content;
 
   self.forgotPassSuccess = function (res) {
     // console.log('havingTrouble.forgotPassSuccess res param', res)
@@ -59,14 +62,16 @@ angular.module('ssoApp')
   self.dismissToRecoverAccount = function () {
 
     $('#havingTroubleModal').one('hidden.bs.modal', function () {
+      console.log("dismissToRecoverAccount triggered");
       $state.go('Recover Account');
     });
     $('#havingTroubleModal').modal('hide');
   };
 
   self.callSecurityTokens = function() {
-          $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-    .then(self.populateAntiForgeryToken, self.error);
+    //       $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+    //       // $http.get('https://mws.charlie.kroll.com/api/v1/security/tokens')
+    // .then(self.populateAntiForgeryToken, self.error);
     self.checkCookie();
   }
 

@@ -1,5 +1,5 @@
 angular.module('ssoApp')
-.directive('asyncValidate', ['antiForgeryToken', 'httpService', 'Constants', '$q', '$timeout', 'getUrl', function (antiForgeryToken, httpService, Constants, $q, $timeout, getUrl) {
+.directive('asyncValidate', ['tokenStorageService','antiForgeryToken', 'httpService', 'Constants', '$q', '$timeout', 'getUrl', function (tokenStorageService,antiForgeryToken, httpService, Constants, $q, $timeout, getUrl) {
 
 
 
@@ -28,6 +28,7 @@ angular.module('ssoApp')
         var data = {
           ClientUrl : getUrl(),
           EmailUserId: viewValue,
+          SessionID : tokenStorageService.getToken(),
           AntiForgeryTokenId: antiForgeryToken.getAntiForgeryToken()
         }
 

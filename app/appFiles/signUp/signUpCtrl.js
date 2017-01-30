@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ssoApp')
-    .controller('signUpCtrl', ['antiForgeryToken', '$http', '$location', 'Constants', '$rootScope', '$stateParams', 'httpService', 'tokenValidationService', 'displayResponseBox', '$window', 'tokenStorageService', '$state', 'loadBrandingService', 'getUrl', function(antiForgeryToken, $http, $location, Constants, $rootScope, $stateParams, httpService, tokenValidationService, displayResponseBox, $window, tokenStorageService, $state, loadBrandingService, getUrl) {
+    .controller('signUpCtrl', ['$scope','contentService','antiForgeryToken', '$http', '$location', 'Constants', '$rootScope', '$stateParams', 'httpService', 'tokenValidationService', 'displayResponseBox', '$window', 'tokenStorageService', '$state', 'loadBrandingService', 'getUrl', function($scope, contentService, antiForgeryToken, $http, $location, Constants, $rootScope, $stateParams, httpService, tokenValidationService, displayResponseBox, $window, tokenStorageService, $state, loadBrandingService, getUrl) {
         var self = this;
 
         self.states = Constants.states
@@ -62,6 +62,8 @@ angular.module('ssoApp')
           ClientUrl: getUrl()
         }
 
+        $scope.interchangableComponents = contentService._content;
+
         //runs if the request has an http error
         self.error = function (err) {
           var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
@@ -73,7 +75,7 @@ angular.module('ssoApp')
         self.invalidTokenError = function (err) {
           var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
           displayResponseBox.setMessage(message, true)
-          $state.go('login')
+          $state.go('Sign In');
           antiForgeryToken.setAntiForgeryTokenFromError(err);
           // $('.processingBtn').button('reset');
         }

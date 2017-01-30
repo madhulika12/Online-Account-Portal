@@ -35,6 +35,7 @@
                 autocomplete="off"
                 id="emailAddress"
                 name="email"
+                async-validate="usernameExist"
                 ng-model="upEmail.updateEmailData.NewEmail"
                 ng-pattern="upEmail.regex.email"
                 ng-model-options="{ debounce: { 'default': 500, 'blur': 0 } }"

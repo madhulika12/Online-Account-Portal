@@ -1,12 +1,11 @@
 angular.module('ssoApp')
 
-.controller('AccountActivationCtrl', ['antiForgeryToken','loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', 'getUrl', function (antiForgeryToken, loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService, getUrl){
+.controller('AccountActivationCtrl', ['contentService','$scope','antiForgeryToken','loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', 'getUrl', function (contentService, $scope, antiForgeryToken, loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService, getUrl){
 
   var self = this;
 
   self.data = {
     SSN : null,
-    SessionId : null,
     Accept: false,
     AntiForgeryToken: null,
     ClientUrl : getUrl(),
@@ -50,7 +49,7 @@ angular.module('ssoApp')
     // var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error.";var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error."
     var message = "Your session has expired, please enter your username and password to continue the activation process."
     displayResponseBox.setMessage(message, true)
-    // $state.go('login');
+    $state.go('Sign In');
     antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 
@@ -92,6 +91,8 @@ angular.module('ssoApp')
   //   $('button[data-loading-text]').click(function () {
   //     $(this).button('loading');
   // });
+
+  $scope.interchangableComponents = contentService._content;
 
   $('button[data-loading-text]')
     .on('click', function () {

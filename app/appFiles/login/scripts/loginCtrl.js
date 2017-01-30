@@ -1,8 +1,6 @@
-'use strict';
-
 //SPECIAL
 angular.module('ssoApp')
-  .controller('loginCtrl', ['titleFactory', 'antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService', 'getUrl', function(titleFactory, antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService, getUrl) {
+  .controller('loginCtrl', ['titleFactory', 'contentService','antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService', 'getUrl', function(titleFactory, contentService, antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService, getUrl) {
       // console.log("Entering Login Ctrl");
 
       var self = this;
@@ -10,6 +8,7 @@ angular.module('ssoApp')
       self.response = null;
       self.error = null;
       $scope.removeAndRedirect = null;
+      // self.interchangableComponents = null;
 
       self.signUpData = {
         MembershipNumber: null,
@@ -99,6 +98,13 @@ angular.module('ssoApp')
       antiForgeryToken.setAntiForgeryToken(res);
        }
 
+      //  angular.element(document).ready(function () {
+      //    console.info("Document null");
+      $scope.interchangableComponents = contentService._content;
+      $scope.interchangableComponents.IDShieldImage = false;
+      $scope.interchangableComponents.primericaImage = true;
+      //  });
+
       self.loginRequest = function (event) {
         // console.log('loginCtrl.loginRequest')
         event.preventDefault()
@@ -118,6 +124,7 @@ angular.module('ssoApp')
       };
 
           self.populateAntiForgeryToken = function(res) {
+            // $scope.interchangableComponents = loadBrandingService.getContent();
             console.log("Antiforgery" + res);
             self.clearCookie();
             antiForgeryToken.setAntiForgeryToken(res);
@@ -145,6 +152,10 @@ angular.module('ssoApp')
 
          loadBrandingService.getStyleSheetPath()
           .then(self.populateAntiForgeryToken, self.error);
+        
+
+         console.info("interchangableComponents");
+         console.log(self.interchangableComponents);
  }]);
 
  // $scope.$on('$locationChangeStart', function (event, next, current) {

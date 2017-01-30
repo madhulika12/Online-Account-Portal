@@ -2,7 +2,6 @@
   width: 100%;
   height: 200px;
   border-radius: 5px;
-  background-size: cover;
 }
 
 #login-view {
@@ -18,6 +17,21 @@
 
 .promotional-image {
   background: url("../../images/IDShield/happy-family.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.IDShieldPromoImage {
+  background: url("../../images/IDShield/happy-family.png");
+}
+
+.IDTheftDefensePromoImage {
+  width: 100%;
+  height: 200px;
+  border-radius: 5px;
+  background: url("../../images/Primerica/Promo.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .welcome-text {

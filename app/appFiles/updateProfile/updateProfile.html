@@ -29,9 +29,9 @@
 	</div>
   <div class="row">
     <div class="col-xs-12 col-sm-6">
-      <div class="global-form-instructions">
-        <h2 id="updateAccountH2"> MY ACCOUNT </h2>
-        <p> Use this page to update your account information </p>
+      <div class="global-form-instructions" data-ng-bind-html="interchangableComponents.updateProfile">
+        <!--<h2 id="updateAccountH2"> MY ACCOUNT </h2>
+        <p> Use this page to update your account information </p>-->
       </div>
     </div>
   </div>
@@ -91,7 +91,7 @@
 
   <div ng-switch="update.mode">
     <div class="global-form updateAccount" ng-switch-when="view" >
-      <h4 class="form-section-headings"> Personal Information </h4>
+      <h4 class="form-section-headings"> </h4>
       <form>
 
         <div class="">

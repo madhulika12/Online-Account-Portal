@@ -1,5 +1,5 @@
 angular.module('ssoApp')
-.service('loadBrandingService', ['antiForgeryToken', '$http', '$location', '$q', 'Constants', 'getUrl', function (antiForgeryToken, $http, $location, $q, Constants, getUrl) {
+.service('loadBrandingService', ['antiForgeryToken', '$http', '$location', '$q', 'Constants', 'getUrl', 'httpService', function (antiForgeryToken, $http, $location, $q, Constants, getUrl, httpService) {
 
     var deferred = $q.defer()
     var idleTime = 0;
@@ -7,6 +7,11 @@ angular.module('ssoApp')
     var functions =  {
       deferred : deferred,
       promise : deferred.promise,
+
+            data : {
+                ClientUrl: getUrl(),
+                AntiForgeryTokenID: null
+            },      
 
       _styles : {
           url : null,
@@ -17,6 +22,8 @@ angular.module('ssoApp')
           pingURL: null
       },
 
+      content : {},
+
       _defaultStyles : Constants.defaultStyles,
 
       getStyleSheetPromise : function () {
@@ -25,6 +32,10 @@ angular.module('ssoApp')
 
       getStyles : function () {
         return this._styles
+      },
+
+      getPingURL : function() {
+        return this._styles.pingURL;
       },
 
       getBaseUrl : function () {
@@ -40,6 +51,33 @@ angular.module('ssoApp')
         }
       },
 
+      _setMultiContent : function (data) {
+        antiForgeryToken.setAntiForgeryToken(data);
+        if (data.data.errorType === 404 || !data.data.responseObject) {
+          this._setDefault()
+        } else {
+          this.content = data.data.responseObject;
+        }
+      },
+      
+
+      setContent : function() {
+        return this.content;
+      },
+
+      getContent : function () {
+        var lbs = this;
+                this.data.AntiForgeryTokenID = antiForgeryToken.getAntiForgeryToken();
+
+                httpService.content(this.data)
+                    .then(function (res) {
+                      lbs._setMultiContent(res);
+                      console.info("In httpService");
+                    }, function (err) {
+              
+                    })
+            },
+
       _setDefault : function () {
         this._styles = this._defaultStyles;
       },
@@ -49,7 +87,8 @@ angular.module('ssoApp')
         var currentUrl = lbs.getBaseUrl()
 
         $http
-          .get('https://mws.stage.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
+          .get('https://auth-api.stage.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
+          // .get('https://mws.charlie.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
           .then(function (res) {
             lbs._setStyles(res)
             lbs.deferred.resolve(res)
@@ -80,7 +119,7 @@ angular.module('ssoApp')
       timerIncrement : function() {
           idleTime = idleTime + 1;
           if (idleTime > 2) { // 20 minutes
-              window.location.assign('https://idshieldstage.mysecuredashboard.com/login');
+              // window.location.assign('https://idshieldstage.mysecuredashboard.com/login');
           }
       }
     }

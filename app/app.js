@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc overview
  * @name ssoApp
@@ -10,7 +8,6 @@
  */
 
 // var routerApp = angular.module('routerApp', ['ui.router', 'ui.bootstrap', 'ngCookies']);
-
 angular
   .module('ssoApp', ['ui.router', 'kendo.directives', 'ngSanitize', 'ngAnimate', 'ui.bootstrap', 'ngCookies'])
 
@@ -22,6 +19,12 @@ angular
     url: '/',
     resolve: {
       loadBrandingService: 'loadBrandingService',
+      contentService : 'contentService',
+
+      content : function(contentService) {
+        return contentService.getContent()
+      },
+
       styleSheetPromise : function (loadBrandingService) {
         return loadBrandingService.getStyleSheetPath()
       },
@@ -29,17 +32,20 @@ angular
     views: {
       'header': {
         templateUrl: 'appFiles/header/header.html',
-        controller: function ($scope, loadBrandingService) {
-          $scope.styles = loadBrandingService.getStyles()
+        controller: function ($scope, loadBrandingService, contentService) {
+          $scope.styles = loadBrandingService.getStyles();
+          $scope.clientContent = contentService.getMultiClientContent();
           $scope.sessionTimeout = loadBrandingService.sessionTimeout()
           console.log($scope.sessionTimeout)
         }
       },
       'view': {
         template: '',
-        controller: function ($state) {
+        controller: function ($state, $scope) {
           $state.go('Sign In')
-
+          $scope.test = "In the view controller";
+          console.info("View parent");
+          console.log($scope.test);
         },
       },
       'footer': {
@@ -139,8 +145,8 @@ angular
       views: {
           'view@': {
               templateUrl: 'appFiles/contactIDShield/contactIDShield.html',
-              controller: 'sessionTimout',
-              controllerAs: 'session'
+              controller: 'contactCtrl',
+              controllerAs: 'contact'
 
           }
       }
@@ -201,7 +207,7 @@ angular
         }
     }
   })
-  .state('Update Profile', {
+  .state('My Account', {
       url: 'member/profile',
       parent: 'user',
       views: {

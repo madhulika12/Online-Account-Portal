@@ -60,7 +60,7 @@ angular.module('ssoApp')
         self.successMessage = function(res) {
           // console.log('resetPassword.successMessage res params', res)
           displayResponseBox.setMessage("The password for your account was successfully reset. Please use the new password to log into the mobile app as well as the web portal.", false)
-          $state.go('login');
+          $state.go('Sign In');
           antiForgeryToken.setAntiForgeryToken(res);
         }
 
@@ -77,7 +77,7 @@ angular.module('ssoApp')
         self.showResetModal = function () {
           $('#password-reset-expired-modal').modal('show')
           $('#password-reset-expired-modal').on('hidden.bs.modal', function () {
-            $state.go('login')
+            $state.go('Sign In');
           })
         }
 

@@ -61,7 +61,7 @@ angular.module('ssoApp')
               displayResponseBox.setMessage(message, false)
           // displayResponseBox.setMessage("A password recovery email was sent to your account.", false)
           antiForgeryToken.setAntiForgeryToken(res);
-          $state.go('login')
+          $state.go('Sign In')
         }
 
         self.resetPassword = function () {

@@ -2,7 +2,7 @@
 
 angular.module('ssoApp')
 
-.controller('recoverAccountCtrl', ['antiForgeryToken', '$http','httpService', 'Constants', 'displayResponseBox', '$state', 'usernameService','tokenStorageService', 'getUrl', function (antiForgeryToken, $http, httpService, Constants, displayResponseBox, $state, usernameService, tokenStorageService, getUrl) {
+.controller('recoverAccountCtrl', ['$scope', 'contentService','antiForgeryToken', '$http','httpService', 'Constants', 'displayResponseBox', '$state', 'usernameService','tokenStorageService', 'getUrl', function ($scope, contentService, antiForgeryToken, $http, httpService, Constants, displayResponseBox, $state, usernameService, tokenStorageService, getUrl) {
   // console.log("Inside Recover Account Controller")
 
   var self = this;
@@ -16,6 +16,8 @@ angular.module('ssoApp')
     AntiForgeryTokenId: null,
     ClientUrl : getUrl()
   }
+
+  self.interchangableComponents = null;
 
   self.usernameData = {
     Username : null,
@@ -58,7 +60,7 @@ angular.module('ssoApp')
 
   self.redirectUpdateEmail = function () {
     usernameService.storeUsername(self.usernameData.Username)
-    $state.go('update-email')
+    $state.go('Update Email Address');
   }
 
 
@@ -84,7 +86,7 @@ angular.module('ssoApp')
   self.resetPassSuccess = function (res) {
     var message = res.data.responseObject
     displayResponseBox.setMessage(message, false)
-    $state.go('login')
+    $state.go('Sign In');
   }
 
   //**************************************************
@@ -96,13 +98,13 @@ angular.module('ssoApp')
     if (modal.length > 0) {
       self.backToLoginFromModal()
     } else {
-      $state.go('login')
+      $state.go('Sign In')
     }
   }
 
   self.backToLoginFromModal = function (event) {
     $('.recover-page-modal').one('hidden.bs.modal', function () {
-      $state.go('login')
+      $state.go('Sign In')
     })
     $('.recover-page-modal').modal('hide')
   }
@@ -193,8 +195,11 @@ angular.module('ssoApp')
         tokenStorageService.refreshCookie();
       };
 
-
+      $scope.interchangableComponents = contentService._content;
+      
       self.populateAntiForgeryToken();
+
+
 
 
 }])

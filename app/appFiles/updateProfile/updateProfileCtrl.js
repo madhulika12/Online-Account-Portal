@@ -2,7 +2,7 @@ angular.module('ssoApp')
 
 // SPECIAL
 
-.controller('updateProfile', ['antiForgeryToken', 'sessionService','inputErrorService', '$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', 'getUrl', function (antiForgeryToken, sessionService, inputErrorService, $window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox, getUrl) {
+.controller('updateProfile', ['contentService' ,'loadBrandingService','antiForgeryToken', 'sessionService','inputErrorService', '$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', 'getUrl', function (contentService, loadBrandingService, antiForgeryToken, sessionService, inputErrorService, $window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox, getUrl) {
 
   var self = this
 
@@ -61,7 +61,8 @@ angular.module('ssoApp')
   self.isEmailAvailableModel = {
           ClientUrl : getUrl(),
           EmailUserId: null,
-          AntiForgeryTokenId: antiForgeryToken.getAntiForgeryToken()
+          AntiForgeryTokenId: antiForgeryToken.getAntiForgeryToken(),
+          SessionId: getUrl()
         }
 
   //xxxxxx
@@ -267,7 +268,9 @@ angular.module('ssoApp')
 
   self.populateAntiForgeryToken = function(res) {
     console.log("Antiforgery" + res);
-
+    console.info("populateAntiForgeryToken");
+    // console.dir(loadbrandingservice)
+    
     // self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
     self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
     self.dataToPopulateForm.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();
@@ -335,6 +338,8 @@ angular.module('ssoApp')
         //   httpService.delCookie(self.resetPassData.SessionId)
         //     .then(self.success, self.error)
         // };
+
+        $scope.interchangableComponents = contentService._content;
 
     self.populateAntiForgeryToken();
 }])
