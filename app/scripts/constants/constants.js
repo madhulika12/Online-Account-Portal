@@ -82,6 +82,8 @@ angular.module('ssoApp')
 endpoints : {
     baseUrl: 'https://auth-api.stage.kroll.com/api/v1/',
 
+    // baseUrl: 'https://mws.stage.kroll.com/api/v1/',
+
     validateJWT : function() {
                 return this.baseUrl + 'member/token/validate';
                 },
