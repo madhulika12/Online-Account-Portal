@@ -152,7 +152,6 @@ angular.module('ssoApp')
 
          loadBrandingService.getStyleSheetPath()
           .then(self.populateAntiForgeryToken, self.error);
-
         
 
          console.info("interchangableComponents");
