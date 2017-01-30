@@ -49,7 +49,7 @@ angular.module('ssoApp')
     // var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error.";var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error."
     var message = "Your session has expired, please enter your username and password to continue the activation process."
     displayResponseBox.setMessage(message, true)
-    $state.go('Sign In');
+    // $state.go('Sign In');
     antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 

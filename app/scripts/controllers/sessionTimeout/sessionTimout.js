@@ -68,7 +68,7 @@ angular.module('ssoApp')
       function timerIncrement() {
           self.idleTime = self.idleTime + 1;
           // if (self.idleTime > 15) { // 20 minutes
-           if (self.idleTime > 2) { // 20 minutes
+           if (self.idleTime > 14) { // 20 minutes
               console.log($location.path());
 
               if($location.path() == '/login') {
@@ -76,7 +76,7 @@ angular.module('ssoApp')
               }
 
               self.backToLoginRoute()
-          } else if (self.idleTime > 13) {
+          } else if (self.idleTime > 12) {
               console.log("else of timerincrement " + self.idleTime)
                   $timeout(function () {
                         self.showTimer = true;
