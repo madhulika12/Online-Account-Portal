@@ -229,7 +229,7 @@ angular
           }
       }
   })
-  .state('Reset Password', {
+  .state('Set Password', {
       url: 'account/reset-password?sptoken',
       parent: 'user',
       views: {
@@ -264,10 +264,10 @@ angular
   })
  // this block below removes the hash tag from angular urls
 
-  $locationProvider.html5Mode({
-    enabled: true,
-    requireBase: false
-  });
+//   $locationProvider.html5Mode({
+//     enabled: true,
+//     requireBase: false
+//   });
 })
 
 .run(function ($rootScope) {
