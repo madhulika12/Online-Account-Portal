@@ -196,7 +196,8 @@
           <button type='button' class='close' data-dismiss='modal'>
             <span>&times;</span>
           </button>
-          <h2 class='modal-title'>RECOVER ACCOUNT</h2>
+          <!--<h2 class='modal-title'>RECOVER ACCOUNT</h2>-->
+          <h2 class='modal-title' data-ng-bind-html="interchangableComponents.forgotUsernamePopupTitle"></h2>
         </div>
         <div class='modal-body'>
           <div>
@@ -204,7 +205,9 @@
 
             <p class="centered bold">{{recover.usernameData.Username}}</p>
 
-            <p>Our records indicate that you haven't logged in since June 1, 2016. You will need to reset your password in order to access your account. A password reset email has been sent to the email associated with your account.</p>
+            <p data-ng-bind-html="interchangableComponents.usernamePopup"></p>
+
+            <!--<p>Our records indicate that you haven't logged in since June 1, 2016. You will need to reset your password in order to access your account. A password reset email has been sent to the email associated with your account.</p>-->
           </div>
 
         </div>
