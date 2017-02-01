@@ -229,7 +229,7 @@ angular
           }
       }
   })
-  .state('Reset Password', {
+  .state('Set Password', {
       url: 'account/reset-password?sptoken',
       parent: 'user',
       views: {
