@@ -79,6 +79,7 @@ angular.module('ssoApp')
 
   self.setData = function (res) {
     antiForgeryToken.setAntiForgeryToken(res);
+
     var db = res.data.responseObject
     var headers =  res.headers('XSRF-TOKEN');
 
@@ -121,7 +122,12 @@ angular.module('ssoApp')
   }
 
   self.editOn = function () {
-    self.mode = 'edit'
+    self.mode = 'edit';
+
+       $( document ).ready(function() {
+          console.log("On load");
+          console.log(document.getElementsByClassName("datePicker").namedItem("dob"));
+       });
   }
 
   self.goToDashboard = function() {
@@ -234,6 +240,7 @@ angular.module('ssoApp')
         }
 
    self.populateForm = function (res) {
+     
           if (res && res.data && res.data.responseObject) {
             var db = res.data.responseObject
 
@@ -265,8 +272,9 @@ angular.module('ssoApp')
           antiForgeryToken.setAntiForgeryToken(res);
         }
 
-
   self.populateAntiForgeryToken = function(res) {
+
+
     console.log("Antiforgery" + res);
     console.info("populateAntiForgeryToken");
     // console.dir(loadbrandingservice)

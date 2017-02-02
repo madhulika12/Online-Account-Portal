@@ -270,13 +270,13 @@
               <div class="form-group col-xs-6">
                 <label for="dob" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
                 <div>
-                  <input id="dob" kendo-date-picker
+                  <input id="dob datePicker" kendo-date-picker
                     k-options="update.kendoDateOptions"
                     k-format="'MM/dd/yyyy'"
                     placeholder="MM/DD/YYYY"
                     autocomplete="off"
                     data-ng-readonly="update.readOnlyProp"
-                   class="form-control input kendo-date" name="dob" ng-pattern="update.regex.DateOfBirth" ng-model="update.currentData.DateOfBirth" required/>
+                   class="form-control input kendo-date datePicker" name="dob" ng-pattern="update.regex.DateOfBirth" ng-model="update.currentData.DateOfBirth" required/>
                 </div>
               </div>
 
@@ -451,3 +451,11 @@
     Lorem ipsum dolor text....
   </div>
 </div> -->
+
+<script>
+  // document.getElementById("datePicker").kendoDatePicker();
+  
+  // var datepicker = document.getElementById("datepicker").data("kendoDatePicker");
+
+  // datepicker.enable(false);
+</script>

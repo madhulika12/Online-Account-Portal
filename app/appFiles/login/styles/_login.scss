@@ -15,6 +15,11 @@
 
 }
 
+.dual-form-container {
+  border : 1px solid $IDShieldBorderColor;
+  border-radius: 5px;
+}
+
 .promotional-image {
   background: url("../../images/IDShield/happy-family.png");
   background-size: cover;

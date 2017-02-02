@@ -181,7 +181,7 @@ endpoints : {
     date: /^(0[1-9]|1[0-2])\/(0[1-9]|[1-2]\d|3[0,1])\/(19|20)\d{2}$/,
     //rough date regex, MM-dd-YYYY, does NOT account for leap years, does NOT limit days according to what month it is. Limits months 01 - 12, limits dates 01 - 31, limits years 1900 - 2099.
     anything: /^[\s\S]+$/,
-    address: /^[a-zA-z0-9\s-'.]+$/, //matches any alphanumeric, periods, spaces, dashes, apostrophes
+    address: /^[a-zA-z0-9\s-'.]{2,99}$/, //matches any alphanumeric, periods, spaces, dashes, apostrophes
     ssn: /^\d{9}$/,
     password: /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,15}$/,
   },
@@ -196,12 +196,12 @@ endpoints : {
     username: "Username must be between 6 and 64 characters. Spaces are not allowed.",
     numbersOnly : "Only numbers are allowed.",
     lettersOnly : "Only letters are allowed.",
-    names: "Only letters, spaces, periods, dash, and apostrophes are allowed.",
+    names: "Only letters, spaces, periods, dash, and apostrophes are allowed. This field cannot exceed 50 characters.",
     zip : "Zip code must contain 5 numbers or 9 numbers with a dash.",
     phone : "Phone number must contain 10 numbers including the area code.",
     date: "Date must be formatted MM/DD/YYYY.",
     anything: "This field is required.",
-    address: "Only numbers, letters, spaces, dash, apostrophes, and periods are allowed.",
+    address: "Only numbers, letters, spaces, dash, apostrophes, and periods are allowed. This field cannot exceed 100 characters.",
     ssn: "SSN must be 9 numbers. Dashes or spaces are not allowed.",
     password: "Passwords must be between 8 and 15 characters. They must container at least one lower case letter, one uppercase letter, and one number.",
     city : "Cities must be two characters or more and can only contain letters, apostrophes, commas, dashes, periods, or spaces."

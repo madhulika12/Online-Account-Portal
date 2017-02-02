@@ -1,12 +1,12 @@
 #footerContent {
-    background-color: white;
+    background-color: #006;
 }
 
 .navbar-default {
   li
     a.footerLink {
         & {
-          color: $primBlue;
+          color: #fff;
         }
     }
 }
@@ -19,3 +19,9 @@
     .glyphicon-copyright-mark {
         font-size: $footerGlypiconFontSize;
 }
+
+.navbar-default .navbar-nav>li>a:hover {
+    color: #fff !important;
+}
+
+
