@@ -133,8 +133,8 @@ angular
       views: {
           'view@': {
               templateUrl: 'appFiles/browser/browser.html',
-              controller: 'sessionTimout',
-              controllerAs: 'session'
+              controller: 'browserCtrl',
+              controllerAs: 'browser'
 
           }
       }

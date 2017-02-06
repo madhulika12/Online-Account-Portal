@@ -124,10 +124,25 @@ angular.module('ssoApp')
   self.editOn = function () {
     self.mode = 'edit';
 
-       $( document ).ready(function() {
+       if (document.readyState === 'complete'){
           console.log("On load");
+          window.setTimeout(self.showElem, 1000);
           console.log(document.getElementsByClassName("datePicker").namedItem("dob"));
-       });
+       };
+
+       ($timeout, function() {
+        console.log("DOM content Loaded");
+        console.log(document.getElementById('bootstrapDatePicker'));
+       }, 5000);
+  }
+
+  self.showElem = function() {
+    console.log("showElem");
+    console.log(document.getElementById('bootstrapDatePicker'));
+
+    $('#bootstrapDatePicker').datetimepicker({
+          format: 'MM/DD/YYYY'
+    });   
   }
 
   self.goToDashboard = function() {
@@ -214,7 +229,6 @@ angular.module('ssoApp')
     displayResponseBox.populateResponseBox(self.resetPassResponseBox, message, true);
     antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
-
 
   self.setPassSuccess = function (res) {
 
@@ -339,6 +353,18 @@ angular.module('ssoApp')
           httpService.getMember(self.dataToPopulateForm)
             // .then(self.populateForm, self.error)
             .then(self.setData, self.error)
+
+            if (document.readyState === 'complete') {
+              console.info("Inside ready state");
+              console.log(document.getElementById('bootstrapDatePicker'));
+            }
+
+            console.log(document.getElementById('bootstrapDatePicker'));
+
+    // document.getElementsByClassName('datepicker')[0].datepicker({
+    //     format: 'mm/dd/yyyy',
+    //     startDate: '-3d'
+    // });     
         }
 
         //  self.delCookie = function() {
@@ -350,4 +376,8 @@ angular.module('ssoApp')
         $scope.interchangableComponents = contentService._content;
 
     self.populateAntiForgeryToken();
+
+      $(document).ready(function() {
+         
+      })
 }])

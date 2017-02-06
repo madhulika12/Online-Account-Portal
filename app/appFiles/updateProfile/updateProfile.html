@@ -152,7 +152,7 @@
               <!-- DOB -->
               <div class="form-group col-xs-6">
                 <label for="dob" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
-                <div class="info-display"> <p> {{update.updatedData.DateOfBirth || update.currentData.DateOfBirth || update.setReturnedData.DateOfBirth }} </p> </div>
+                <div class="info-display input-group date" data-provide="datepicker"> <p> {{update.updatedData.DateOfBirth || update.currentData.DateOfBirth || update.setReturnedData.DateOfBirth }} </p> </div>
               </div>
 
               <!-- EMAIL -->
@@ -268,8 +268,8 @@
             <div class="row">
               <!-- DOB -->
               <div class="form-group col-xs-6">
-                <label for="dob" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
-                <div>
+                <label for="dob bootstrapDatePicker" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
+                <!--<div>
                   <input id="dob datePicker" kendo-date-picker
                     k-options="update.kendoDateOptions"
                     k-format="'MM/dd/yyyy'"
@@ -277,12 +277,14 @@
                     autocomplete="off"
                     data-ng-readonly="update.readOnlyProp"
                    class="form-control input kendo-date datePicker" name="dob" ng-pattern="update.regex.DateOfBirth" ng-model="update.currentData.DateOfBirth" required/>
-                </div>
+                </div>-->
+
+            <div class="input-group date" data-provide="datepicker">
+              <input type="text" class="form-control datepicker" id="bootstrapDatePicker" placeholder="MM/DD/YYYY">
+            </div>
+                
               </div>
 
-              <div>
-                <input data-provide="datepicker">
-              </div>
 
               <!-- EMAIL -->
               <div class="form-group col-xs-12 col-md-6">
