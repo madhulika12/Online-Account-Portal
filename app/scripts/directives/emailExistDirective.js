@@ -37,7 +37,7 @@ angular.module('ssoApp')
 
     $http
           // .get('https://mws.stage.kroll.com/api/v1/member/email-userid/exist?emailUserId=' + ctrl.$viewValue)
-          .get('https://auth-api.stage.kroll.com/api/v1/member/email-userid/exist?emailUserId=' + ctrl.$viewValue)
+          .get('https://auth-api.charlie.kroll.com/api/v1/member/email-userid/exist?emailUserId=' + ctrl.$viewValue)
           .then(resolve, reject)
     }
 
