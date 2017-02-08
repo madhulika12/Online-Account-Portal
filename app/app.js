@@ -32,12 +32,8 @@ angular
     views: {
       'header': {
         templateUrl: 'appFiles/header/header.html',
-        controller: function ($scope, loadBrandingService, contentService) {
-          $scope.styles = loadBrandingService.getStyles();
-          $scope.clientContent = contentService.getMultiClientContent();
-          $scope.sessionTimeout = loadBrandingService.sessionTimeout()
-          console.log($scope.sessionTimeout)
-        }
+        controller: 'headerCtrl',
+        controllerAs: 'header',
       },
       'view': {
         template: '',
@@ -264,10 +260,10 @@ angular
   })
  // this block below removes the hash tag from angular urls
 
-//   $locationProvider.html5Mode({
-//     enabled: true,
-//     requireBase: false
-//   });
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
 })
 
 .run(function ($rootScope) {
