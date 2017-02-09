@@ -11,7 +11,7 @@ angular.module('ssoApp')
   console.log("Header Ctrl");
 
   self.homeLink = '/#/login';
-  self.logoLink = 'https://imc2-staging2.csid.com/login?RTN=90000013';
+  self.logoLink = 'https://imc2-staging2.csid.com/login?RTN=';
 
   self.changeHref = function() {
 
