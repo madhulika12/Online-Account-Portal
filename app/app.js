@@ -46,9 +46,8 @@ angular
       },
       'footer': {
         templateUrl: 'appFiles/footer/footer.html',
-        controller: function ($scope, loadBrandingService) {
-          console.log("View controller")
-        }
+        controller: 'footerCtrl',
+        controllerAs: 'footer'
       },
     },
   })
