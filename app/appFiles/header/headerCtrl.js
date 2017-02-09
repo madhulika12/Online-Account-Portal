@@ -13,6 +13,8 @@ angular.module('ssoApp')
   self.homeLink = '/#/login';
   self.logoLink = 'https://imc2-staging2.csid.com/login?RTN=';
 
+  $scope.interchangableComponents = contentService._content;
+
   self.changeHref = function() {
 
     self.logoLink = getClient();

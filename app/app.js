@@ -247,6 +247,17 @@ angular
           }
       }
   })
+
+  .state('Set Password Success', {
+      url: 'set-password-success',
+      parent: 'user',
+      views: {
+          'view@': {
+              templateUrl: 'appFiles/setPasswordSuccess/setPasswordSuccess.html'
+          }
+      }
+  })
+
   .state('Update Email Address', {
       url: 'account/update-email',
       parent: 'user',
@@ -260,10 +271,10 @@ angular
   })
  // this block below removes the hash tag from angular urls
 
-//   $locationProvider.html5Mode({
-//     enabled: true,
-//     requireBase: false
-//   });
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
 })
 
 .run(function ($rootScope) {

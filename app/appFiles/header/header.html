@@ -8,16 +8,16 @@
             <span class="icon-bar"></span>
           </button>
 
-          <a href="{{header.logoLink}}" >
+          <a href="{{interchangableComponents.clientUrl}}" >
           <!--<a>-->
-            <img ng-attr-src="{{styles.logo}}" class="navbar-brand" ng-click="header.changeHref()"/>
+            <img ng-attr-src="{{styles.logo}}" class="navbar-brand"/>
           </a>
           <!--<a href="https://imc2-staging2.csid.com/login?RTN=90000013"><img ng-attr-src="{{styles.logo}}" class="navbar-brand" ng-click="header.changeHref()"/></a>-->
       </div>
 
       <div class="collapse navbar-collapse" data-ng-controller="headerCtrl as header">
         <ul class="nav navbar-nav navbar-right" id="header">
-          <li><a href="{{header.logoLink}}" class="headerLinks navbar-link" ng-click="header.changeHref()">Home</a></li>
+          <li><a href="{{interchangableComponents.clientUrl}}" class="headerLinks navbar-link">Home</a></li>
           <li><a href="/#/contact-us" class="headerLinks navbar-link">Contact Us</a></li>
         </ul>
       </div>
