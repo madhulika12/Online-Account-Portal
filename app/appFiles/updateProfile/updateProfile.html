@@ -269,8 +269,8 @@
               <!-- DOB -->
               <div class="form-group col-xs-6">
                 <label for="dob bootstrapDatePicker" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
-                <!--<div>
-                  <input id="dob datePicker" kendo-date-picker
+                <!--<div>-->
+                  <!--<input id="dob datePicker" kendo-date-picker
                     k-options="update.kendoDateOptions"
                     k-format="'MM/dd/yyyy'"
                     placeholder="MM/DD/YYYY"
@@ -280,7 +280,7 @@
                 </div>-->
 
             <div class="input-group date" data-provide="datepicker">
-              <input type="text" class="form-control datepicker" id="bootstrapDatePicker" placeholder="MM/DD/YYYY">
+              <input type="text" class="form-control datepicker" id="bootstrapDatePicker" placeholder="MM/DD/YYYY" data-ng-click="setAsReadOnly">
             </div>
                 
               </div>

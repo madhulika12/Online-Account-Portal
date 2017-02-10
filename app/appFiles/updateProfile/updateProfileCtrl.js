@@ -102,6 +102,8 @@ angular.module('ssoApp')
       self.setUpdatedDataAsOld()
       self.elemVal = db.email;
 
+      db.dob ? document.getElementById("bootstrapDatePicker").readOnly = true : document.getElementById("bootstrapDatePicker").readOnly = false;
+
       self.checkCookie();
     }
   }
@@ -373,7 +375,24 @@ angular.module('ssoApp')
         //     .then(self.success, self.error)
         // };
 
+    $(document).ready(function() {
+      // $("#datePicker").kendoDatePicker();
+      // var datePick = $('#datePicker').data('kendoDatePicker');
+      // datePick.readonly();
+        $('#bootstrapDatePicker').datetimepicker({
+          format: 'MM/DD/YYYY'
+        });    
+
+      // $('#bootstrapDatePicker').prop('disabled', true);  
+    })
+
+    // $('#bootstrapDatePicker').prop('disabled', true);  
+
         $scope.interchangableComponents = contentService._content;
+
+        self.setAsReadOnly = function() {
+          document.getElementById("bootstrapDatePicker").readOnly = true;
+        }
 
     self.populateAntiForgeryToken();
 
