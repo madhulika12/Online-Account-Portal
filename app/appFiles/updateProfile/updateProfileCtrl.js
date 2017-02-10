@@ -124,7 +124,7 @@ angular.module('ssoApp')
     if (self.setReturnedData.DateOfBirth) {
       console.log("setReadOnly if");
       self.readOnlyProp = true;
-      document.getElementById("bootstrapDatePicker").setAttribute("id", "greyOutDob");
+      document.getElementById("datePicker").classList.add("greyOutDob");
     }
   }
 
