@@ -102,11 +102,15 @@ angular.module('ssoApp')
       self.setUpdatedDataAsOld()
       self.elemVal = db.email;
 
+      // console.log("Date picker value");
+      // console.log(document.getElementById("bootstrapDatePicker").value);
+
       self.checkCookie();
     }
   }
 
   self.setUpdatedDataAsOld = function () {
+    console.log("setUpdatedDataAsOld");
     angular.copy(self.setReturnedData, self.currentData)
     self.setReadOnly();
   }
@@ -116,8 +120,11 @@ angular.module('ssoApp')
       };
 
   self.setReadOnly = function() {
+    console.log("setReadOnly");  
     if (self.setReturnedData.DateOfBirth) {
+      console.log("setReadOnly if");
       self.readOnlyProp = true;
+      document.getElementById("bootstrapDatePicker").setAttribute("id", "greyOutDob");
     }
   }
 
@@ -130,16 +137,26 @@ angular.module('ssoApp')
           console.log(document.getElementsByClassName("datePicker").namedItem("dob"));
        };
 
-       ($timeout, function() {
-        console.log("DOM content Loaded");
-        console.log(document.getElementById('bootstrapDatePicker'));
-       }, 5000);
+      //  setTimeout(self.setReadOnly(), 5000);
+
+      //  ($timeout, function() {
+      //   console.log("DOM content Loaded");
+      //   console.log(document.getElementById('bootstrapDatePicker'));
+      //   var datePick = document.getElementById("bootstrapDatePicker");
+      //   datePick.value ? datePick.readOnly = true : datePick.readOnly = false;
+      //  }, 5000);
 
        $(document).ready(function() {
-         var datePick = document.getElementById("bootstrapDatePicker");
-         datePick.value ? datePick.readOnly = true : datePick.readOnly = false;
+         
     })
   }
+
+  // self.setReadOnly = function() {
+  //   console.log("DOM content Loaded");
+  //   console.log(document.getElementById('bootstrapDatePicker'));
+    // var datePick = document.getElementById("bootstrapDatePicker");
+    // datePick.value ? datePick.readOnly = true : datePick.readOnly = false;   
+  // };
 
   self.showElem = function() {
     console.log("showElem");
@@ -383,7 +400,7 @@ angular.module('ssoApp')
       // var datePick = $('#datePicker').data('kendoDatePicker');
       // datePick.readonly();
         $('#bootstrapDatePicker').datetimepicker({
-          format: 'MM/DD/YYYY'
+          format: 'YYYY/MM/DD'
         });    
 
       // $('#bootstrapDatePicker').prop('disabled', true);  
