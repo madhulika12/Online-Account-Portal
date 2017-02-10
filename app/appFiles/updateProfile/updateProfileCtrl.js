@@ -102,8 +102,6 @@ angular.module('ssoApp')
       self.setUpdatedDataAsOld()
       self.elemVal = db.email;
 
-      db.dob ? document.getElementById("bootstrapDatePicker").readOnly = true : document.getElementById("bootstrapDatePicker").readOnly = false;
-
       self.checkCookie();
     }
   }
@@ -136,6 +134,11 @@ angular.module('ssoApp')
         console.log("DOM content Loaded");
         console.log(document.getElementById('bootstrapDatePicker'));
        }, 5000);
+
+       $(document).ready(function() {
+         var datePick = document.getElementById("bootstrapDatePicker");
+         datePick.value ? datePick.readOnly = true : datePick.readOnly = false;
+    })
   }
 
   self.showElem = function() {
