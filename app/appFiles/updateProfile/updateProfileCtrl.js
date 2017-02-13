@@ -124,7 +124,17 @@ angular.module('ssoApp')
     if (self.setReturnedData.DateOfBirth) {
       console.log("setReadOnly if");
       self.readOnlyProp = true;
+      console.log(document.getElementById("date"));
+      document.getElementById("date").classList.add("greyOutDob");
       document.getElementById("datePicker").classList.add("greyOutDob");
+    }
+
+    var all = document.getElementsByTagName("input");
+
+    for (var i=0, max=all.length; i < max; i++) {
+      console.log("Inside setreadonly for");
+      console.log(all[i]);
+     // Do something with the element here
     }
   }
 
