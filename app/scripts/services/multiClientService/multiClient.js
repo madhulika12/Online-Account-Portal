@@ -6,7 +6,7 @@ angular.module('ssoApp')
             self.data = {
                 ClientUrl: getUrl()
                 // AntiForgeryTokenID: null
-            }
+            };
 
             var functions =  {
             deferred : deferred,
@@ -52,13 +52,13 @@ angular.module('ssoApp')
                 $http.post('https://auth-api.stage.kroll.com/api/v1/client/content', {'ClientUrl': getUrl()})
                 //  $http.post('https://mws.charlie.kroll.com/api/v1/client/content', {'ClientUrl': getUrl()})
                    .then(function (res) {
-                        lbs._setContent(res)
-                        lbs.deferred.resolve(res)
+                        lbs._setContent(res);
+                        lbs.deferred.resolve(res);
                     }, function (err) {
-                        lbs._setDefault()
-                        lbs.deferred.resolve(err)
+                        lbs._setDefault();
+                        lbs.deferred.resolve(err);
                     })
-                    return this.promise
+                    return this.promise;
                 }
             }
 

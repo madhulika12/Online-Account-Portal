@@ -7,15 +7,15 @@ angular.module('ssoApp')
     LoginSourceId : Constants.loginSourceId,
     AntiForgeryTokenId: null,
     ClientUrl : getUrl()
-  }
+  };
 
   self.forgotPassConfirmData = {
     Username : null
-  }
+  };
 
   self.regex = {
     username : Constants.regexs.username
-  }
+  };
 
   self.responseBoxConfig = {
     message : null,
@@ -84,9 +84,9 @@ angular.module('ssoApp')
   // }
 
 
-  self.showModal()
+  self.showModal();
 
-  self.populateAntiForgeryToken()
+  self.populateAntiForgeryToken();
 
 
 

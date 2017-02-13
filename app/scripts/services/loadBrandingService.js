@@ -1,7 +1,7 @@
 angular.module('ssoApp')
 .service('loadBrandingService', ['antiForgeryToken', '$http', '$location', '$q', 'Constants', 'getUrl', 'httpService', function (antiForgeryToken, $http, $location, $q, Constants, getUrl, httpService) {
 
-    var deferred = $q.defer()
+    var deferred = $q.defer();
     var idleTime = 0;
 
     var functions =  {
@@ -27,11 +27,11 @@ angular.module('ssoApp')
       _defaultStyles : Constants.defaultStyles,
 
       getStyleSheetPromise : function () {
-        return this.promise
+        return this.promise;
       },
 
       getStyles : function () {
-        return this._styles
+        return this._styles;
       },
 
       getPingURL : function() {
@@ -39,13 +39,13 @@ angular.module('ssoApp')
       },
 
       getBaseUrl : function () {
-        return getUrl()
+        return getUrl();
       },
 
       _setStyles : function (data) {
         antiForgeryToken.setAntiForgeryToken(data);
         if (data.data.errorType === 404 || !data.data.responseObject) {
-          this._setDefault()
+          this._setDefault();
         } else {
           this._styles = data.data.responseObject;
         }
@@ -54,13 +54,12 @@ angular.module('ssoApp')
       _setMultiContent : function (data) {
         antiForgeryToken.setAntiForgeryToken(data);
         if (data.data.errorType === 404 || !data.data.responseObject) {
-          this._setDefault()
+          this._setDefault();
         } else {
           this.content = data.data.responseObject;
         }
       },
       
-
       setContent : function() {
         return this.content;
       },
@@ -83,24 +82,24 @@ angular.module('ssoApp')
       },
 
       getStyleSheetPath : function () {
-        var lbs = this
-        var currentUrl = lbs.getBaseUrl()
+        var lbs = this;
+        var currentUrl = lbs.getBaseUrl();
 
         $http
           .get('https://auth-api.stage.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
           // .get('https://mws.charlie.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
           .then(function (res) {
-            lbs._setStyles(res)
-            lbs.deferred.resolve(res)
+            lbs._setStyles(res);
+            lbs.deferred.resolve(res);
           }, function (err) {
-            lbs._setDefault()
-            lbs.deferred.resolve(err)
+            lbs._setDefault();
+            lbs.deferred.resolve(err);
           })
-        return this.promise
+        return this.promise;
       },
 
         sessionTimeout : function() {
-          console.log("In session timeout function")
+          console.log("In session timeout function");
             $(document).ready(function () {
           //Increment the idle time counter every minute.
           // timerIncrement()
@@ -120,10 +119,10 @@ angular.module('ssoApp')
           idleTime = idleTime + 1;
           if (idleTime > 2) { // 20 minutes
               // window.location.assign('https://idshieldstage.mysecuredashboard.com/login');
-          }
+          };
       }
-    }
+    };
 
     return functions;
 
-}])
+}]);
