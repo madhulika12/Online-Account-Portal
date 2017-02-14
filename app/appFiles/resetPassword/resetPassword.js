@@ -1,6 +1,6 @@
 'use strict';
 angular.module('ssoApp')
-    .controller('resetPasswordCtrl', ['antiForgeryToken','tokenStorageService', '$http','$scope', 'Constants', 'httpService', '$state', 'loadBrandingService', 'tokenValidationService', 'displayResponseBox', 'getUrl',  function(antiForgeryToken, tokenStorageService, $http, $scope, Constants, httpService, $state, loadBrandingService, tokenValidationService, displayResponseBox, getUrl) {
+    .controller('resetPasswordCtrl', ['contentService','$window','antiForgeryToken','tokenStorageService', '$http','$scope', 'Constants', 'httpService', '$state', 'loadBrandingService', 'tokenValidationService', 'displayResponseBox', 'getUrl',  function(contentService, $window, antiForgeryToken, tokenStorageService, $http, $scope, Constants, httpService, $state, loadBrandingService, tokenValidationService, displayResponseBox, getUrl) {
 
         var self = this;
 
@@ -46,6 +46,8 @@ angular.module('ssoApp')
           display : false
         }
 
+        $scope.interchangableComponents = contentService._content;
+
         // FUNCTIONS TO SET THE PASSWORD
         //***************************************************
 
@@ -77,7 +79,10 @@ angular.module('ssoApp')
         self.showResetModal = function () {
           $('#password-reset-expired-modal').modal('show')
           $('#password-reset-expired-modal').on('hidden.bs.modal', function () {
-            $state.go('invalid');
+            // $state.go('invalid');
+            var csidLogin = "http://" + $scope.interchangableComponents.clientUrl;
+            $window.location.href = csidLogin;
+            // window.location.href($scope.interchangableComponents.clientUrl);
           })
         }
 
