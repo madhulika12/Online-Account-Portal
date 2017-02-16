@@ -102,7 +102,7 @@ angular.module('ssoApp')
           .catch(self.showResetModal)
 
       self.populateAntiForgeryToken = function(res) {
-            console.log("Antiforgery" + res);
+            // console.log("Antiforgery" + res);
             self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
             self.checkCookie();
           }

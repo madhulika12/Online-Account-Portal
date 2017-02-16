@@ -41,7 +41,7 @@ angular.module('ssoApp')
   };
 
   self.populateAntiForgeryToken = function(res) {
-    console.log("Antiforgery" + res);
+    // console.log("Antiforgery" + res);
     self.forgotPassData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
   };
 
@@ -61,7 +61,7 @@ angular.module('ssoApp')
   self.dismissToRecoverAccount = function () {
 
     $('#havingTroubleModal').one('hidden.bs.modal', function () {
-      console.log("dismissToRecoverAccount triggered");
+      // console.log("dismissToRecoverAccount triggered");
       $state.go('Recover Account');
     });
     $('#havingTroubleModal').modal('hide');

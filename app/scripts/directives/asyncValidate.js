@@ -34,23 +34,23 @@ angular.module('ssoApp')
 
         var inputCtrlVal = ctrl.$modelValue;
         var inputCtrlVal1 = inputCtrlVal;
-        console.log('async validating')
+        // console.log('async validating')
         var deferred = $q.defer()
 
         var resolve = function (res) {
-          console.log('existance based sucesss', res)
-          console.log(ctrl);
+          // console.log('existance based sucesss', res)
+          // console.log(ctrl);
           deferred.resolve(res)
         }
 
         var reject = function (err) {
-          console.log('existance based rejection', err)
+          // console.log('existance based rejection', err)
           deferred.reject(err)
         }
 
       // if(ctrl.$dirty == true) {
       //   if(elem3 != ctrl.$viewValue) {
-          console.log("InputCtrlVal " + inputCtrlVal);
+          // console.log("InputCtrlVal " + inputCtrlVal);
           httpService[ attrs['asyncValidate'] ](data)
             .then(resolve, reject)
         //  }

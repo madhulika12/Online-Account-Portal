@@ -45,7 +45,7 @@ angular.module('ssoApp')
   }
 
   self.invalidTokenError = function(err) {
-    console.log("Invalid TOken Error");
+    // console.log("Invalid TOken Error");
     // var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error.";var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error."
     var message = "Your session has expired, please enter your username and password to continue the activation process."
     displayResponseBox.setMessage(message, true)
@@ -61,18 +61,18 @@ angular.module('ssoApp')
   }
 
   self.incorrectError = function (event) {
-    console.log("Error");
+    // console.log("Error");
   }
 
   self.populateId = function (res) {
-    console.log("In success");
+    // console.log("In success");
     self.data.SessionId = tokenValidationService.getToken();
     tokenStorageService.setToken(self.data.SessionId);
     // self.data.MemberId = res.data.responseObject.id
   }
 
   self.populateAntiForgeryToken = function(res) {
-    console.log("Antiforgery" + res);
+    // console.log("Antiforgery" + res);
     antiForgeryToken.setAntiForgeryToken(res);
     self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
 

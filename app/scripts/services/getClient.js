@@ -3,17 +3,17 @@ angular.module('ssoApp')
   return function () {
      var host = $location.host();
     //  host = 'idshieldstage.mysecuredashboard.com'
-     console.log(host);
+    //  console.log(host);
 
      var regex = /idshield/;
     //  var regexMatch = host.match(regex);
      var regexTest = regex.test(host);
 
-     console.log(regexTest);
+    //  console.log(regexTest);
 
     // var regexMatch = true;
 
-     console.info("regexmatch");
+    //  console.info("regexmatch");
     //  console.log(regexMatch);
 
     //  var host = $location.absUrl();
@@ -21,11 +21,11 @@ angular.module('ssoApp')
 
     if(regexTest) {
         var idshieldLink = 'https://imc2-staging2.csid.com/login?RTN=90000013'; 
-        console.log(idshieldLink);
+        // console.log(idshieldLink);
         return idshieldLink;
     } else {
         var primericaLink = 'https://imc2-staging2.csid.com/login?RTN=90000151'; 
-        console.log(primericaLink);
+        // console.log(primericaLink);
         return primericaLink;
     }
     // return regexTest ? 'https://imc2-staging2.csid.com/login?RTN=90000013' : 'https://imc2-staging2.csid.com/login?RTN=90000151';

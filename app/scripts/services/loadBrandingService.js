@@ -71,7 +71,7 @@ angular.module('ssoApp')
                 httpService.content(this.data)
                     .then(function (res) {
                       lbs._setMultiContent(res);
-                      console.info("In httpService");
+                      // console.info("In httpService");
                     }, function (err) {
               
                     })
@@ -86,7 +86,7 @@ angular.module('ssoApp')
         var currentUrl = lbs.getBaseUrl();
 
         $http
-          .get('https://auth-api.charlie.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
+          .get('https://auth-api.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
           // .get('https://mws.charlie.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
           .then(function (res) {
             lbs._setStyles(res);
@@ -99,7 +99,7 @@ angular.module('ssoApp')
       },
 
         sessionTimeout : function() {
-          console.log("In session timeout function");
+          // console.log("In session timeout function");
             $(document).ready(function () {
           //Increment the idle time counter every minute.
           // timerIncrement()

@@ -3,7 +3,7 @@
 angular.module('ssoApp')
   .controller('browserCtrl', ['$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService',function($scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService) {
 
-    console.log("Inside browserCtrl.js");
+    // console.log("Inside browserCtrl.js");
 
       var self = this;
 
@@ -13,7 +13,7 @@ angular.module('ssoApp')
 
       self.checkCookie();
 
-      console.log(document.getElementById('bootstrapDatePicker'));
+      // console.log(document.getElementById('bootstrapDatePicker'));
 
   $(document).ready(function() {
       $('#bootstrapDatePicker').datetimepicker({

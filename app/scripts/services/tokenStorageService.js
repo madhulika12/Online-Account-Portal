@@ -1,34 +1,34 @@
 angular.module('ssoApp')
 .service('tokenStorageService', ['$cookies', 'Constants', function ($cookies, Constants) {
   //I created this as a service to manage cookies, but if we're using http only cookies then we can't touch them from  the Javascript at all.
-  var self = this
-  var options = {}
+  var self = this;
+  var options = {};
 
   var optionsFifteen = function () {
-    var opt = {}
-    var fifteenAhead = self.now() + Constants.fifteenMinutes
+    var opt = {};
+    var fifteenAhead = self.now() + Constants.fifteenMinutes;
     // var fifteenAhead = self.now() + Constants.twoMinutes
-    opt.expires = new Date(fifteenAhead)
-    return opt
-  }
+    opt.expires = new Date(fifteenAhead);
+    return opt;
+  };
 
   var refreshOptions = function () {
-    var opt = angular.copy(options)
-    var refreshAhead1 = self.now()
-    var refreshAhead2 = refreshAhead1 + Constants.fifteenMinutes
+    var opt = angular.copy(options);
+    var refreshAhead1 = self.now();
+    var refreshAhead2 = refreshAhead1 + Constants.fifteenMinutes;
 
     // var fifteenAhead = self.now() + Constants.twoMinutes
-    opt.expires = new Date(refreshAhead2)
-    return opt
-  }
+    opt.expires = new Date(refreshAhead2);
+    return opt;
+  };
 
   self.now = function () {
-    return Date.now()
-  }
+    return Date.now();
+  };
 
   self.refreshCookie = function () {
-    var token = self.getToken()
-    self.refreshToken(token)
+    var token = self.getToken();
+    self.refreshToken(token);
   }
 
   self.refreshToken = function (token) {
@@ -36,8 +36,8 @@ angular.module('ssoApp')
   }
 
   self.setToken = function (token) {
-    console.log("set token");
-    var opt = optionsFifteen()
+    // console.log("set token");
+    var opt = optionsFifteen();
     // document.cookie = "myCookie=" + JSON.stringify({foo: 'bar', baz: 'poo'});
     // document.cookie = "Kroll=" + JSON.stringify({ssoSessionId: token});
     // document.cookie = "Kroll1=myvalue";
@@ -56,10 +56,10 @@ angular.module('ssoApp')
   }
 
   self.getToken = function () {
-    return $cookies.get(Constants.tokenCookieKey)
+    return $cookies.get(Constants.tokenCookieKey);
   }
 
   self.deleteToken = function () {
-    $cookies.remove(Constants.tokenCookieKey)
-  }
+    $cookies.remove(Constants.tokenCookieKey);
+  };
 }])

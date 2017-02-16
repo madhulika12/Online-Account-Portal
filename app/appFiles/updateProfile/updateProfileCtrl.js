@@ -110,7 +110,7 @@ angular.module('ssoApp')
   }
 
   self.setUpdatedDataAsOld = function () {
-    console.log("setUpdatedDataAsOld");
+    // console.log("setUpdatedDataAsOld");
     angular.copy(self.setReturnedData, self.currentData)
     self.setReadOnly();
   }
@@ -120,11 +120,11 @@ angular.module('ssoApp')
       };
 
   self.setReadOnly = function() {
-    console.log("setReadOnly");  
+    // console.log("setReadOnly");  
     if (self.setReturnedData.DateOfBirth) {
-      console.log("setReadOnly if");
+      // console.log("setReadOnly if");
       self.readOnlyProp = true;
-      console.log(document.getElementById("date"));
+      // console.log(document.getElementById("date"));
       document.getElementById("date").classList.add("greyOutDob");
       document.getElementById("datePicker").classList.add("greyOutDob");
     }
@@ -132,8 +132,8 @@ angular.module('ssoApp')
     var all = document.getElementsByTagName("input");
 
     for (var i=0, max=all.length; i < max; i++) {
-      console.log("Inside setreadonly for");
-      console.log(all[i]);
+      // console.log("Inside setreadonly for");
+      // console.log(all[i]);
      // Do something with the element here
     }
   }
@@ -142,9 +142,9 @@ angular.module('ssoApp')
     self.mode = 'edit';
 
        if (document.readyState === 'complete'){
-          console.log("On load");
+          // console.log("On load");
           window.setTimeout(self.showElem, 1000);
-          console.log(document.getElementsByClassName("datePicker").namedItem("dob"));
+          // console.log(document.getElementsByClassName("datePicker").namedItem("dob"));
        };
 
       //  setTimeout(self.setReadOnly(), 5000);
@@ -169,8 +169,8 @@ angular.module('ssoApp')
   // };
 
   self.showElem = function() {
-    console.log("showElem");
-    console.log(document.getElementById('bootstrapDatePicker'));
+    // console.log("showElem");
+    // console.log(document.getElementById('bootstrapDatePicker'));
 
     $('#bootstrapDatePicker').datetimepicker({
           format: 'MM/DD/YYYY'
@@ -321,8 +321,8 @@ angular.module('ssoApp')
   self.populateAntiForgeryToken = function(res) {
 
 
-    console.log("Antiforgery" + res);
-    console.info("populateAntiForgeryToken");
+    // console.log("Antiforgery" + res);
+    // console.info("populateAntiForgeryToken");
     // console.dir(loadbrandingservice)
     
     // self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
@@ -351,7 +351,7 @@ angular.module('ssoApp')
   }
 
   self.emailExists = function() {
-    console.log("Exists");
+    // console.log("Exists");
 
     // if (!document.getElementById("updateProfileSave").hasAttribute("disabled")) {
       document.getElementById("updateProfileSave").setAttribute("disabled", "disabled");
@@ -363,9 +363,9 @@ angular.module('ssoApp')
   }
 
   self.emailAvailable = function() {
-    console.log("Doesn't Exists");
-    console.log(document.getElementById("updateProfileSave").classList.contains("EmailExists"));
-    console.log(document.getElementById("updateProfileSave").hasAttribute("disabled"));
+    // console.log("Doesn't Exists");
+    // console.log(document.getElementById("updateProfileSave").classList.contains("EmailExists"));
+    // console.log(document.getElementById("updateProfileSave").hasAttribute("disabled"));
 
      document.getElementById("updateProfileSave").classList.remove("EmailExists");
 
@@ -387,11 +387,11 @@ angular.module('ssoApp')
             .then(self.setData, self.error)
 
             if (document.readyState === 'complete') {
-              console.info("Inside ready state");
-              console.log(document.getElementById('bootstrapDatePicker'));
+              // console.info("Inside ready state");
+              // console.log(document.getElementById('bootstrapDatePicker'));
             }
 
-            console.log(document.getElementById('bootstrapDatePicker'));
+            // console.log(document.getElementById('bootstrapDatePicker'));
 
     // document.getElementsByClassName('datepicker')[0].datepicker({
     //     format: 'mm/dd/yyyy',

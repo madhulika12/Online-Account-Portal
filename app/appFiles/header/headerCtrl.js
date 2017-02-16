@@ -8,7 +8,7 @@ angular.module('ssoApp')
           // $scope.clientContent = contentService.getMultiClientContent();
           $scope.sessionTimeout = loadBrandingService.sessionTimeout()
 
-  console.log("Header Ctrl");
+  // console.log("Header Ctrl");
 
   self.homeLink = '/#/login';
   self.logoLink = 'https://imc2-staging2.csid.com/login?RTN=';

@@ -2,7 +2,7 @@
 
 angular.module('ssoApp')
     .controller('sessionTimout', ['sessionService', 'httpService','displayResponseBox','$state','tokenStorageService', '$rootScope', 'loadBrandingService', '$http', '$scope', '$timeout', '$uibModal', '$location', function(sessionService, httpService, displayResponseBox, $state, tokenStorageService, $rootScope, loadBrandingService, $http, $scope, $timeout, $uibModal, $location) {
-        console.log("Outside");
+        // console.log("Outside");
 
         var self = this;
 
@@ -55,7 +55,7 @@ angular.module('ssoApp')
       }
 
     self.backToLoginRoute = function() {
-        console.log("In backtoLogin but outside event")
+        // console.log("In backtoLogin but outside event")
            $('#username-modal').modal('hide')
            $('.modal-backdrop').removeClass("modal-backdrop");
               $('body').removeClass('modal-open');
@@ -69,7 +69,7 @@ angular.module('ssoApp')
           self.idleTime = self.idleTime + 1;
           // if (self.idleTime > 15) { // 20 minutes
            if (self.idleTime > 14) { // 20 minutes
-              console.log($location.path());
+            //   console.log($location.path());
 
               if($location.path() == '/login') {
                 window.location.reload(true);
@@ -77,7 +77,7 @@ angular.module('ssoApp')
 
               self.backToLoginRoute()
           } else if (self.idleTime > 12) {
-              console.log("else of timerincrement " + self.idleTime)
+            //   console.log("else of timerincrement " + self.idleTime)
                   $timeout(function () {
                         self.showTimer = true;
                         $('#session-modal').modal('show')
