@@ -25,6 +25,14 @@ angular.module('ssoApp')
 
   $scope.interchangableComponents = contentService._content;
 
+  if(/false/.test($scope.interchangableComponents.popupStatus)){
+    $('div#havingTroubleModal').addClass('hide');
+    $('div#havingTroubleModal').removeClass('fade');
+    $('div#havingTroubleModal').attr('data-backdrop',"");
+
+  }
+
+
   self.forgotPassSuccess = function (res) {
     // console.log('havingTrouble.forgotPassSuccess res param', res)
     var message = (res.data && res.data.responseObject) ? res.data.responseObject : "A password recovery email was sent to your account.";

@@ -49,7 +49,7 @@ angular.module('ssoApp')
                 //     headers : { 'Content-Type' : 'application/x-www-form-urlencoded'}
                 // })
 
-                $http.post('https://auth-api.kroll.com/api/v1/client/content', {'ClientUrl': getUrl()})
+                $http.post('https://auth-api.charlie.kroll.com/api/v1/client/content', {'ClientUrl': getUrl()})
                 //  $http.post('https://mws.charlie.kroll.com/api/v1/client/content', {'ClientUrl': getUrl()})
                    .then(function (res) {
                         lbs._setContent(res);
