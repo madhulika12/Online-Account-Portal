@@ -20,8 +20,8 @@ angular.module('ssoApp')
 
   self.success = function (res) {
     antiForgeryToken.setAntiForgeryToken(res);
-    console.log("loadBrandingService.");
-    console.log(loadBrandingService.getPingURL());
+    // console.log("loadBrandingService.");
+    // console.log(loadBrandingService.getPingURL());
     $window.location.assign(loadBrandingService.getPingURL() + res.data.responseObject.pingToken);
   }
 
@@ -34,7 +34,7 @@ angular.module('ssoApp')
   self.acceptTerms = function (event) {
     event.preventDefault()
     $('.processingBtn').button('loading');
-    console.log("acceptTerms" + self.data);
+    // console.log("acceptTerms" + self.data);
     httpService.acceptTerms(self.data)
       .then(self.success, self.error)
       .finally(function () { $('.processingBtn').button('reset'); })
@@ -49,7 +49,7 @@ angular.module('ssoApp')
   //   .then(self.populateId)
   
   self.populateAntiForgeryToken = function(res) {
-    console.log("Antiforgery" + res);
+    // console.log("Antiforgery" + res);
     self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
       
     self.checkCookie();

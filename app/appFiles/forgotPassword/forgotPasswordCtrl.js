@@ -17,7 +17,7 @@ angular.module('ssoApp')
       username : null,
       LoginSourceID: null,
       AntiForgeryTokenId: null,
-      ClientUrl : 'https://idtheftdefensestage.mysecuredashboard.com/login'
+      ClientUrl : getUrl()
     }
 
     $rootScope.responseBox = {

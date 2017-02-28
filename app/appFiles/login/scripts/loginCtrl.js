@@ -74,12 +74,12 @@ angular.module('ssoApp')
         antiForgeryToken.setAntiForgeryToken(res);
       }
 
-       console.log(loadBrandingService._styles.pingURL);
+      //  console.log(loadBrandingService._styles.pingURL);
 
        self.loginSuccess = function (res) {
 
       if (res.data.errorType == 200) {
-        console.log("Login Success");
+        // console.log("Login Success");
         tokenStorageService.setToken(res.data.responseObject.sessionToken);
 
         if ( self.checkForTerms(res) ) {
@@ -89,8 +89,8 @@ angular.module('ssoApp')
           $location.url( res.data.responseObject.pingToken + "?token=" + res.data.responseObject.sessionToken )
        }
         else {
-          console.log(res.data.responseObject);
-          console.log(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
+          // console.log(res.data.responseObject);
+          // console.log(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
           $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
         }
       }
@@ -126,7 +126,7 @@ angular.module('ssoApp')
 
           self.populateAntiForgeryToken = function(res) {
             // $scope.interchangableComponents = loadBrandingService.getContent();
-            console.log("Antiforgery" + res);
+            // console.log("Antiforgery" + res);
             self.clearCookie();
             antiForgeryToken.setAntiForgeryToken(res);
             self.signUpData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
@@ -155,8 +155,8 @@ angular.module('ssoApp')
           .then(self.populateAntiForgeryToken, self.error);
         
 
-         console.info("interchangableComponents");
-         console.log(self.interchangableComponents);
+        //  console.info("interchangableComponents");
+        //  console.log(self.interchangableComponents);
  }]);
 
  // $scope.$on('$locationChangeStart', function (event, next, current) {

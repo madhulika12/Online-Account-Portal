@@ -32,27 +32,22 @@ angular
     views: {
       'header': {
         templateUrl: 'appFiles/header/header.html',
-        controller: function ($scope, loadBrandingService, contentService) {
-          $scope.styles = loadBrandingService.getStyles();
-          $scope.clientContent = contentService.getMultiClientContent();
-          $scope.sessionTimeout = loadBrandingService.sessionTimeout()
-          console.log($scope.sessionTimeout)
-        }
+        controller: 'headerCtrl',
+        controllerAs: 'header',
       },
       'view': {
         template: '',
         controller: function ($state, $scope) {
           $state.go('Sign In')
           $scope.test = "In the view controller";
-          console.info("View parent");
-          console.log($scope.test);
+        //   console.info("View parent");
+        //   console.log($scope.test);
         },
       },
       'footer': {
         templateUrl: 'appFiles/footer/footer.html',
-        controller: function ($scope, loadBrandingService) {
-          console.log("View controller")
-        }
+        controller: 'footerCtrl',
+        controllerAs: 'footer'
       },
     },
   })
@@ -133,8 +128,8 @@ angular
       views: {
           'view@': {
               templateUrl: 'appFiles/browser/browser.html',
-              controller: 'sessionTimout',
-              controllerAs: 'session'
+              controller: 'browserCtrl',
+              controllerAs: 'browser'
 
           }
       }
@@ -251,6 +246,17 @@ angular
           }
       }
   })
+
+  .state('Set Password Success', {
+      url: 'set-password-success',
+      parent: 'user',
+      views: {
+          'view@': {
+              templateUrl: 'appFiles/setPasswordSuccess/setPasswordSuccess.html'
+          }
+      }
+  })
+
   .state('Update Email Address', {
       url: 'account/update-email',
       parent: 'user',

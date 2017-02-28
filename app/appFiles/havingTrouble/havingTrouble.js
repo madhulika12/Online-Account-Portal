@@ -7,16 +7,15 @@ angular.module('ssoApp')
     LoginSourceId : Constants.loginSourceId,
     AntiForgeryTokenId: null,
     ClientUrl : getUrl()
-    // ClientUrl : 'https://idtheftdefensecharlie.mysecuredashboard.com/login'
-  }
+  };
 
   self.forgotPassConfirmData = {
     Username : null
-  }
+  };
 
   self.regex = {
     username : Constants.regexs.username
-  }
+  };
 
   self.responseBoxConfig = {
     message : null,
@@ -25,6 +24,14 @@ angular.module('ssoApp')
   };
 
   $scope.interchangableComponents = contentService._content;
+
+  if(/false/.test($scope.interchangableComponents.popupStatus)){
+    $('div#havingTroubleModal').addClass('hide');
+    $('div#havingTroubleModal').removeClass('fade');
+    $('div#havingTroubleModal').attr('data-backdrop',"");
+
+  }
+
 
   self.forgotPassSuccess = function (res) {
     // console.log('havingTrouble.forgotPassSuccess res param', res)
@@ -42,7 +49,7 @@ angular.module('ssoApp')
   };
 
   self.populateAntiForgeryToken = function(res) {
-    console.log("Antiforgery" + res);
+    // console.log("Antiforgery" + res);
     self.forgotPassData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
   };
 
@@ -62,7 +69,7 @@ angular.module('ssoApp')
   self.dismissToRecoverAccount = function () {
 
     $('#havingTroubleModal').one('hidden.bs.modal', function () {
-      console.log("dismissToRecoverAccount triggered");
+      // console.log("dismissToRecoverAccount triggered");
       $state.go('Recover Account');
     });
     $('#havingTroubleModal').modal('hide');
@@ -85,9 +92,9 @@ angular.module('ssoApp')
   // }
 
 
-  self.showModal()
+  self.showModal();
 
-  self.populateAntiForgeryToken()
+  self.populateAntiForgeryToken();
 
 
 

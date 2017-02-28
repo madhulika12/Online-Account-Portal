@@ -13,7 +13,7 @@
 
 angular.module('ssoApp')
 
-.controller('ActivationCtrl', ['Constants', '$state', '$window', 'httpService', function ( Constants, $state, $window, httpService){
+.controller('ActivationCtrl', ['getUrl', 'Constants', '$state', '$window', 'httpService', function (getUrl, Constants, $state, $window, httpService){
 
   var self = this;
 
@@ -21,7 +21,7 @@ angular.module('ssoApp')
     membershipNum : null,
     lastName : null,
     zip : null,
-    ClientUrl : 'https://idtheftdefensestage.mysecuredashboard.com/login'
+    ClientUrl : getUrl()
   }
 
   self.regex = {
