@@ -107,7 +107,7 @@ angular.module('ssoApp')
           console.log(modelCtrl);
 
           console.log("data");
-          console.log
+          console.log(data);
 
           modelCtrl.$setViewValue(data)
           modelCtrl.$render()
