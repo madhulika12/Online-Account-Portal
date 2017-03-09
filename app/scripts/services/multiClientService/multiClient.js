@@ -37,21 +37,33 @@ angular.module('ssoApp')
 
             getContent : function () {
                 var lbs = this;
-                // self.data.AntiForgeryTokenI/D = antiForgeryToken.getAntiForgeryToken();
-                // console.log(data);
+                // // self.data.AntiForgeryTokenI/D = antiForgeryToken.getAntiForgeryToken();
+                // // console.log(data);
 
-                // test.newAntiforgeryToken = antiForgeryToken.getAntiForgeryToken();
+                // // test.newAntiforgeryToken = antiForgeryToken.getAntiForgeryToken();
 
-                // $http({
-                //     method: 'POST',
-                //     url: 'https://mws.stage.kroll.com/api/v1/client/content',
-                //     data: self.data,
-                //     headers : { 'Content-Type' : 'application/x-www-form-urlencoded'}
-                // })
+                // // $http({
+                // //     method: 'POST',
+                // //     url: 'https://mws.stage.kroll.com/api/v1/client/content',
+                // //     data: self.data,
+                // //     headers : { 'Content-Type' : 'application/x-www-form-urlencoded'}
+                // // })
 
-                $http.post('https://auth-api.stage.kroll.com/api/v1/client/content', {'ClientUrl': getUrl()})
-                //  $http.post('https://mws.stage.kroll.com/api/v1/client/content', {'ClientUrl': getUrl()})
-                   .then(function (res) {
+               
+
+                // $http.post('https://auth-api.stage.kroll.com/api/v1/client/content', {'ClientUrl': getUrl()})
+                // //  $http.post('https://mws.stage.kroll.com/api/v1/client/content', {'ClientUrl': getUrl()})
+                //    .then(function (res) {
+                //         lbs._setContent(res);
+                //         lbs.deferred.resolve(res);
+                //     }, function (err) {
+                //         lbs._setDefault();
+                //         lbs.deferred.resolve(err);
+                //     })
+                //     return this.promise;
+
+                 httpService.content({'ClientUrl': getUrl()})
+                    .then(function (res) {
                         lbs._setContent(res);
                         lbs.deferred.resolve(res);
                     }, function (err) {

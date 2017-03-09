@@ -126,6 +126,10 @@ endpoints : {
 
     forgotPassword : function() {
                 return this.baseUrl + 'member/forgot-password';
+            },
+            
+    webpageAttrs : function() {
+                return this.baseUrl + 'vendor/webpage-attributes';
                 },
 
     content : function() {

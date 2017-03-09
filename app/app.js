@@ -278,7 +278,7 @@ angular
 
 .run(function ($rootScope, $location, $window) {
 
-    $window.ga('create', 'UA-47157105-34', 'auto');
+    $window.ga('create', 'UA-47157105-35', 'auto');
     
   $rootScope.$on('$stateChangeSuccess', function (event) {
       $window.ga('send', 'pageview', $location.path());
