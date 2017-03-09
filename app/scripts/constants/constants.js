@@ -5,8 +5,8 @@ angular.module('ssoApp')
   //endpoints
 
   loginSourceId : 2,
-//   portalBaseUrl : 'https://login.mysecuredashboard.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
-  portalBaseUrl : 'https://loginstage.mysecuredashboard.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
+  portalBaseUrl : 'https://login.mysecuredashboard.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
+//   portalBaseUrl : 'https://loginstage.mysecuredashboard.com/idp/startSSO.ping?PartnerSpId=sso:imc:90000013&REF=',
   tokenCookieKey : 'ssoSessionId',
   fifteenMinutes : 900000,
   refreshTime : 900,
@@ -80,7 +80,7 @@ angular.module('ssoApp')
 //   },
 
 endpoints : {
-    baseUrl: 'https://auth-api.stage.kroll.com/api/v1/',
+    baseUrl: 'https://auth-api.kroll.com/api/v1/',
 
     // baseUrl: 'https://mws.stage.kroll.com/api/v1/',
 
