@@ -85,9 +85,11 @@ angular.module('ssoApp')
         var lbs = this;
         var currentUrl = lbs.getBaseUrl();
 
-        $http
-          // .get('https://auth-api.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
-          .get('https://auth-api.charlie.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
+        // $http
+        //   // .get('https://auth-api.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
+          // .get('https://auth-api.stage.kroll.com/api/v1/vendor/webpage-attributes?url=' + currentUrl)
+
+      httpService.getStyles(currentUrl)
           .then(function (res) {
             lbs._setStyles(res);
             lbs.deferred.resolve(res);

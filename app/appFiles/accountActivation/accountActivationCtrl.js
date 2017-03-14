@@ -100,7 +100,7 @@ angular.module('ssoApp')
         btn.button('loading')
         setTimeout(function () {
             btn.button('reset')
-        }, 1000)
+        }, 3000)
 });
 
 

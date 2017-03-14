@@ -257,7 +257,8 @@
             <label for="membershipNum" class="form-control-label">MEMBERSHIP NUMBER<span class="required">*</span></label>
             <div class="">
               <input type="text" class="form-control input" autocomplete="off" name="membershipNum" ng-model="recover.recoveryData.MembershipNumber" required/>
-              <span uib-popover="Your IDShield membership number begins with 700, followed by 'm' or 's'." class="glyphicon glyphicon-question-sign tool-tip-icon" popover-placement="top-right" popover-trigger="'mouseenter'"></span>
+              <!--<span uib-popover="Your IDShield membership number begins with 700, followed by 'm' or 's'." class="glyphicon glyphicon-question-sign tool-tip-icon" popover-placement="top-right" popover-trigger="'mouseenter'"></span>-->
+              <span compile="interchangableComponents.tooltip" ></span>
             </div>
           </div>
 

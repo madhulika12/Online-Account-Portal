@@ -102,6 +102,13 @@ angular.module('ssoApp')
 
 
         self.setViewAndRender = function (modelCtrl, data) {
+
+          console.log("modelCtrl");
+          console.log(modelCtrl);
+
+          console.log("data");
+          console.log(data);
+
           modelCtrl.$setViewValue(data)
           modelCtrl.$render()
           modelCtrl.$validate()
@@ -109,9 +116,13 @@ angular.module('ssoApp')
 
         self.populateForm = function (res) {
           if (res && res.data && res.data.responseObject) {
-            var db = res.data.responseObject
+            var db = res.data.responseObject;
 
-            self.data.MemberId = db.id
+            self.data.MemberId = db.id;
+
+            console.log("Value of suffix");
+            console.log(db.suffix);
+
             self.setViewAndRender(self.form.Dob, db.dob)
             self.setViewAndRender(self.form.Phone, db.homePhone)
             self.setViewAndRender(self.form.FirstName, db.firstName)

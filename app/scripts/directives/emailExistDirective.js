@@ -35,10 +35,13 @@ angular.module('ssoApp')
 
     if(elem3 != ctrl.$viewValue) {
 
-    $http
-          // .get('https://mws.stage.kroll.com/api/v1/member/email-userid/exist?emailUserId=' + ctrl.$viewValue)
-          .get('https://auth-api.kroll.com/api/v1/member/email-userid/exist?emailUserId=' + ctrl.$viewValue)
-          .then(resolve, reject);
+       httpService.emailExist(ctrl.$viewValue)
+        .then(resolve, reject);
+
+    // $http
+    //       // .get('https://mws.stage.kroll.com/api/v1/member/email-userid/exist?emailUserId=' + ctrl.$viewValue)
+    //       .get('https://auth-api.stage.kroll.com/api/v1/member/email-userid/exist?emailUserId=' + ctrl.$viewValue)
+    //       .then(resolve, reject);
     };
 
       deferred.promise

@@ -140,6 +140,11 @@ angular.module('ssoApp')
       return this.request(con);
     },
 
+    getStyles : function (clientUrl) {
+      var con = this._buildConfigure('GET', Constants.endpoints.webpageAttrs(), { url : clientUrl});
+      return this.request(con);
+    },
+
     // getMember : function (data) {
     //   var con = this._buildConfigure('GET', Constants.endpoints.getMemberByToken, data)
     //   // console.log("Get Member");

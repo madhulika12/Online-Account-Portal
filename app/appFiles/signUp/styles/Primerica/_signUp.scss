@@ -1,0 +1,11 @@
+
+
+.help-box {
+  text-align: right;
+  & span {
+
+  }
+  & span a#phoneNum {
+      color: $footerBackgroundColor;
+  }
+}

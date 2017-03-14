@@ -270,14 +270,18 @@ angular
   })
  // this block below removes the hash tag from angular urls
 
-//   $locationProvider.html5Mode({
-//     enabled: true,
-//     requireBase: false
-//   });
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
 })
 
-.run(function ($rootScope) {
-  $rootScope.$on('$stateChangeSuccess', function () {
+.run(function ($rootScope, $location, $window) {
+
+    $window.ga('create', 'UA-47157105-35', 'auto');
+    
+  $rootScope.$on('$stateChangeSuccess', function (event) {
+      $window.ga('send', 'pageview', $location.path());
     document.body.scrollTop = 0;
   })
 

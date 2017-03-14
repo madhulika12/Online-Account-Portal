@@ -77,7 +77,7 @@ angular.module('ssoApp')
 
   self.callSecurityTokens = function() {
     //       $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-    //       // $http.get('https://mws.charlie.kroll.com/api/v1/security/tokens')
+    //       // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
     // .then(self.populateAntiForgeryToken, self.error);
     self.checkCookie();
   }
