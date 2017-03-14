@@ -196,7 +196,8 @@
           <button type='button' class='close' data-dismiss='modal'>
             <span>&times;</span>
           </button>
-          <h2 class='modal-title'>RECOVER ACCOUNT</h2>
+          <!--<h2 class='modal-title'>RECOVER ACCOUNT</h2>-->
+          <h2 class='modal-title' data-ng-bind-html="interchangableComponents.forgotUsernamePopupTitle"></h2>
         </div>
         <div class='modal-body'>
           <div>
@@ -204,7 +205,9 @@
 
             <p class="centered bold">{{recover.usernameData.Username}}</p>
 
-            <p>Our records indicate that you haven't logged in since June 1, 2016. You will need to reset your password in order to access your account. A password reset email has been sent to the email associated with your account.</p>
+            <p data-ng-bind-html="interchangableComponents.usernamePopup"></p>
+
+            <!--<p>Our records indicate that you haven't logged in since June 1, 2016. You will need to reset your password in order to access your account. A password reset email has been sent to the email associated with your account.</p>-->
           </div>
 
         </div>
@@ -223,11 +226,12 @@
 
   <div class="row">
     <div class="col-xs-12 col-md-6">
-      <div class="global-form-instructions">
-        <h2>FORGOT USERNAME</h2>
+      <div class="global-form-instructions" data-ng-bind-html="interchangableComponents.forgotUsernameViewText">
+        <!--<h2>FORGOT USERNAME</h2>
         <section>
           <p>For your security, please provide the following information so we can take you to your account.</p>
-        </section>
+        </section>-->
+
       </div>
     </div>
     <div class="col-xs-12 col-md-6">
@@ -253,7 +257,8 @@
             <label for="membershipNum" class="form-control-label">MEMBERSHIP NUMBER<span class="required">*</span></label>
             <div class="">
               <input type="text" class="form-control input" autocomplete="off" name="membershipNum" ng-model="recover.recoveryData.MembershipNumber" required/>
-              <span uib-popover="Your IDShield membership number begins with 700, followed by 'm' or 's'." class="glyphicon glyphicon-question-sign tool-tip-icon" popover-placement="top-right" popover-trigger="'mouseenter'"></span>
+              <!--<span uib-popover="Your IDShield membership number begins with 700, followed by 'm' or 's'." class="glyphicon glyphicon-question-sign tool-tip-icon" popover-placement="top-right" popover-trigger="'mouseenter'"></span>-->
+              <span compile="interchangableComponents.tooltip" ></span>
             </div>
           </div>
 

@@ -19,7 +19,7 @@
 @import "submitButton/submitButton";
 @import "../appFiles/footer/styles/footer";
 @import "../appFiles/updateEmail/styles/updateEmail";
-@import "../appFiles/signUp/signUp";
+@import "../appFiles/signUp/styles/signUp";
 @import "../appFiles/recoverAccount/styles/_recoverAccount.scss";
 @import "../appFiles/havingTrouble/styles/havingTrouble.scss";
 @import "../appFiles/termsAccept/styles/termsAccept.scss";
@@ -236,6 +236,10 @@ span.required {
 .global-form {
   padding: 10px 2%;
   margin-bottom: 15px;
+}
+
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+  display: none !important;
 }
 
 .global-form-instructions {

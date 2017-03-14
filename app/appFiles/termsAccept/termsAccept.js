@@ -1,12 +1,13 @@
 angular.module('ssoApp')
-.controller('termsAcceptanceCtrl', ['antiForgeryToken', 'Constants', 'tokenValidationService', 'httpService', 'displayResponseBox', '$window', 'tokenStorageService', '$http', function(antiForgeryToken, Constants, tokenValidationService, httpService, displayResponseBox, $window, tokenStorageService, $http){
+.controller('termsAcceptanceCtrl', ['antiForgeryToken', 'getUrl', 'Constants', 'tokenValidationService', 'httpService', 'displayResponseBox', '$window', 'tokenStorageService', '$http', 'loadBrandingService',function(antiForgeryToken, getUrl, Constants, tokenValidationService, httpService, displayResponseBox, $window, tokenStorageService, $http, loadBrandingService){
 
   var self = this;
 
   self.data = {
     LoginSourceId: 2,
     AntiForgeryTokenId: null,
-    sessionId: tokenStorageService.getToken()
+    sessionId: tokenStorageService.getToken(),
+    ClientUrl : getUrl()
   }
 
   self.TermsAccept = null;
@@ -19,7 +20,9 @@ angular.module('ssoApp')
 
   self.success = function (res) {
     antiForgeryToken.setAntiForgeryToken(res);
-    $window.location.assign(Constants.portalBaseUrl + res.data.responseObject.pingToken);
+    // console.log("loadBrandingService.");
+    // console.log(loadBrandingService.getPingURL());
+    $window.location.assign(loadBrandingService.getPingURL() + res.data.responseObject.pingToken);
   }
 
   self.error = function (err) {
@@ -31,7 +34,7 @@ angular.module('ssoApp')
   self.acceptTerms = function (event) {
     event.preventDefault()
     $('.processingBtn').button('loading');
-    console.log("acceptTerms" + self.data);
+    // console.log("acceptTerms" + self.data);
     httpService.acceptTerms(self.data)
       .then(self.success, self.error)
       .finally(function () { $('.processingBtn').button('reset'); })
@@ -46,7 +49,7 @@ angular.module('ssoApp')
   //   .then(self.populateId)
   
   self.populateAntiForgeryToken = function(res) {
-    console.log("Antiforgery" + res);
+    // console.log("Antiforgery" + res);
     self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
       
     self.checkCookie();

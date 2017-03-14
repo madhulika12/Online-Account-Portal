@@ -2,7 +2,7 @@
 
 angular.module('ssoApp')
     .controller('sessionTimout', ['sessionService', 'httpService','displayResponseBox','$state','tokenStorageService', '$rootScope', 'loadBrandingService', '$http', '$scope', '$timeout', '$uibModal', '$location', function(sessionService, httpService, displayResponseBox, $state, tokenStorageService, $rootScope, loadBrandingService, $http, $scope, $timeout, $uibModal, $location) {
-        console.log("Outside");
+        // console.log("Outside");
 
         var self = this;
 
@@ -55,29 +55,29 @@ angular.module('ssoApp')
       }
 
     self.backToLoginRoute = function() {
-        console.log("In backtoLogin but outside event")
+        // console.log("In backtoLogin but outside event")
            $('#username-modal').modal('hide')
            $('.modal-backdrop').removeClass("modal-backdrop");
               $('body').removeClass('modal-open');
               $('.modal-backdrop').remove();
                 displayResponseBox.setMessage("Your session has ended. To continue you must log back into the system with your current credentials.", true);
-                $state.go('login')
+                $state.go('Sign In')
             }
 
 
       function timerIncrement() {
           self.idleTime = self.idleTime + 1;
           // if (self.idleTime > 15) { // 20 minutes
-           if (self.idleTime > 2) { // 20 minutes
-              console.log($location.path());
+           if (self.idleTime > 14) { // 20 minutes
+            //   console.log($location.path());
 
               if($location.path() == '/login') {
                 window.location.reload(true);
               }
 
               self.backToLoginRoute()
-          } else if (self.idleTime > 13) {
-              console.log("else of timerincrement " + self.idleTime)
+          } else if (self.idleTime > 12) {
+            //   console.log("else of timerincrement " + self.idleTime)
                   $timeout(function () {
                         self.showTimer = true;
                         $('#session-modal').modal('show')

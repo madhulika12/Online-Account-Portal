@@ -1,6 +1,6 @@
 'use strict';
 angular.module('ssoApp')
-    .controller('resetPasswordCtrl', ['antiForgeryToken','tokenStorageService', '$http','$scope', 'Constants', 'httpService', '$state', 'loadBrandingService', 'tokenValidationService', 'displayResponseBox', 'getUrl',  function(antiForgeryToken, tokenStorageService, $http, $scope, Constants, httpService, $state, loadBrandingService, tokenValidationService, displayResponseBox, getUrl) {
+    .controller('resetPasswordCtrl', ['contentService','$window','antiForgeryToken','tokenStorageService', '$http','$scope', 'Constants', 'httpService', '$state', 'loadBrandingService', 'tokenValidationService', 'displayResponseBox', 'getUrl',  function(contentService, $window, antiForgeryToken, tokenStorageService, $http, $scope, Constants, httpService, $state, loadBrandingService, tokenValidationService, displayResponseBox, getUrl) {
 
         var self = this;
 
@@ -46,6 +46,8 @@ angular.module('ssoApp')
           display : false
         }
 
+        $scope.interchangableComponents = contentService._content;
+
         // FUNCTIONS TO SET THE PASSWORD
         //***************************************************
 
@@ -60,7 +62,7 @@ angular.module('ssoApp')
         self.successMessage = function(res) {
           // console.log('resetPassword.successMessage res params', res)
           displayResponseBox.setMessage("The password for your account was successfully reset. Please use the new password to log into the mobile app as well as the web portal.", false)
-          $state.go('login');
+          $state.go('Set Password Success');
           antiForgeryToken.setAntiForgeryToken(res);
         }
 
@@ -77,7 +79,10 @@ angular.module('ssoApp')
         self.showResetModal = function () {
           $('#password-reset-expired-modal').modal('show')
           $('#password-reset-expired-modal').on('hidden.bs.modal', function () {
-            $state.go('login')
+            // $state.go('invalid');
+            var csidLogin = "http://" + $scope.interchangableComponents.clientUrl;
+            $window.location.href = csidLogin;
+            // window.location.href($scope.interchangableComponents.clientUrl);
           })
         }
 
@@ -97,7 +102,7 @@ angular.module('ssoApp')
           .catch(self.showResetModal)
 
       self.populateAntiForgeryToken = function(res) {
-            console.log("Antiforgery" + res);
+            // console.log("Antiforgery" + res);
             self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
             self.checkCookie();
           }

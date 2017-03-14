@@ -28,6 +28,9 @@
   }
 }
 
+.greyOutDob {
+  color: #999 !important;
+}
 
 // #updateAccountH2 {
 //     margin-bottom: 3%
@@ -76,4 +79,8 @@
 .dashboardBtn a {
   text-decoration: none;
   color: white;
+}
+
+.appendToDom.existsError {
+  border-color: #A22B38;
 }

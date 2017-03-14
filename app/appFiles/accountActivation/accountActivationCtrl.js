@@ -1,12 +1,11 @@
 angular.module('ssoApp')
 
-.controller('AccountActivationCtrl', ['antiForgeryToken','loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', 'getUrl', function (antiForgeryToken, loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService, getUrl){
+.controller('AccountActivationCtrl', ['contentService','$scope','antiForgeryToken','loadBrandingService', '$http', 'Constants', '$state', '$window', 'httpService', 'displayResponseBox', 'tokenValidationService', 'tokenStorageService', 'getUrl', function (contentService, $scope, antiForgeryToken, loadBrandingService, $http, Constants, $state, $window, httpService, displayResponseBox, tokenValidationService, tokenStorageService, getUrl){
 
   var self = this;
 
   self.data = {
     SSN : null,
-    SessionId : null,
     Accept: false,
     AntiForgeryToken: null,
     ClientUrl : getUrl(),
@@ -46,11 +45,11 @@ angular.module('ssoApp')
   }
 
   self.invalidTokenError = function(err) {
-    console.log("Invalid TOken Error");
+    // console.log("Invalid TOken Error");
     // var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error.";var message = (err.data || !err.data.responseObject.isValid) ? err.data.responseObject.message : "There was an unexpected error."
     var message = "Your session has expired, please enter your username and password to continue the activation process."
     displayResponseBox.setMessage(message, true)
-    // $state.go('login');
+    // $state.go('Sign In');
     antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
 
@@ -62,18 +61,18 @@ angular.module('ssoApp')
   }
 
   self.incorrectError = function (event) {
-    console.log("Error");
+    // console.log("Error");
   }
 
   self.populateId = function (res) {
-    console.log("In success");
+    // console.log("In success");
     self.data.SessionId = tokenValidationService.getToken();
     tokenStorageService.setToken(self.data.SessionId);
     // self.data.MemberId = res.data.responseObject.id
   }
 
   self.populateAntiForgeryToken = function(res) {
-    console.log("Antiforgery" + res);
+    // console.log("Antiforgery" + res);
     antiForgeryToken.setAntiForgeryToken(res);
     self.data.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
 
@@ -93,13 +92,15 @@ angular.module('ssoApp')
   //     $(this).button('loading');
   // });
 
+  $scope.interchangableComponents = contentService._content;
+
   $('button[data-loading-text]')
     .on('click', function () {
         var btn = $(this)
         btn.button('loading')
         setTimeout(function () {
             btn.button('reset')
-        }, 1000)
+        }, 3000)
 });
 
 

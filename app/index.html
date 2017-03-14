@@ -1,22 +1,28 @@
 ﻿<!doctype html>
-<html ng-app="ssoApp" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur' : 0} }">
+<html lang="en" ng-app="ssoApp" xmlns:ng="http://angularjs.org" class="ng-app:ssoApp" id="ng-app" data-ng-controller="mainCtrl as main" ng-model-options="{ updateOn: 'default blur', debounce: { 'default': 500, 'blur' : 0} }">
   <head data-ng-controller="linkElement as link">
     <meta charset="utf-8">
     <base href="/">
-
+    
     <meta name="viewport" content="width=device-width">
-
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <!-- These two scripts grab and load the Kroll fonts -->
 
 
     <!-- build:css(.) styles/vendor.css -->
     <!-- endbuild -->
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <!--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2016.2.714/styles/kendo.common.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2016.2.714/styles/kendo.default.min.css" />
     <link rel="stylesheet" href="https://kendo.cdn.telerik.com/2016.2.714/styles/kendo.default.mobile.min.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css" />
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 
     <!-- build:css(.tmp) styles/main.css -->
 
@@ -24,14 +30,26 @@
 
 
     <!-- endbuild -->
-    <title data-ng-bind="link.styles.title"> </title>
+    <!--<title data-ng-bind="link.styles.title" ng-cloak> </title>-->
+    <!--<title data-ng-bind = "main.title"> </title>-->
+    <title class="ng-cloak" data-ng-bind = "main.title.title()" ng-cloak></title>
+
     <link rel="shortcut icon" type="image/ico" data-ng-href={{link.styles.favicon}}>
     <link rel="stylesheet" data-ng-href={{link.styles.stylesheet}}>
     <!-- <div ui-view="head"></div> -->
     <script src="https://use.typekit.net/jeu4xtz.js"></script>
     <script>try{Typekit.load({ async: true });}catch(e){}</script>
 
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
 
+      // ga('create', 'UA-47157105-34', 'auto');
+      // ga('send', 'pageview');
+
+    </script>
   </head>
 
   <body>
@@ -49,7 +67,11 @@
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
-     <script>
+
+
+
+
+    <!--<script>
        !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
        (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
        r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
@@ -57,14 +79,14 @@
 
        ga('create', 'UA-47157105-24');
        ga('send', 'pageview');
-    </script>
+    </script>-->
 
     <!-- build:js() scripts/vendor.js -->
 
     <!-- endbuild -->
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>-->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-cookies.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.3.1/angular-ui-router.js"></script>
     <!-- <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular-cookie/4.0.10/angular-cookie.min.js"></script> -->
@@ -72,8 +94,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.4.0/angular-animate.min.js"></script>
     <script src="https://kendo.cdn.telerik.com/2016.2.607/js/kendo.all.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.js"></script>             
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
     <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/0.13.3/ui-bootstrap-tpls.js"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.0.1/ui-bootstrap-tpls.js"></script>
+    
 
 
 
@@ -82,38 +106,61 @@
     <script src="app.js"></script>
     <script src="scripts/constants/constants.js"></script>
 
+    <script src="scripts/services/httpService.js"></script>
+
+    <script src="scripts/controllers/mainCtrl.js"></script>
+
+    <script src="scripts/services/getUrl.js"></script>
+
+    <script src="scripts/factories/title.js"></script>
+
     <script src="scripts/services/loadBrandingService.js"></script>
+    <script src="scripts/services/multiClientService/multiClient.js"></script>
+
+    <script src="scripts/directives/validationHighlights.js"></script>
+
+    <script src="scripts/services/inputErrorService.js"></script>
 
        <!--<script src="scripts/services/afterSessionExpire.js"></script>-->
 
     <script src="scripts/services/displayResponseBox.js"></script>
-    <script src="scripts/services/tokenValidationService.js"></script>
+
     <script src="scripts/services/tokenStorageService.js"></script>
-    <script src="scripts/services/httpService.js"></script>
-    <script src="scripts/services/inputErrorService.js"></script>
-    <script src="scripts/services/getUrl.js"></script>
-    <script src="scripts/services/usernameService.js"></script>
-    <script src="scripts/services/sessionService.js"></script>
+    <script src="scripts/services/tokenValidationService.js"></script>
+
     <script src="scripts/services/antiForgeryToken.js"></script>
 
+    <script src="scripts/services/sessionService.js"></script>
+    <script src="scripts/services/usernameService.js"></script>
 
-    <script src="scripts/directives/validationHighlights.js"></script>
+    <script src="scripts/services/getClient.js"></script>
+    
+
     <script src="scripts/directives/emailExistDirective.js"></script>
     <script src="scripts/directives/sessionPopup/sessionPopup.js"></script>
     <script src="scripts/directives/inputLinker.js"></script>
     <script src="scripts/directives/responseBox/responseBox.js"></script>
     <script src="scripts/directives/asyncValidate.js"></script>
+    <script src="scripts/directives/compile.js"></script>
 
     <!--<script src="appFiles/login/scripts/loginDirective.js"></script>-->
 
     <script src="scripts/controllers/linkElement.js"></script>
-    <script src="scripts/controllers/test.js"></script>
-    <script src="scripts/controllers/secondTest.js"></script>
     <script src="scripts/controllers/sessionTimeout/sessionTimout.js"></script>
+    <script src="appFiles/termsAndConditions/termsAndConditions.js"></script>
+
 
     <script src="appFiles/header/headerCtrl.js"></script>
+    <script src="appFiles/footer/footerCtrl.js"></script>
     <script src="appFiles/login/scripts/loginCtrl.js"></script>
     <script src="appFiles/resetPassword/resetPassword.js"></script>
+
+    <script src="appFiles/browser/browserCtrl.js"></script>
+    <script src="appFiles/contactIDShield/contactIDShieldCtrl.js"></script>
+
+    
+
+    <script src="scripts/controllers/linkElement.js"></script>
     <script src="appFiles/signUp/signUpCtrl.js"></script>
     <script src="appFiles/forgotPassword/forgotPasswordCtrl.js"></script>
     <script src="appFiles/updateEmail/updateEmailCtrl.js"></script>
@@ -124,33 +171,8 @@
     <script src="appFiles/havingTrouble/havingTrouble.js"></script>
     <script src="appFiles/forgotUsername/forgotUsername.js"></script>
     <script src="appFiles/updateProfile/updateProfileCtrl.js"></script>
-    <script src="appFiles/browser/browserCtrl.js"></script>
-    <script src="appFiles/contactIDShield/contactIDShieldCtrl.js"></script>
 
     <script src="scripts/controllers/validation.js"></script>
     <!-- endbuild -->
-
-    <script type="text/javascript">
-      // var idleTime = 0;
-      // $(document).ready(function () {
-      //     //Increment the idle time counter every minute.
-      //     var idleInterval = setInterval(timerIncrement, 60000); // 1 minute
-
-      //     //Zero the idle timer on mouse movement.
-      //     $(this).mousemove(function (e) {
-      //         idleTime = 0;
-      //     });
-      //     $(this).keypress(function (e) {
-      //         idleTime = 0;
-      //     });
-      // });
-
-      // function timerIncrement() {
-      //     idleTime = idleTime + 1;
-      //     if (idleTime > 18) { // 20 minutes
-      //         window.location.assign('https://idshieldstage.krollportal.com/login');
-      //     }
-      // }
-</script>
 </body>
 </html>

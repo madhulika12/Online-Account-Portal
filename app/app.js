@@ -1,5 +1,3 @@
-'use strict';
-
 /**
  * @ngdoc overview
  * @name ssoApp
@@ -10,7 +8,6 @@
  */
 
 // var routerApp = angular.module('routerApp', ['ui.router', 'ui.bootstrap', 'ngCookies']);
-
 angular
   .module('ssoApp', ['ui.router', 'kendo.directives', 'ngSanitize', 'ngAnimate', 'ui.bootstrap', 'ngCookies'])
 
@@ -22,6 +19,12 @@ angular
     url: '/',
     resolve: {
       loadBrandingService: 'loadBrandingService',
+      contentService : 'contentService',
+
+      content : function(contentService) {
+        return contentService.getContent()
+      },
+
       styleSheetPromise : function (loadBrandingService) {
         return loadBrandingService.getStyleSheetPath()
       },
@@ -29,24 +32,22 @@ angular
     views: {
       'header': {
         templateUrl: 'appFiles/header/header.html',
-        controller: function ($scope, loadBrandingService) {
-          $scope.styles = loadBrandingService.getStyles()
-          $scope.sessionTimeout = loadBrandingService.sessionTimeout()
-          console.log($scope.sessionTimeout)
-        }
+        controller: 'headerCtrl',
+        controllerAs: 'header',
       },
       'view': {
         template: '',
-        controller: function ($state) {
-          $state.go('login')
-
+        controller: function ($state, $scope) {
+          $state.go('Sign In')
+          $scope.test = "In the view controller";
+        //   console.info("View parent");
+        //   console.log($scope.test);
         },
       },
       'footer': {
         templateUrl: 'appFiles/footer/footer.html',
-        controller: function ($scope, loadBrandingService) {
-          console.log("View controller")
-        }
+        controller: 'footerCtrl',
+        controllerAs: 'footer'
       },
     },
   })
@@ -61,7 +62,7 @@ angular
           }
       },
   })
-  .state('login', {
+  .state('Sign In', {
       url: 'login',
       parent: 'user',
       views: {
@@ -85,7 +86,7 @@ angular
       }
   })
 
-  .state('accountActivation', {
+  .state('Account Activation', {
     url: 'account-activation?token',
     parent: 'user',
     views: {
@@ -97,18 +98,18 @@ angular
         }
     }
   })
-  .state('termsAndConditions', {
+  .state('Terms and Conditions', {
       url: 'terms-and-conditions',
       parent: 'user',
       views: {
           'view@': {
               templateUrl: 'appFiles/termsAndConditions/termsAndConditions.html',
-              controller: 'sessionTimout',
-              controllerAs: 'session'
+              controller: 'termsAndConditions',
+            //   controllerAs: 'terms'
           }
       }
   })
-  .state('terms-accept', {
+  .state('Accept Terms and Conditions', {
       url: 'terms-accept?token',
       parent: 'user',
       views: {
@@ -121,31 +122,31 @@ angular
   })
 
 
-  .state('browser', {
+  .state('Browser Compatibility', {
       url: 'browser',
       parent: 'user',
       views: {
           'view@': {
               templateUrl: 'appFiles/browser/browser.html',
-              controller: 'sessionTimout',
-              controllerAs: 'session'
+              controller: 'browserCtrl',
+              controllerAs: 'browser'
 
           }
       }
   })
-  .state('contactIDShield', {
+  .state('Contact Us', {
       url: 'contact-us',
       parent: 'user',
       views: {
           'view@': {
               templateUrl: 'appFiles/contactIDShield/contactIDShield.html',
-              controller: 'sessionTimout',
-              controllerAs: 'session'
+              controller: 'contactCtrl',
+              controllerAs: 'contact'
 
           }
       }
   })
- .state('privacyPolicy', {
+ .state('Privacy Policy', {
       url: 'privacy-policy',
       parent: 'user',
       views: {
@@ -157,7 +158,7 @@ angular
           }
       }
   })
-  .state('recover-account', {
+  .state('Recover Account', {
       url: 'account/recover-account',
       parent: 'user',
       views: {
@@ -169,7 +170,7 @@ angular
           }
       }
   })
-  .state('having-trouble', {
+  .state('Having Trouble Logging In', {
     url: 'having-trouble',
     parent: 'user',
     views: {
@@ -180,7 +181,7 @@ angular
       }
     }
   })
-  .state('forgot-username', {
+  .state('Forgot Username', {
     url: 'forgot-username',
     parent: 'user',
     views: {
@@ -201,7 +202,7 @@ angular
         }
     }
   })
-  .state('update-profile', {
+  .state('My Account', {
       url: 'member/profile',
       parent: 'user',
       views: {
@@ -212,7 +213,7 @@ angular
           }
       }
   })
-  .state('forgot-password', {
+  .state('Forgot Password', {
       url: 'forgot-password',
       parent: 'user',
       views: {
@@ -223,7 +224,7 @@ angular
           }
       }
   })
-  .state('reset-password', {
+  .state('Set Password', {
       url: 'account/reset-password?sptoken',
       parent: 'user',
       views: {
@@ -234,7 +235,7 @@ angular
           }
       }
   })
-  .state('sign-up', {
+  .state('Sign Up', {
       url: 'account/sign-up',
       parent: 'user',
       views: {
@@ -245,7 +246,18 @@ angular
           }
       }
   })
-  .state('update-email', {
+
+  .state('Set Password Success', {
+      url: 'set-password-success',
+      parent: 'user',
+      views: {
+          'view@': {
+              templateUrl: 'appFiles/setPasswordSuccess/setPasswordSuccess.html'
+          }
+      }
+  })
+
+  .state('Update Email Address', {
       url: 'account/update-email',
       parent: 'user',
       views: {
@@ -258,16 +270,18 @@ angular
   })
  // this block below removes the hash tag from angular urls
 
-  // $locationProvider.html5Mode({
-  //   enabled: true,
-  //   requireBase: false
-  // });
+  $locationProvider.html5Mode({
+    enabled: true,
+    requireBase: false
+  });
 })
 
+.run(function ($rootScope, $location, $window) {
 
-
-.run(function ($rootScope) {
-  $rootScope.$on('$stateChangeSuccess', function () {
+    $window.ga('create', 'UA-47157105-35', 'auto');
+    
+  $rootScope.$on('$stateChangeSuccess', function (event) {
+      $window.ga('send', 'pageview', $location.path());
     document.body.scrollTop = 0;
   })
 

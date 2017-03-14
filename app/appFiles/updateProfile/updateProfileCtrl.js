@@ -2,7 +2,7 @@ angular.module('ssoApp')
 
 // SPECIAL
 
-.controller('updateProfile', ['antiForgeryToken', 'sessionService','inputErrorService', '$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', 'getUrl', function (antiForgeryToken, sessionService, inputErrorService, $window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox, getUrl) {
+.controller('updateProfile', ['contentService' ,'loadBrandingService','antiForgeryToken', 'sessionService','inputErrorService', '$window', '$timeout', 'httpService', '$http', '$scope', 'Constants', 'tokenValidationService', 'tokenStorageService', 'displayResponseBox', 'getUrl', function (contentService, loadBrandingService, antiForgeryToken, sessionService, inputErrorService, $window, $timeout, httpService, $http, $scope, Constants, tokenValidationService, tokenStorageService, displayResponseBox, getUrl) {
 
   var self = this
 
@@ -10,6 +10,7 @@ angular.module('ssoApp')
   self.editPasswordMode = 'show';
   self.elemVal = null;
   self.readOnlyProp = false;
+  self.emailElem = null;
 
   self.states = Constants.states
   self.generations = Constants.generations
@@ -57,6 +58,13 @@ angular.module('ssoApp')
     display : false
   }
 
+  self.isEmailAvailableModel = {
+          ClientUrl : getUrl(),
+          EmailUserId: null,
+          AntiForgeryTokenId: antiForgeryToken.getAntiForgeryToken(),
+          SessionId: getUrl()
+        }
+
   //xxxxxx
   // PRESERVING OLD DATA
   //xxxxxx
@@ -71,6 +79,7 @@ angular.module('ssoApp')
 
   self.setData = function (res) {
     antiForgeryToken.setAntiForgeryToken(res);
+
     var db = res.data.responseObject
     var headers =  res.headers('XSRF-TOKEN');
 
@@ -87,16 +96,21 @@ angular.module('ssoApp')
         Email : db.email,
         PhoneNumber : db.homePhone,
         SessionId : tokenStorageService.getToken(),
-        AntiForgeryTokenId :  self.updatedData.AntiForgeryTokenId
+        AntiForgeryTokenId :  self.updatedData.AntiForgeryTokenId,
+        ClientUrl : getUrl()
       }
       self.setUpdatedDataAsOld()
       self.elemVal = db.email;
+
+      // console.log("Date picker value");
+      // console.log(document.getElementById("bootstrapDatePicker").value);
 
       self.checkCookie();
     }
   }
 
   self.setUpdatedDataAsOld = function () {
+    // console.log("setUpdatedDataAsOld");
     angular.copy(self.setReturnedData, self.currentData)
     self.setReadOnly();
   }
@@ -106,13 +120,61 @@ angular.module('ssoApp')
       };
 
   self.setReadOnly = function() {
+    // console.log("setReadOnly");  
     if (self.setReturnedData.DateOfBirth) {
+      // console.log("setReadOnly if");
       self.readOnlyProp = true;
+      // console.log(document.getElementById("date"));
+      document.getElementById("date").classList.add("greyOutDob");
+      document.getElementById("datePicker").classList.add("greyOutDob");
+    }
+
+    var all = document.getElementsByTagName("input");
+
+    for (var i=0, max=all.length; i < max; i++) {
+      // console.log("Inside setreadonly for");
+      // console.log(all[i]);
+     // Do something with the element here
     }
   }
 
   self.editOn = function () {
-    self.mode = 'edit'
+    self.mode = 'edit';
+
+       if (document.readyState === 'complete'){
+          // console.log("On load");
+          window.setTimeout(self.showElem, 1000);
+          // console.log(document.getElementsByClassName("datePicker").namedItem("dob"));
+       };
+
+      //  setTimeout(self.setReadOnly(), 5000);
+
+      //  ($timeout, function() {
+      //   console.log("DOM content Loaded");
+      //   console.log(document.getElementById('bootstrapDatePicker'));
+      //   var datePick = document.getElementById("bootstrapDatePicker");
+      //   datePick.value ? datePick.readOnly = true : datePick.readOnly = false;
+      //  }, 5000);
+
+       $(document).ready(function() {
+         
+    })
+  }
+
+  // self.setReadOnly = function() {
+  //   console.log("DOM content Loaded");
+  //   console.log(document.getElementById('bootstrapDatePicker'));
+    // var datePick = document.getElementById("bootstrapDatePicker");
+    // datePick.value ? datePick.readOnly = true : datePick.readOnly = false;   
+  // };
+
+  self.showElem = function() {
+    // console.log("showElem");
+    // console.log(document.getElementById('bootstrapDatePicker'));
+
+    $('#bootstrapDatePicker').datetimepicker({
+          format: 'MM/DD/YYYY'
+    });   
   }
 
   self.goToDashboard = function() {
@@ -189,6 +251,7 @@ angular.module('ssoApp')
       .finally(function () { $('.updateProcessingBtn').button('reset'); })
   }
 
+
   //xxxxxx
   // RESET PASSWORD FORM
   //xxxxxx
@@ -198,7 +261,6 @@ angular.module('ssoApp')
     displayResponseBox.populateResponseBox(self.resetPassResponseBox, message, true);
     antiForgeryToken.setAntiForgeryTokenFromError(err);
   }
-
 
   self.setPassSuccess = function (res) {
 
@@ -224,6 +286,7 @@ angular.module('ssoApp')
         }
 
    self.populateForm = function (res) {
+     
           if (res && res.data && res.data.responseObject) {
             var db = res.data.responseObject
 
@@ -255,10 +318,13 @@ angular.module('ssoApp')
           antiForgeryToken.setAntiForgeryToken(res);
         }
 
-
   self.populateAntiForgeryToken = function(res) {
-    console.log("Antiforgery" + res);
 
+
+    // console.log("Antiforgery" + res);
+    // console.info("populateAntiForgeryToken");
+    // console.dir(loadbrandingservice)
+    
     // self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
     self.dataToPopulateForm.SessionId = tokenStorageService.getToken()
     self.dataToPopulateForm.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();
@@ -274,10 +340,63 @@ angular.module('ssoApp')
     self.sendRequestToPopulate();
   }
 
+  self.isEmailAvailable = function(userEmail) {
+    self.isEmailAvailableModel.EmailUserId = userEmail;
+    self.emailElem = this;
+
+    if(userEmail !== undefined && userEmail != self.elemVal && !document.getElementById("email").classList.contains("ng-invalid-pattern")) {
+      httpService.usernameExist(self.isEmailAvailableModel)
+        // .then(self.emailAvailable, self.emailExists);
+    }
+  }
+
+  self.emailExists = function() {
+    // console.log("Exists");
+
+    // if (!document.getElementById("updateProfileSave").hasAttribute("disabled")) {
+      document.getElementById("updateProfileSave").setAttribute("disabled", "disabled");
+      document.getElementById("updateProfileSave").className += " EmailExists";
+      document.getElementById("email").className += " ExistsError";
+      inputErrorService.addAvailabilityError();
+    // } 
+    
+  }
+
+  self.emailAvailable = function() {
+    // console.log("Doesn't Exists");
+    // console.log(document.getElementById("updateProfileSave").classList.contains("EmailExists"));
+    // console.log(document.getElementById("updateProfileSave").hasAttribute("disabled"));
+
+     document.getElementById("updateProfileSave").classList.remove("EmailExists");
+
+    // if ((document.getElementById("updateProfileSave").classList.contains("EmailExists")) && (!document.getElementById("updateProfileSave").hasAttribute("disabled"))) {
+
+      // if (document.getElementById("updateProfileSave").hasAttribute("disabled")) {
+        if (document.getElementById("updateProfileSave").classList.contains("EmailExists")) {
+          document.getElementById("updateProfileSave").removeAttribute("disabled", "disabled");
+     
+      //submitButton updateProcessingBtn k-button
+
+    } 
+    
+  }
+
   self.sendRequestToPopulate = function() {
           httpService.getMember(self.dataToPopulateForm)
             // .then(self.populateForm, self.error)
             .then(self.setData, self.error)
+
+            if (document.readyState === 'complete') {
+              // console.info("Inside ready state");
+              // console.log(document.getElementById('bootstrapDatePicker'));
+            }
+
+            // console.log(document.getElementById('bootstrapDatePicker'));
+
+    // document.getElementsByClassName('datepicker')[0].datepicker({
+    //     format: 'mm/dd/yyyy',
+    //     startDate: '-3d'
+    // });     
         }
 
         //  self.delCookie = function() {
@@ -286,5 +405,28 @@ angular.module('ssoApp')
         //     .then(self.success, self.error)
         // };
 
+    $(document).ready(function() {
+      // $("#datePicker").kendoDatePicker();
+      // var datePick = $('#datePicker').data('kendoDatePicker');
+      // datePick.readonly();
+        $('#bootstrapDatePicker').datetimepicker({
+          format: 'YYYY/MM/DD'
+        });    
+
+      // $('#bootstrapDatePicker').prop('disabled', true);  
+    })
+
+    // $('#bootstrapDatePicker').prop('disabled', true);  
+
+        $scope.interchangableComponents = contentService._content;
+
+        self.setAsReadOnly = function() {
+          document.getElementById("bootstrapDatePicker").readOnly = true;
+        }
+
     self.populateAntiForgeryToken();
+
+      $(document).ready(function() {
+         
+      })
 }])

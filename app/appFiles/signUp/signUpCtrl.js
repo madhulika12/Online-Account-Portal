@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('ssoApp')
-    .controller('signUpCtrl', ['antiForgeryToken', '$http', '$location', 'Constants', '$rootScope', '$stateParams', 'httpService', 'tokenValidationService', 'displayResponseBox', '$window', 'tokenStorageService', '$state', 'loadBrandingService', 'getUrl', function(antiForgeryToken, $http, $location, Constants, $rootScope, $stateParams, httpService, tokenValidationService, displayResponseBox, $window, tokenStorageService, $state, loadBrandingService, getUrl) {
+    .controller('signUpCtrl', ['$scope','contentService','antiForgeryToken', '$http', '$location', 'Constants', '$rootScope', '$stateParams', 'httpService', 'tokenValidationService', 'displayResponseBox', '$window', 'tokenStorageService', '$state', 'loadBrandingService', 'getUrl', function($scope, contentService, antiForgeryToken, $http, $location, Constants, $rootScope, $stateParams, httpService, tokenValidationService, displayResponseBox, $window, tokenStorageService, $state, loadBrandingService, getUrl) {
         var self = this;
 
         self.states = Constants.states
@@ -62,6 +62,8 @@ angular.module('ssoApp')
           ClientUrl: getUrl()
         }
 
+        $scope.interchangableComponents = contentService._content;
+
         //runs if the request has an http error
         self.error = function (err) {
           var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
@@ -73,7 +75,7 @@ angular.module('ssoApp')
         self.invalidTokenError = function (err) {
           var message = (err.data && err.data.errorMessage) ? err.data.errorMessage : "There was an unexpected error.";
           displayResponseBox.setMessage(message, true)
-          $state.go('login')
+          $state.go('Sign In');
           antiForgeryToken.setAntiForgeryTokenFromError(err);
           // $('.processingBtn').button('reset');
         }
@@ -100,6 +102,13 @@ angular.module('ssoApp')
 
 
         self.setViewAndRender = function (modelCtrl, data) {
+
+          console.log("modelCtrl");
+          console.log(modelCtrl);
+
+          console.log("data");
+          console.log(data);
+
           modelCtrl.$setViewValue(data)
           modelCtrl.$render()
           modelCtrl.$validate()
@@ -107,9 +116,13 @@ angular.module('ssoApp')
 
         self.populateForm = function (res) {
           if (res && res.data && res.data.responseObject) {
-            var db = res.data.responseObject
+            var db = res.data.responseObject;
 
-            self.data.MemberId = db.id
+            self.data.MemberId = db.id;
+
+            console.log("Value of suffix");
+            console.log(db.suffix);
+
             self.setViewAndRender(self.form.Dob, db.dob)
             self.setViewAndRender(self.form.Phone, db.homePhone)
             self.setViewAndRender(self.form.FirstName, db.firstName)
@@ -138,7 +151,7 @@ angular.module('ssoApp')
         }
 
           self.populateAntiForgeryToken = function(res) {
-            console.log("Antiforgery" + res);
+            // console.log("Antiforgery" + res);
             self.data.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();
             self.dataToPopulateForm.AntiForgeryTokenId = antiForgeryToken.getAntiForgeryToken();
             self.data.SessionId = tokenStorageService.getToken();

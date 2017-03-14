@@ -25,13 +25,13 @@
 			</div>
 		</div>
 		</div>
-	</div>	
+	</div>
 	</div>
   <div class="row">
     <div class="col-xs-12 col-sm-6">
-      <div class="global-form-instructions">
-        <h2 id="updateAccountH2"> MY ACCOUNT </h2>
-        <p> Use this page to update your account information </p>
+      <div class="global-form-instructions" data-ng-bind-html="interchangableComponents.updateProfile">
+        <!--<h2 id="updateAccountH2"> MY ACCOUNT </h2>
+        <p> Use this page to update your account information </p>-->
       </div>
     </div>
   </div>
@@ -91,7 +91,7 @@
 
   <div ng-switch="update.mode">
     <div class="global-form updateAccount" ng-switch-when="view" >
-      <h4 class="form-section-headings"> Personal Information </h4>
+      <h4 class="form-section-headings"> </h4>
       <form>
 
         <div class="">
@@ -152,7 +152,7 @@
               <!-- DOB -->
               <div class="form-group col-xs-6">
                 <label for="dob" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
-                <div class="info-display"> <p> {{update.updatedData.DateOfBirth || update.currentData.DateOfBirth || update.setReturnedData.DateOfBirth }} </p> </div>
+                <div class="info-display input-group date" data-provide="datepicker"> <p> {{update.updatedData.DateOfBirth || update.currentData.DateOfBirth || update.setReturnedData.DateOfBirth }} </p> </div>
               </div>
 
               <!-- EMAIL -->
@@ -268,23 +268,30 @@
             <div class="row">
               <!-- DOB -->
               <div class="form-group col-xs-6">
-                <label for="dob" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
+                <label for="dob bootstrapDatePicker" class="form-control-label">DATE OF BIRTH<span class="required">*</span></label>
                 <div>
-                  <input id="dob" kendo-date-picker
+                  <input id="dob datePicker" kendo-date-picker
                     k-options="update.kendoDateOptions"
                     k-format="'MM/dd/yyyy'"
                     placeholder="MM/DD/YYYY"
                     autocomplete="off"
                     data-ng-readonly="update.readOnlyProp"
-                   class="form-control input kendo-date" name="dob" ng-pattern="update.regex.DateOfBirth" ng-model="update.currentData.DateOfBirth" required/>
+                   class="form-control input kendo-date datePicker" name="dob" ng-pattern="update.regex.DateOfBirth" ng-model="update.currentData.DateOfBirth" required/>
                 </div>
+
+            <!--<div class="input-group date" data-provide="datepicker">
+              <input type="text" class="form-control input datepicker" id="bootstrapDatePicker" placeholder="MM/DD/YYYY" name="dob" ng-pattern="update.regex.DateOfBirth" ng-model="update.currentData.DateOfBirth" required/>
+            </div>-->
+                
               </div>
+
 
               <!-- EMAIL -->
               <div class="form-group col-xs-12 col-md-6">
                 <label for="email" class="form-control-label">EMAIL<span class="required">*</span></label>
                 <div>
-                  <input type="text" class="form-control input appendToDom" autocomplete="off" email-exist-directive="emailExist" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name="email" ng-change="update.appendDirectiveDom()" required>
+                  <!--<input type="text" class="form-control input appendToDom" async-validate="usernameExist" autocomplete="off" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name = "email" ng-change="update.isEmailAvailable(update.currentData.Email, this)" required>-->
+                  <input type="text" class="form-control input appendToDom" async-validate="usernameExist" autocomplete="off" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" name = "email" required>
                   <!--<input type="text" class="form-control input appendToDom" id="email" ng-pattern="update.regex.Email" ng-model="update.currentData.Email" ng-change="update.appendDirectiveDom()" name="email" required>-->
                 </div>
               </div>
@@ -300,6 +307,7 @@
             </kendo-button>
             <kendo-button
               class="submitButton updateProcessingBtn"
+              id="updateProfileSave"
               ng-disabled="update.form.$invalid"
               ng-click="update.save()"
               data-loading-text="<i class='fa fa-circle-o-notch fa-spin'></i> Sending Request"
@@ -327,14 +335,14 @@
         <!-- PASSWORD -->
         <div class="form-group col-xs-12 col-md-6">
           <label for="password" class="form-control-label">NEW PASSWORD<span class="required">*</span></label>
-                
+
                 <div class="info-display"> <p> </p> </div>
         </div>
 
         <!-- PASSWORD CONFIRMATION -->
         <div class="form-group col-xs-12 col-md-6">
           <label for="confirmPassword" class="form-control-label">CONFIRM NEW PASSWORD<span class="required">*</span></label>
-                
+
                 <div class="info-display"> <p>  </p> </div>
         </div>
               </div>
@@ -449,3 +457,11 @@
     Lorem ipsum dolor text....
   </div>
 </div> -->
+
+<script>
+  // document.getElementById("datePicker").kendoDatePicker();
+  
+  // var datepicker = document.getElementById("datepicker").data("kendoDatePicker");
+
+  // datepicker.enable(false);
+</script>

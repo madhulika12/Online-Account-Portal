@@ -1,8 +1,6 @@
-'use strict';
-
 //SPECIAL
 angular.module('ssoApp')
-  .controller('loginCtrl', ['antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService', 'getUrl', function(antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService, getUrl) {
+  .controller('loginCtrl', ['titleFactory', 'contentService','antiForgeryToken', '$scope', 'Constants', '$http', '$state', '$rootScope', 'httpService', 'displayResponseBox', '$window', '$location', 'tokenStorageService', 'loadBrandingService', 'getUrl', function(titleFactory, contentService, antiForgeryToken, $scope, Constants, $http, $state, $rootScope, httpService, displayResponseBox, $window, $location, tokenStorageService, loadBrandingService, getUrl) {
       // console.log("Entering Login Ctrl");
 
       var self = this;
@@ -10,6 +8,7 @@ angular.module('ssoApp')
       self.response = null;
       self.error = null;
       $scope.removeAndRedirect = null;
+      // self.interchangableComponents = null;
 
       self.signUpData = {
         MembershipNumber: null,
@@ -71,16 +70,16 @@ angular.module('ssoApp')
       self.activationSuccess = function (res) {
         // $state.go('sign-up', { token : res.data.responseObject })
         tokenStorageService.setToken(res.data.responseObject);
-        $state.go('sign-up')
+        $state.go('Sign Up')
         antiForgeryToken.setAntiForgeryToken(res);
       }
 
-       console.log(loadBrandingService._styles.pingURL);
+      //  console.log(loadBrandingService._styles.pingURL);
 
        self.loginSuccess = function (res) {
 
       if (res.data.errorType == 200) {
-        console.log("Login Success");
+        // console.log("Login Success");
         tokenStorageService.setToken(res.data.responseObject.sessionToken);
 
         if ( self.checkForTerms(res) ) {
@@ -90,14 +89,22 @@ angular.module('ssoApp')
           $location.url( res.data.responseObject.pingToken + "?token=" + res.data.responseObject.sessionToken )
        }
         else {
-          console.log(res.data.responseObject);
-          console.log(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
+          // console.log(res.data.responseObject);
+          // console.log(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
           $window.location.assign(loadBrandingService._styles.pingURL + res.data.responseObject.pingToken)
         }
       }
 
       antiForgeryToken.setAntiForgeryToken(res);
        }
+
+      //  angular.element(document).ready(function () {
+      //    console.info("Document null");
+      $scope.interchangableComponents = contentService._content;
+
+      $scope.interchangableComponents.IDShieldImage = false;
+      $scope.interchangableComponents.primericaImage = true;
+      //  });
 
       self.loginRequest = function (event) {
         // console.log('loginCtrl.loginRequest')
@@ -118,7 +125,8 @@ angular.module('ssoApp')
       };
 
           self.populateAntiForgeryToken = function(res) {
-            console.log("Antiforgery" + res);
+            // $scope.interchangableComponents = loadBrandingService.getContent();
+            // console.log("Antiforgery" + res);
             self.clearCookie();
             antiForgeryToken.setAntiForgeryToken(res);
             self.signUpData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
@@ -145,6 +153,10 @@ angular.module('ssoApp')
 
          loadBrandingService.getStyleSheetPath()
           .then(self.populateAntiForgeryToken, self.error);
+        
+
+        //  console.info("interchangableComponents");
+        //  console.log(self.interchangableComponents);
  }]);
 
  // $scope.$on('$locationChangeStart', function (event, next, current) {

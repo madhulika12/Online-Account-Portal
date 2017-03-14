@@ -1,21 +1,21 @@
 angular.module('ssoApp')
-.controller('havingTroubleCtrl', ['antiForgeryToken' ,'tokenStorageService', '$http', 'httpService', 'Constants', 'displayResponseBox', '$state', 'getUrl', function (antiForgeryToken, tokenStorageService, $http, httpService, Constants, displayResponseBox, $state, getUrl) {
+.controller('havingTroubleCtrl', ['contentService','$scope','loadBrandingService', 'antiForgeryToken' ,'tokenStorageService', '$http', 'httpService', 'Constants', 'displayResponseBox', '$state', 'getUrl', function (contentService, $scope, loadBrandingService, antiForgeryToken, tokenStorageService, $http, httpService, Constants, displayResponseBox, $state, getUrl) {
   var self = this;
 
   self.forgotPassData = {
     Username : null,
     LoginSourceId : Constants.loginSourceId,
     AntiForgeryTokenId: null,
-    ClientUrl : 'https://idtheftdefensestage.mysecuredashboard.com/login'
-  }
+    ClientUrl : getUrl()
+  };
 
   self.forgotPassConfirmData = {
     Username : null
-  }
+  };
 
   self.regex = {
     username : Constants.regexs.username
-  }
+  };
 
   self.responseBoxConfig = {
     message : null,
@@ -23,11 +23,21 @@ angular.module('ssoApp')
     display : false
   };
 
+  $scope.interchangableComponents = contentService._content;
+
+  if(/false/.test($scope.interchangableComponents.popupStatus)){
+    $('div#havingTroubleModal').addClass('hide');
+    $('div#havingTroubleModal').removeClass('fade');
+    $('div#havingTroubleModal').attr('data-backdrop',"");
+
+  }
+
+
   self.forgotPassSuccess = function (res) {
     // console.log('havingTrouble.forgotPassSuccess res param', res)
     var message = (res.data && res.data.responseObject) ? res.data.responseObject : "A password recovery email was sent to your account.";
     displayResponseBox.setMessage(message, false);
-    $state.go('login');
+    $state.go('Sign In');
     antiForgeryToken.setAntiForgeryToken(res);
   };
 
@@ -39,7 +49,7 @@ angular.module('ssoApp')
   };
 
   self.populateAntiForgeryToken = function(res) {
-    console.log("Antiforgery" + res);
+    // console.log("Antiforgery" + res);
     self.forgotPassData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
   };
 
@@ -59,14 +69,16 @@ angular.module('ssoApp')
   self.dismissToRecoverAccount = function () {
 
     $('#havingTroubleModal').one('hidden.bs.modal', function () {
-      $state.go('recover-account');
+      // console.log("dismissToRecoverAccount triggered");
+      $state.go('Recover Account');
     });
     $('#havingTroubleModal').modal('hide');
   };
 
   self.callSecurityTokens = function() {
-          $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
-    .then(self.populateAntiForgeryToken, self.error);
+    //       $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+    //       // $http.get('https://mws.stage.kroll.com/api/v1/security/tokens')
+    // .then(self.populateAntiForgeryToken, self.error);
     self.checkCookie();
   }
 
@@ -80,9 +92,9 @@ angular.module('ssoApp')
   // }
 
 
-  self.showModal()
+  self.showModal();
 
-  self.populateAntiForgeryToken()
+  self.populateAntiForgeryToken();
 
 
 

@@ -2,7 +2,6 @@
   width: 100%;
   height: 200px;
   border-radius: 5px;
-  background-size: cover;
 }
 
 #login-view {
@@ -16,8 +15,28 @@
 
 }
 
+.dual-form-container {
+  border : 1px solid $IDShieldBorderColor;
+  border-radius: 5px;
+}
+
 .promotional-image {
   background: url("../../images/IDShield/happy-family.png");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+.IDShieldPromoImage {
+  // background: url("../../images/IDShield/happy-family.png");
+}
+
+.IDTheftDefensePromoImage {
+  width: 100%;
+  height: 200px;
+  border-radius: 5px;
+  background: url("../../images/Primerica/Promo.jpg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
 
 .welcome-text {
