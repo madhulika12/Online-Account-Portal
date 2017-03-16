@@ -109,7 +109,15 @@ angular.module('ssoApp')
           console.log("data");
           console.log(data);
 
-          modelCtrl.$setViewValue(data)
+          if(modelCtrl.$name == "Generation") {
+            console.log("Converting to lowercase");
+            var lowerCaseData = data.toLowerCase();
+            console.log(data);
+            modelCtrl.$setViewValue(lowerCaseData)
+          } else {
+              modelCtrl.$setViewValue(data);
+          }
+
           modelCtrl.$render()
           modelCtrl.$validate()
         }
@@ -124,6 +132,7 @@ angular.module('ssoApp')
             console.log(db.suffix);
 
             self.setViewAndRender(self.form.Dob, db.dob)
+            // renderChangesToModal.setView(self.form.Dob, db.dob);
             self.setViewAndRender(self.form.Phone, db.homePhone)
             self.setViewAndRender(self.form.FirstName, db.firstName)
             self.setViewAndRender(self.form.LastName, db.lastName)
