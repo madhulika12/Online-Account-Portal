@@ -109,13 +109,15 @@ angular.module('ssoApp')
           console.log("data");
           console.log(data);
 
-          if(modelCtrl.$name == "Generation") {
-            console.log("Converting to lowercase");
-            var lowerCaseData = data.toLowerCase();
-            console.log(data);
-            modelCtrl.$setViewValue(lowerCaseData)
-          } else {
-              modelCtrl.$setViewValue(data);
+          if(data) {
+            if(modelCtrl.$name == "Generation") {
+              console.log("Converting to lowercase");
+              var lowerCaseData = data.toLowerCase();
+              console.log(data);
+              modelCtrl.$setViewValue(lowerCaseData)
+            } else {
+                modelCtrl.$setViewValue(data);
+            }
           }
 
           modelCtrl.$render()
