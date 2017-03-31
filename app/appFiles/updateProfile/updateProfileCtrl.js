@@ -125,8 +125,15 @@ angular.module('ssoApp')
       // console.log("setReadOnly if");
       self.readOnlyProp = true;
       // console.log(document.getElementById("date"));
-      document.getElementById("date").classList.add("greyOutDob");
-      document.getElementById("datePicker").classList.add("greyOutDob");
+
+      var dateElem = document.getElementById("date");
+      var datePickerElem = document.getElementById("datePicker");
+
+      if (dateElem) {
+        dateElem.classList.add("greyOutDob");
+        datePickerElem.classList.add("greyOutDob");
+      }
+      
     }
 
     var all = document.getElementsByTagName("input");
