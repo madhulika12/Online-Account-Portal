@@ -131,8 +131,33 @@ angular.module('ssoApp')
             antiForgeryToken.setAntiForgeryToken(res);
             self.signUpData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
             self.loginData.AntiForgeryTokenId =  antiForgeryToken.getAntiForgeryToken();
+            self.getReferrer();
 
-          }
+          };
+
+          self.getReferrer = function() { 
+            var a = document.createElement('a');
+            a.href = document.referrer;
+            console.log(document.referrer);
+            console.log([a.protocol,a.host,a.pathname].join('\n'));
+            // a='';
+  
+            self.checkReferrer(a);
+          };
+
+          self.checkReferrer = function(referrerURL) {
+            console.log("Check Referrer");
+            if (referrerURL == 'http://imc2-staging2.csid.com/enrollment/idverification') {
+              console.log("Check Referrer method");
+              displayResponseBox.setMessage("Your account servies are set to manual authentication", true);
+              self.responseBoxConfig = displayResponseBox.checkMessage()
+            }
+          };
+
+          $scope.$on('$routeChangeStart', function(next, current) { 
+            console.log("Route change Event triggered");
+            displayResponseBox._eraseStoredMessage();
+          });
 
           self.clearCookie = function() {
             tokenStorageService.deleteToken();
