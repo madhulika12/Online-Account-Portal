@@ -80,7 +80,7 @@ angular.module('ssoApp')
 //   },
 
 endpoints : {
-    baseUrl: 'https://auth-api.kroll.com/api/v1/',
+    baseUrl: 'https://auth-api.charlie.kroll.com/api/v1/',
 
     // baseUrl: 'https://auth-api.charlie.kroll.com/api/v1/',
 
