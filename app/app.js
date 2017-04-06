@@ -123,7 +123,7 @@ angular
 
 
   .state('Browser Compatibility', {
-      url: 'browser',
+      url: 'help',
       parent: 'user',
       views: {
           'view@': {

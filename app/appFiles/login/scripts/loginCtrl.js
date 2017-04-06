@@ -147,9 +147,9 @@ angular.module('ssoApp')
 
           self.checkReferrer = function(referrerURL) {
             console.log("Check Referrer");
-            if (referrerURL == 'http://imc2-staging2.csid.com/enrollment/idverification') {
+            if (referrerURL == 'https://www.idtheftdefense.com/enrollment/idverification') {
               console.log("Check Referrer method");
-              displayResponseBox.setMessage("Your account servies are set to manual authentication", true);
+              displayResponseBox.setMessage("Our records indicated you have been flagged for manual authentication. Please call 1-844-392-2964  for assistance.", true);
               self.responseBoxConfig = displayResponseBox.checkMessage()
             }
           };
