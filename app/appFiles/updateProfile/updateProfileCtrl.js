@@ -185,7 +185,8 @@ angular.module('ssoApp')
   }
 
   self.goToDashboard = function() {
-    $window.location.assign("http://imc2-staging2.csid.com/dashboard");
+    // $window.location.assign("http://imc2-staging2.csid.com/dashboard");
+    $window.location.assign("https://www.idtheftdefense.com/dashboard");
   }
 
   self.passwordMode = function () {
